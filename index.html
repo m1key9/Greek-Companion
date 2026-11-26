@@ -2,7 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111014">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Greek">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
 <title>Attic Greek · Lessons 1–23</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -431,13 +439,274 @@ header.top{background:rgba(17,16,20,.82);backdrop-filter:saturate(1.2) blur(14px
 @media print{.sfx,.toast,.burst{display:none}.refscope .rv{opacity:1;transform:none}}
 
 @media (pointer:coarse){.labscope .kbdhint{display:none}}
+
+/* ================= Daily path ================= */
+.dailyscope{--d-w:560px}
+#daily{max-width:var(--d-w);margin:0 auto;padding:22px 18px 80px}
+.dl-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.dl-stat{background:var(--panel);border-radius:14px;padding:12px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;position:relative}
+.dl-stat b{font-size:1.35rem;font-weight:600;line-height:1.1}
+.dl-stat span{font-size:.72rem;color:var(--muted)}
+.dl-stat svg{width:22px;height:22px}
+.dl-stat.streak svg{color:#5d566b}
+.dl-stat.streak.lit svg{color:#ffb35c;filter:drop-shadow(0 0 6px rgba(255,160,70,.55))}
+.dl-stat.streak.lit b{color:#ffcf96}
+.dl-stat.goal{padding-top:6px}
+.ringsvg{width:40px!important;height:40px!important;transform:rotate(-90deg);margin-bottom:-2px}
+.ringsvg circle{fill:none;stroke-width:5}
+.rbg{stroke:#2a2733}.rfg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.2,.7,.2,1)}
+.dl-goal b,.dl-stat.goal b{font-size:1rem}
+.dl-stat.xp b{color:var(--accent);margin-top:8px}
+.dl-week{display:flex;justify-content:space-between;margin:14px 6px 6px}
+.wd{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.68rem;color:var(--muted)}
+.wd i{width:22px;height:22px;border-radius:50%;background:#221f29;border:1.5px solid #2e2a38}
+.wd.on i{background:radial-gradient(circle at 50% 40%,#ffcf96,#ff9d45);border-color:#ffb35c;box-shadow:0 0 10px rgba(255,160,70,.35)}
+.wd.td span{color:var(--ink);font-weight:600}
+.wd.td i{border-color:var(--accent)}
+.dl-msg{text-align:center;color:var(--muted);font-size:.85rem;margin:10px 0 14px}
+.dl-extras{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.dl-x{background:var(--panel);border:1px solid #26232e;border-radius:12px;padding:10px 10px;color:var(--ink);text-align:left;cursor:pointer;font:inherit;transition:border-color .2s,transform .12s}
+.dl-x:hover{border-color:var(--accent-dim);transform:translateY(-2px)}
+.dl-x:active{transform:scale(.97)}
+.dl-x b{display:block;font-size:.86rem;font-weight:600}
+.dl-x span{display:block;font-size:.72rem;color:var(--muted);margin-top:2px;line-height:1.3}
+.dl-goalset{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);margin:14px 0 6px}
+.dl-g{width:30px;height:30px;border-radius:50%;border:1px solid var(--rule);background:none;color:var(--muted);font:600 .8rem var(--f);cursor:pointer}
+.dl-g[aria-pressed="true"]{border-color:var(--accent);color:var(--ink);background:var(--tint)}
+.dl-goalset .dim{margin-left:4px;color:#6f6a7a}
+
+.dl-path{margin-top:22px;display:flex;flex-direction:column;gap:22px}
+.dl-unit{position:relative}
+.dl-uhead{border-radius:14px;padding:12px 16px;display:flex;flex-direction:column;gap:2px;background:linear-gradient(135deg,#2a2240,#1f1a2e);border:1px solid #352c50;position:sticky;top:calc(var(--hh,96px) + 8px);z-index:3;box-shadow:0 8px 20px -14px #000}
+.dl-unit.u1 .dl-uhead{background:linear-gradient(135deg,#1f2b33,#19222a);border-color:#2b3c46}
+.dl-unit.u2 .dl-uhead{background:linear-gradient(135deg,#332a1f,#26201a);border-color:#4a3c2b}
+.dl-unit.u3 .dl-uhead{background:linear-gradient(135deg,#2d2033,#22192a);border-color:#432f4b}
+.dl-uhead span{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.dl-uhead b{font-size:1.05rem;font-weight:600}
+.dl-uhead em{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-style:normal;font-size:.72rem;color:var(--good);border:1px solid #2f5a3d;border-radius:999px;padding:2px 9px}
+.dl-nodes{display:flex;flex-direction:column;align-items:center;gap:26px;padding:26px 0 6px}
+.dl-nodewrap{position:relative;transform:translateX(var(--x));display:flex;flex-direction:column;align-items:center}
+.dl-node{width:70px;height:64px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;position:relative;
+  background:#2a2733;color:#5f596c;box-shadow:0 7px 0 #1b1921;transition:transform .12s,box-shadow .12s,filter .2s}
+.dl-node svg{width:28px;height:28px}
+.dl-node:active{transform:translateY(5px);box-shadow:0 2px 0 #1b1921}
+.dl-node.done{background:linear-gradient(#c9b6ff,#a68cf5);color:#2a1f4d;box-shadow:0 7px 0 #6b56b8}
+.dl-node.done.k-boss{background:linear-gradient(#ffd99a,#f2b85c);color:#4d3510;box-shadow:0 7px 0 #a8752a}
+.dl-node.cur{background:linear-gradient(#cdbbff,#9f84f2);color:#21183f;box-shadow:0 7px 0 #6650b0,0 0 0 6px rgba(185,163,255,.16)}
+.dl-node.cur.k-speed{background:linear-gradient(#ffe08c,#f5c049);color:#4d3a08;box-shadow:0 7px 0 #b38722,0 0 0 6px rgba(245,192,73,.16)}
+.dl-node.cur.k-boss{background:linear-gradient(#ffd0a0,#f39a4a);color:#4d2a08;box-shadow:0 7px 0 #b2652a,0 0 0 6px rgba(243,154,74,.16)}
+.dl-node.cur:hover{filter:brightness(1.07)}
+.dl-node.lock{cursor:not-allowed}
+.dl-label{font-size:.72rem;color:var(--muted);margin-top:12px;white-space:nowrap}
+.dl-node.cur+.hero+.dl-start+.dl-label{color:var(--ink)}
+.dl-start{position:absolute;top:-34px;left:50%;transform:translateX(-50%);background:var(--panel);border:1.5px solid var(--accent-dim);color:var(--accent);font:700 .7rem var(--f);letter-spacing:.1em;padding:4px 10px;border-radius:9px;white-space:nowrap;pointer-events:none}
+.dl-start::after{content:"";position:absolute;left:50%;bottom:-6px;width:9px;height:9px;background:var(--panel);border-right:1.5px solid var(--accent-dim);border-bottom:1.5px solid var(--accent-dim);transform:translateX(-50%) rotate(45deg)}
+.hero{position:absolute;left:-66px;top:-14px;width:56px;height:66px;pointer-events:none;z-index:2}
+.dl-nodewrap[style*="--x:-"] .hero{left:auto;right:-66px}
+.hero-svg{width:100%;height:100%;overflow:visible}
+.dl-fin{text-align:center;color:var(--muted);padding:12px;background:var(--panel);border-radius:12px}
+
+/* ---------- lesson overlay ---------- */
+body.dl-lock{overflow:hidden}
+.dl-ov{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;justify-content:center}
+.dl-ovin{width:100%;max-width:640px;display:flex;flex-direction:column;height:100%;padding:max(14px,env(safe-area-inset-top)) 18px max(16px,env(safe-area-inset-bottom))}
+.dl-bar{display:flex;align-items:center;gap:12px}
+.dl-close{background:none;border:0;color:var(--muted);font-size:1.25rem;width:36px;height:36px;border-radius:50%;cursor:pointer}
+.dl-close:hover{color:var(--ink);background:var(--panel)}
+.dl-prog{flex:1;height:12px;background:#24212c;border-radius:999px;overflow:hidden}
+.dl-prog i{display:block;height:100%;background:linear-gradient(90deg,#8e78e0,var(--accent));border-radius:999px;transition:width .45s cubic-bezier(.2,.7,.2,1);position:relative}
+.dl-prog i::after{content:"";position:absolute;left:8px;right:8px;top:3px;height:3px;border-radius:3px;background:rgba(255,255,255,.28)}
+.dl-combo{min-width:48px;display:flex;align-items:center;justify-content:flex-end;gap:3px;color:#ffb35c;font-weight:700;font-size:.9rem}
+.dl-combo svg{width:18px;height:18px}
+.dl-combo.dim{color:var(--muted);font-weight:500;font-size:.75rem;white-space:nowrap;max-width:120px;overflow:hidden;text-overflow:ellipsis}
+.dl-body{flex:1;overflow:auto;padding:28px 2px 16px;display:flex;flex-direction:column}
+.q-tag{font-size:1.25rem;font-weight:600;margin-bottom:18px}
+.q-prompt{text-align:center;padding:18px 10px 24px}
+.q-big{font-size:2.3rem;line-height:1.2;overflow-wrap:anywhere}
+.q-en{font-size:1.2rem;margin-top:6px;color:var(--ink)}
+.q-eq,.q-sub{color:var(--muted);font-size:.85rem;margin-top:6px}
+.q-opts{display:grid;gap:10px;margin-top:auto}
+.q-opts.tf{grid-template-columns:1fr 1fr}
+.q-opt{display:flex;align-items:center;gap:12px;text-align:left;background:var(--panel);border:2px solid #2a2733;border-bottom-width:4px;border-radius:14px;padding:13px 14px;color:var(--ink);font:500 1rem var(--f);cursor:pointer;transition:border-color .15s,background .15s,transform .08s}
+.gkopts .q-opt span{font-size:1.25rem}
+.q-opts.tf .q-opt{justify-content:center;font-size:1.05rem;padding:18px}
+.q-opt kbd{font:600 .7rem var(--f);color:var(--muted);border:1.5px solid #34303e;border-radius:6px;min-width:22px;height:22px;display:grid;place-items:center;flex:none}
+.q-opts.tf kbd{display:none}
+.q-opt:hover:not([disabled]){border-color:#3d3750}
+.q-opt:active:not([disabled]){transform:translateY(2px);border-bottom-width:2px}
+.q-opt.sel{border-color:var(--accent);background:var(--tint)}
+.q-opt.sel kbd{border-color:var(--accent);color:var(--accent)}
+.q-opt.right{border-color:var(--good);background:var(--goodbg)}
+.q-opt.wrong{border-color:var(--bad);background:var(--badbg)}
+.q-opt[disabled]{cursor:default}
+.q-type{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:auto}
+.q-type input{width:100%;font:1.3rem var(--f);text-align:center;padding:14px;border-radius:14px;border:2px solid #2a2733;background:var(--panel);color:var(--ink)}
+.q-type input:focus{border-color:var(--accent);outline:none}
+.q-prev{font-size:1.6rem;min-height:2.1rem;color:var(--accent)}
+.q-kbd{display:flex;flex-wrap:wrap;justify-content:center;gap:5px}
+.q-kbd button{width:36px;height:40px;border-radius:9px;border:1px solid #2e2a38;border-bottom-width:3px;background:var(--panel);color:var(--ink);font:1.1rem var(--f);cursor:pointer}
+.q-kbd button.w{width:52px}
+.q-kbd button:active{transform:translateY(2px);border-bottom-width:1px}
+.q-match{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.q-match>div{display:flex;flex-direction:column;gap:10px}
+.mt{min-height:58px;background:var(--panel);border:2px solid #2a2733;border-bottom-width:4px;border-radius:14px;color:var(--ink);font:500 .92rem var(--f);padding:8px;cursor:pointer;line-height:1.25;transition:border-color .15s,background .15s,opacity .3s,transform .1s}
+.mt.gk{font-size:1.2rem}
+.mt.sel{border-color:var(--accent);background:var(--tint)}
+.mt.ok{opacity:.32;border-color:#2f5a3d;background:transparent;cursor:default}
+.mt.bad{border-color:var(--bad);background:var(--badbg)}
+.dl-foot{min-height:86px;display:flex;align-items:flex-end}
+.dl-check{width:100%;padding:15px;border-radius:14px;border:0;border-bottom:4px solid #6650b0;background:var(--accent);color:#17122a;font:700 1rem var(--f);letter-spacing:.04em;cursor:pointer;transition:filter .15s,transform .08s}
+.dl-check:hover:not([disabled]){filter:brightness(1.07)}
+.dl-check:active:not([disabled]){transform:translateY(2px);border-bottom-width:2px}
+.dl-check[disabled]{background:#2a2733;color:#6f6a7a;border-bottom-color:#1e1c25;cursor:default}
+.dl-check.red{background:var(--bad);border-bottom-color:#a8473b;color:#2a0f0b}
+.dl-fb{width:100%;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.dl-fb.ok{background:#1b2c21}.dl-fb.no{background:#33201d}
+.dl-fb b{font-size:1.15rem}.dl-fb.ok b{color:var(--good)}.dl-fb.no b{color:var(--bad)}
+.dl-ans{margin-top:4px;color:var(--ink);font-size:.95rem}
+.dl-ans .gk{font-size:1.1rem}
+/* speed */
+.sp-intro{text-align:center;margin:auto 0}
+.sp-intro h3{font-size:1.5rem;margin:10px 0 6px}
+.sp-intro p{color:var(--muted);max-width:34ch;margin:0 auto}
+.sp-bolt{width:72px;height:72px;margin:0 auto;border-radius:50%;display:grid;place-items:center;background:linear-gradient(#ffe08c,#f5c049);color:#4d3a08;box-shadow:0 6px 0 #b38722}
+.sp-bolt svg{width:34px;height:34px}
+.sp-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.sp-time{font-size:1.1rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.sp-time span{font-size:1.6rem;color:var(--ink);font-weight:600}
+.sp-time.low span{color:var(--bad)}
+.sp-score{font-size:1.8rem;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+/* results */
+.res{text-align:center;margin:auto 0;display:flex;flex-direction:column;align-items:center}
+.res-hero{width:110px;height:130px}
+.res h2{font-size:1.7rem;margin:10px 0 4px;color:var(--accent)}
+.res-sub{color:var(--muted);margin:0 0 18px}
+.res-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:420px}
+.res-cards>div{border:2px solid #2a2733;border-radius:14px;padding:10px 6px;display:flex;flex-direction:column;gap:4px}
+.res-cards span{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.res-cards b{font-size:1.3rem;display:flex;align-items:center;justify-content:center;gap:4px}
+.res-cards b svg{width:20px;height:20px;color:#ffb35c}
+.res-cards em{font-style:normal;display:inline-block}
+.res-cards .hot{border-color:#7a4a1c;background:#2a1d12}
+.res-note{color:var(--ink);margin:16px 0 0;font-size:.92rem}
+
+@media (prefers-reduced-motion: no-preference){
+  .hero{animation:bob 2.2s ease-in-out infinite}
+  .hero.arrive{animation:hop .75s cubic-bezier(.3,.7,.3,1),bob 2.2s ease-in-out .75s infinite}
+  @keyframes bob{50%{transform:translateY(-4px)}}
+  @keyframes hop{0%{transform:translate(0,-120px) scale(.8);opacity:0}55%{transform:translate(0,6px) scale(1.05,.92);opacity:1}75%{transform:translate(0,-8px)}100%{transform:none}}
+  .dl-start{animation:float 1.8s ease-in-out infinite}
+  @keyframes float{50%{transform:translate(-50%,-4px)}}
+  .dl-node.cur::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(185,163,255,.5);animation:ping 1.8s ease-out infinite}
+  @keyframes ping{0%{transform:scale(.9);opacity:.8}100%{transform:scale(1.3);opacity:0}}
+  .nudge{animation:shake .38s ease}
+  .dl-ov.enter{animation:ovin .3s cubic-bezier(.2,.7,.2,1)}
+  @keyframes ovin{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  .slidein{animation:slidein .32s cubic-bezier(.2,.7,.2,1)}
+  @keyframes slidein{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+  .pop{animation:cardin .22s ease}
+  .sheet{animation:sheet .28s cubic-bezier(.2,.8,.2,1.1)}
+  @keyframes sheet{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+  .pairpop{animation:okpop .45s ease}
+  .q-opt.right{animation:okpop .45s cubic-bezier(.2,.9,.3,1.3)}
+  .q-opt.wrong,.mt.bad{animation:shake .38s ease}
+  .res-hero .hero-svg{animation:hop .8s cubic-bezier(.3,.7,.3,1)}
+  .res-hero.sad .hero-svg{animation:none;opacity:.8}
+  .flamepop{animation:bump .5s ease}
+  .wd.td.on i{animation:okpop .6s ease}
+}
+@keyframes okpop{0%{transform:scale(1)}40%{transform:scale(1.04)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+@keyframes cardin{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes bump{40%{transform:scale(1.35)}}
+
+/* ================= Phone: app mode ================= */
+.botnav{display:none}
+@media (max-width:700px){
+  body{padding-bottom:calc(66px + env(safe-area-inset-bottom))}
+  header.top{position:sticky;top:0;padding-top:env(safe-area-inset-top)}
+  .hwrap{flex-wrap:nowrap;align-items:center;padding:10px 16px}
+  .hwrap .eyebrow{display:none}
+  header.top h1{font-size:1.15rem;margin:0}
+  .toptabs{display:none}
+  .sfx{margin:0}
+  .botnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(20,19,24,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--rule);padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
+  .botnav button{flex:1;background:none;border:0;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;font:600 .68rem var(--f);padding:6px 0;cursor:pointer;border-radius:12px;transition:color .2s}
+  .botnav svg{width:24px;height:24px}
+  .botnav button[aria-selected="true"]{color:var(--accent)}
+  .botnav button[aria-selected="true"] svg{filter:drop-shadow(0 0 6px rgba(185,163,255,.45))}
+  footer{display:none}
+  .labscope .dtop{top:var(--hh,52px)!important;margin:0 -16px 10px}
+  .refscope .fjump,.refscope .cjump{top:var(--hh,52px)!important;flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;scrollbar-width:none;margin:0 -14px;padding:8px 14px}
+  .refscope .fjump a,.refscope .cjump a{flex:none}
+  .refscope .side{position:static!important;max-height:none!important}
+  .dl-uhead{top:calc(var(--hh,52px) + 6px)}
+  #daily{padding:14px 14px 30px}
+  .dl-extras{grid-template-columns:1fr 1fr 1fr;gap:6px}
+  .dl-x{padding:9px 8px}
+  .dl-x span{display:none}
+  .q-kbd button{width:32px;height:40px}
+  .labscope .wrap{padding-left:14px;padding-right:14px}
+  .refscope .card{padding:10px 10px 8px}
+  .toast{bottom:calc(84px + env(safe-area-inset-bottom))}
+}
+@media (max-width:700px) and (hover:none){ .labscope .tile:hover,.dl-x:hover{transform:none} }
+@media (display-mode: standalone){ header.top{padding-top:env(safe-area-inset-top)} }
+
+/* ================= Settings & About ================= */
+.set{position:fixed;inset:0;z-index:55;background:rgba(8,7,10,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;justify-content:center;align-items:flex-start;padding:6vh 16px;overflow:auto}
+.set-in{width:100%;max-width:560px;background:#16151b;border:1px solid #2a2733;border-radius:20px;padding:20px 22px 26px;box-shadow:0 30px 80px -30px #000}
+.set-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.set h2{font-size:1.25rem;font-weight:600;margin:0}
+.set-h2{font-size:.78rem!important;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:22px 0 8px!important}
+.set-x{background:none;border:0;color:var(--muted);font-size:1.2rem;width:38px;height:38px;border-radius:50%;cursor:pointer}
+.set-x:hover{background:var(--panel);color:var(--ink)}
+.set-group{background:var(--panel);border-radius:14px;overflow:hidden}
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px}
+.set-row+.set-row{border-top:1px solid #24222b}
+.set-row b{display:block;font-weight:600;font-size:.95rem}
+.set-row span{display:block;font-size:.78rem;color:var(--muted);margin-top:2px}
+.set-goal{display:flex;gap:6px;flex:none}
+.switch{flex:none;width:50px;height:30px;border-radius:999px;border:0;background:#34303e;position:relative;cursor:pointer;transition:background .2s}
+.switch i{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#e8e6ec;transition:transform .22s cubic-bezier(.2,.7,.2,1);box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.switch[aria-pressed="true"]{background:var(--accent)}
+.switch[aria-pressed="true"] i{transform:translateX(20px)}
+.set-btn{flex:none;border:1px solid var(--rule);background:none;color:var(--ink);border-radius:10px;padding:8px 14px;font:600 .85rem var(--f);cursor:pointer;min-width:84px}
+.set-btn.danger{color:var(--bad);border-color:#5a2a24}
+.set-btn.danger:hover{background:var(--badbg)}
+.about{padding:16px}
+.about .lead{margin:0 0 14px;font-size:.95rem;line-height:1.55}
+.about .small{margin:14px 0 0;font-size:.8rem;color:var(--muted);line-height:1.5}
+.ab-grid{display:grid;gap:10px}
+.ab-grid div{border-left:2px solid var(--accent-dim);padding:2px 0 2px 12px}
+.ab-grid b{display:block;font-size:.9rem;color:var(--accent)}
+.ab-grid span{display:block;font-size:.84rem;color:#c9c6d0;line-height:1.5}
+.log{list-style:none;margin:0;padding:6px 16px}
+.log li{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:10px 0;font-size:.85rem;line-height:1.45}
+.log li+li{border-top:1px solid #24222b}
+.log time{color:var(--muted);font-size:.78rem;padding-top:1px}
+.credits{text-align:center;margin-top:26px;display:flex;flex-direction:column;gap:4px}
+.credits span{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.credits b{font-size:1.05rem;letter-spacing:.22em;color:var(--accent);font-weight:600}
+@media (prefers-reduced-motion: no-preference){.set.enter{animation:fadein2 .2s ease}.set.enter .set-in{animation:ovin .3s cubic-bezier(.2,.7,.2,1)}}
+@media (max-width:700px){
+  .set{padding:0;align-items:flex-end;background:rgba(8,7,10,.7)}
+  .set-in{max-width:none;border-radius:22px 22px 0 0;max-height:92vh;overflow:auto;padding:16px 16px calc(26px + env(safe-area-inset-bottom));border-bottom:0}
+  .set-row.stack{align-items:flex-start;flex-direction:column;gap:10px}
+  .log li{grid-template-columns:1fr;gap:2px}
+}
+
+.dl-nodes{padding-top:48px}
+@media (min-width:701px){.dl-ov{align-items:center}.dl-ovin{height:min(100%,760px)}}
+
+.toast{max-width:min(90vw,420px);text-align:center;white-space:normal}
 </style>
 </head>
 <body>
 <header class="top"><div class="hwrap">
- <div><div class="eyebrow">Groton · From Alpha to Omega · Lessons 1–23 · 237 words</div><h1>Attic Greek <span>Companion</span></h1></div>
- <div class="hright"><nav class="toptabs" role="tablist" aria-label="Sections"><button role="tab" data-top="reference">Reference</button><button role="tab" data-top="dictionary">Dictionary</button></nav>
- <button class="sfx" id="sfx" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z" fill="currentColor" fill-opacity=".18"/><path class="w" d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11"/><path class="x" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button></div>
+ <div><h1>Attic Greek <span>Companion</span></h1></div>
+ <div class="hright"><nav class="toptabs" role="tablist" aria-label="Sections"><button role="tab" data-top="reference">Reference</button><button role="tab" data-top="dictionary">Dictionary</button><button role="tab" data-top="daily">Daily</button></nav>
+ <button class="sfx" id="set-open" aria-label="Settings and about" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
 </div></header>
 <div class="view refscope" id="v-reference">
  <div class="rsub" role="group" aria-label="Reference sections"><button class="seg" data-rsub="forms">Forms &amp; paradigms</button><button class="seg" data-rsub="syntax">Syntax &amp; prepositions</button></div>
@@ -514,7 +783,52 @@ header.top{background:rgba(17,16,20,.82);backdrop-filter:saturate(1.2) blur(14px
 </div>
  <div id="modal"></div>
 </div></div>
-<footer>Progress, your set and missed words are saved in this browser.</footer>
+<div class="view dailyscope" id="v-daily" hidden><div id="daily"></div></div>
+<div id="dl-ov" class="dl-ov" hidden role="dialog" aria-modal="true" aria-label="Lesson"></div>
+<nav class="botnav" aria-label="Sections">
+ <button data-top="reference"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M8 7h8M8 10.5h6" stroke-linecap="round"/></svg>Reference</button>
+ <button data-top="dictionary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/><path d="M8.5 12.5c0-3 1-4.5 2.5-4.5 1 0 1.6.6 1.6 1.6 0 1.4-1.3 2-2.6 2.4"/></svg>Dictionary</button>
+ <button data-top="daily"><svg viewBox="0 0 24 24"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-4-1-6 1-9z" fill="currentColor"/></svg>Daily</button>
+</nav>
+<div id="set" class="set" hidden role="dialog" aria-modal="true" aria-labelledby="set-title">
+ <div class="set-in">
+  <div class="set-head"><h2 id="set-title">Settings</h2><button class="set-x" id="set-close" aria-label="Close settings">✕</button></div>
+
+  <section class="set-group">
+   <div class="set-row"><div><b>Sound effects</b><span>Dings, flips and little chimes</span></div><button class="switch" id="sfx" aria-pressed="true"><i></i></button></div>
+   <div class="set-row stack"><div><b>Daily goal</b><span>Levels per day · one keeps your streak</span></div><div class="set-goal" id="set-goal"></div></div>
+   <div class="set-row stack"><div><b>Reset progress</b><span>Clears your Daily path, streak and XP on this device</span></div><button class="set-btn danger" id="set-reset">Reset</button></div>
+  </section>
+
+  <h2 class="set-h2">About</h2>
+  <section class="set-group about">
+   <p class="lead"><b>Attic Greek Companion</b> is a study app for first-year Attic Greek, built around Anne H. Groton’s textbook <i>From Alpha to Omega: A Beginning Course in Classical Greek</i>. It covers <b>Lessons 1–23</b> and 237 vocabulary words (Lessons 3–23).</p>
+   <div class="ab-grid">
+    <div><b>Reference</b><span>Every paradigm and construction so far: the article, nouns, adjectives, pronouns, verbs through the perfect, syntax and prepositions.</span></div>
+    <div><b>Dictionary</b><span>Search any word or inflected form, then drill with flashcards, quizzes, typing, match, memory and declension games. Build your own set from any words.</span></div>
+    <div><b>Daily</b><span>A path of short levels for 10–15 minutes of review a day. One level keeps your streak alive; words you miss come back more often.</span></div>
+   </div>
+   <p class="small">Vocabulary, definitions and principal parts follow Groton’s lesson lists. Progress is saved in this browser on this device, so your phone and computer keep separate streaks.</p>
+  </section>
+
+  <h2 class="set-h2">Edit history</h2>
+  <section class="set-group">
+   <ol class="log">
+    <li><time>Nov 26, 2026</time><span>Daily review path with streaks, levels and speed rounds. Phone app mode, installable from the home screen. Settings and About.</span></li>
+    <li><time>Nov 26, 2026</time><span>Sound effects, gentle animations and a calmer, centered layout.</span></li>
+    <li><time>Nov 26, 2026</time><span>Moved to its own permanent website on GitHub Pages.</span></li>
+    <li><time>Nov 26, 2026</time><span>Reference and Dictionary combined into one app. Lessons 20–23 added, including ἀποθνῄσκω.</span></li>
+    <li><time>Nov 25, 2026</time><span>Vocabulary Lab redesigned in the dark purple style, with Build a Set.</span></li>
+    <li><time>Nov 21, 2026</time><span>Reference sheet for Lessons 1–19 with dictionary and Greek keyboard.</span></li>
+    <li><time>Fall 2026</time><span>Earlier labs: alphabet, accents, declensions, verbs and exam reviews.</span></li>
+   </ol>
+  </section>
+
+  <div class="credits"><span>Made by</span><b>MICAH &amp; CLAUDE</b></div>
+ </div>
+</div>
+
+<footer>Attic Greek Companion · by Micah &amp; Claude</footer>
 <script>
 
 const DATA = {"V": [{"les": 3, "g": "γράφω, *γράψω, ἔγραψα*", "m": "write, draw [cf. autograph]", "pos": "verb", "id": 0, "h": "γράφω", "lem": ["γράφω"], "dk": null, "dt": null}, {"les": 3, "g": "ἐθέλω, *ἐθελήσω, ἠθέλησα*", "m": "(+ infinitive) be willing (to), wish (to)", "pos": "verb", "id": 1, "h": "ἐθέλω", "lem": ["ἐθέλω"], "dk": null, "dt": null}, {"les": 3, "g": "θύω, *θύσω, ἔθυσα*", "m": "offer sacrifice, sacrifice, slay", "pos": "verb", "id": 2, "h": "θύω", "lem": ["θύω"], "dk": null, "dt": null}, {"les": 3, "g": "κλέπτω, *κλέψω, ἔκλεψα*", "m": "steal [cf. kleptomania]", "pos": "verb", "id": 3, "h": "κλέπτω", "lem": ["κλέπτω"], "dk": null, "dt": null}, {"les": 3, "g": "παιδεύω, *παιδεύσω, ἐπαίδευσα*", "m": "teach, educate [cf. propaedeutic]", "pos": "verb", "id": 4, "h": "παιδεύω", "lem": ["παιδεύω"], "dk": null, "dt": null}, {"les": 3, "g": "σπεύδω, *σπεύσω, ἔσπευσα*", "m": "(+ infinitive) hasten (to), strive (to), be eager (to)", "pos": "verb", "id": 5, "h": "σπεύδω", "lem": ["σπεύδω"], "dk": null, "dt": null}, {"les": 3, "g": "φυλάττω, *φυλάξω, ἐφύλαξα*", "m": "stand guard, guard, protect, preserve [cf. prophylactic]", "pos": "verb", "id": 6, "h": "φυλάττω", "lem": ["φυλάττω"], "dk": null, "dt": null}, {"les": 3, "g": "μή", "m": "(negative adverb used with imperative mood) not", "pos": "adv", "id": 7, "h": "μή", "lem": ["μή"], "dk": null, "dt": null}, {"les": 3, "g": "οὐ (οὐκ, οὐχ)", "m": "(negative adverb used with indicative mood) not", "pos": "adv", "id": 8, "h": "οὐ (οὐκ, οὐχ)", "lem": ["οὐ"], "dk": null, "dt": null}, {"les": 3, "g": "καί", "m": "(conjunction) and; (adverb) also, even", "pos": "conj", "id": 9, "h": "καί", "lem": ["καί"], "dk": null, "dt": null}, {"les": 3, "g": "καὶ…καί", "m": "(correlative conjunctions) both…and", "pos": "conj", "id": 10, "h": "καὶ…καί", "lem": ["καὶ…καί"], "dk": null, "dt": null}, {"les": 4, "g": "πέμπω, *πέμψω, ἔπεμψα*", "m": "send [cf. propempticon]", "pos": "verb", "id": 11, "h": "πέμπω", "lem": ["πέμπω"], "dk": null, "dt": null}, {"les": 4, "g": "ἀγορά, -ᾶς, ἡ", "m": "marketplace, market [cf. agoraphobia]", "pos": "noun", "id": 12, "h": "ἀγορά", "lem": ["ἀγορά"], "dk": "ἀγορά", "dt": "N"}, {"les": 4, "g": "ἐπιστολή, -ῆς, ἡ", "m": "letter, message [cf. epistle]", "pos": "noun", "id": 13, "h": "ἐπιστολή", "lem": ["ἐπιστολή"], "dk": "ἐπιστολή", "dt": "N"}, {"les": 4, "g": "ἡσυχία, -ας, ἡ", "m": "leisure, stillness, tranquillity", "pos": "noun", "id": 14, "h": "ἡσυχία", "lem": ["ἡσυχία"], "dk": "ἡσυχία", "dt": "N"}, {"les": 4, "g": "θεά, -ᾶς, ἡ", "m": "goddess", "pos": "noun", "id": 15, "h": "θεά", "lem": ["θεά"], "dk": "θεά", "dt": "N"}, {"les": 4, "g": "σκηνή, -ῆς, ἡ", "m": "tent [cf. scene]", "pos": "noun", "id": 16, "h": "σκηνή", "lem": ["σκηνή"], "dk": "σκηνή", "dt": "N"}, {"les": 4, "g": "χώρα, -ας, ἡ", "m": "land, country, countryside, space, position", "pos": "noun", "id": 17, "h": "χώρα", "lem": ["χώρα"], "dk": "χώρα", "dt": "N"}, {"les": 4, "g": "εἰς", "m": "(preposition + object in accusative case) into, to", "pos": "prep", "id": 18, "h": "εἰς", "lem": ["εἰς"], "dk": null, "dt": null, "cases": [["acc", "into, to"]]}, {"les": 4, "g": "ἐκ (ἐξ)", "m": "(preposition + object in genitive case) out of (ἐξ is written before words starting with a vowel) [cf. eclectic, ecstasy]", "pos": "prep", "id": 19, "h": "ἐκ (ἐξ)", "lem": ["ἐκ"], "dk": null, "dt": null, "cases": [["gen", "out of"]]}, {"les": 4, "g": "ἐν", "m": "(preposition + object in dative case) in [cf. entropy, enzyme]", "pos": "prep", "id": 20, "h": "ἐν", "lem": ["ἐν"], "dk": null, "dt": null, "cases": [["dat", "in"]]}, {"les": 4, "g": "ὦ", "m": "(interjection used with a noun in the vocative) O!", "pos": "part", "id": 21, "h": "ὦ", "lem": ["ὦ"], "dk": null, "dt": null}, {"les": 5, "g": "ἀκούω, *ἀκούσομαι, ἤκουσα*", "m": "(+ genitive or accusative) hear, listen, listen to [cf. acoustics]", "pos": "verb", "id": 22, "h": "ἀκούω", "lem": ["ἀκούω"], "dk": null, "dt": null}, {"les": 5, "g": "βλάπτω, *βλάψω, ἔβλαψα*", "m": "harm, hurt", "pos": "verb", "id": 23, "h": "βλάπτω", "lem": ["βλάπτω"], "dk": null, "dt": null}, {"les": 5, "g": "κελεύω, *κελεύσω, ἐκέλευσα*", "m": "(with accusative or dative + infinitive) order (to), command (to), urge (to)", "pos": "verb", "id": 24, "h": "κελεύω", "lem": ["κελεύω"], "dk": null, "dt": null}, {"les": 5, "g": "δέσποινα, -ης, ἡ", "m": "mistress (of the household), lady, Lady (title for a goddess)", "pos": "noun", "id": 25, "h": "δέσποινα", "lem": ["δέσποινα"], "dk": "δέσποινα", "dt": "N"}, {"les": 5, "g": "θάλαττα, -ης, ἡ", "m": "sea [cf. thalassocracy]", "pos": "noun", "id": 26, "h": "θάλαττα", "lem": ["θάλαττα"], "dk": "θάλαττα", "dt": "N"}, {"les": 5, "g": "θεράπαινα, -ης, ἡ", "m": "servant (female), maid", "pos": "noun", "id": 27, "h": "θεράπαινα", "lem": ["θεράπαινα"], "dk": "θεράπαινα", "dt": "N"}, {"les": 5, "g": "κλίνη, -ης, ἡ", "m": "couch, bed [cf. clinic]", "pos": "noun", "id": 28, "h": "κλίνη", "lem": ["κλίνη"], "dk": "κλίνη", "dt": "N"}, {"les": 5, "g": "μοῖρα, -ας, ἡ", "m": "destiny, fate; Μοῖρα = Destiny or Fate (personified as a goddess)", "pos": "noun", "id": 29, "h": "μοῖρα", "lem": ["μοῖρα"], "dk": "μοῖρα", "dt": "N"}, {"les": 5, "g": "ὥρα, -ας, ἡ", "m": "season, hour; (with accusative or dative + infinitive) it is time (to) [cf. horoscope, hour]", "pos": "noun", "id": 30, "h": "ὥρα", "lem": ["ὥρα"], "dk": "ὥρα", "dt": "N"}, {"les": 5, "g": "ἐπεί or ἐπειδή", "m": "(conjunction) when, after, since, because", "pos": "conj", "id": 31, "h": "ἐπεί or ἐπειδή", "lem": ["ἐπεί", "ἐπειδή"], "dk": null, "dt": null}, {"les": 6, "g": "ἀλλάττω, ἀλλάξω, *ἤλλαξα*", "m": "change, alter [cf. parallax]", "pos": "verb", "id": 32, "h": "ἀλλάττω", "lem": ["ἀλλάττω"], "dk": null, "dt": null}, {"les": 6, "g": "διώκω, διώξω, *ἐδίωξα*", "m": "pursue, chase, hunt, drive away, banish", "pos": "verb", "id": 33, "h": "διώκω", "lem": ["διώκω"], "dk": null, "dt": null}, {"les": 6, "g": "ἔχω, ἕξω/σχήσω, *ἔσχον*", "m": "have, hold, possess; (+ infinitive) be able (to) [cf. cathexis]", "pos": "verb", "id": 34, "h": "ἔχω", "lem": ["ἔχω"], "dk": null, "dt": null}, {"les": 6, "g": "μέλλω, μελλήσω, *ἐμέλλησα*", "m": "(+ future infinitive) be about (to), intend (to); (+ present infinitive) delay (to), hesitate (to)", "pos": "verb", "id": 35, "h": "μέλλω", "lem": ["μέλλω"], "dk": null, "dt": null}, {"les": 6, "g": "κόρη, -ης, ἡ", "m": "maiden, girl, daughter; Κόρη = Maiden (another name for Persephone) [cf. hypocorism]", "pos": "noun", "id": 36, "h": "κόρη", "lem": ["κόρη"], "dk": "κόρη", "dt": "N"}, {"les": 6, "g": "οἰκία, -ας, ἡ", "m": "house, household", "pos": "noun", "id": 37, "h": "οἰκία", "lem": ["οἰκία"], "dk": "οἰκία", "dt": "N"}, {"les": 6, "g": "ἔτι", "m": "(adverb) still, yet, longer", "pos": "adv", "id": 38, "h": "ἔτι", "lem": ["ἔτι"], "dk": null, "dt": null}, {"les": 6, "g": "μηκέτι", "m": "(adverb) no longer, no more (used wherever μή would be appropriate)", "pos": "adv", "id": 39, "h": "μηκέτι", "lem": ["μηκέτι"], "dk": null, "dt": null}, {"les": 6, "g": "οὐκέτι", "m": "(adverb) no longer, no more (used wherever οὐ would be appropriate)", "pos": "adv", "id": 40, "h": "οὐκέτι", "lem": ["οὐκέτι"], "dk": null, "dt": null}, {"les": 6, "g": "πάλιν", "m": "(adverb) back, backwards, again, once more [cf. palimpsest, palindrome]", "pos": "adv", "id": 41, "h": "πάλιν", "lem": ["πάλιν"], "dk": null, "dt": null}, {"les": 6, "g": "ἀλλά (ἀλλ’)", "m": "(conjunction) but (ἀλλ’ is written before a vowel)", "pos": "conj", "id": 42, "h": "ἀλλά (ἀλλ’)", "lem": ["ἀλλά"], "dk": null, "dt": null}, {"les": 7, "g": "χαίρω, χαιρήσω, *ἐχαίρησα*", "m": "be happy; (+ dative) rejoice (in), take delight (in)", "pos": "verb", "id": 43, "h": "χαίρω", "lem": ["χαίρω"], "dk": null, "dt": null}, {"les": 7, "g": "ἀδελφή, -ῆς, ἡ", "m": "sister", "pos": "noun", "id": 44, "h": "ἀδελφή", "lem": ["ἀδελφή"], "dk": "ἀδελφή", "dt": "N"}, {"les": 7, "g": "ἀδελφός, -οῦ, ὁ", "m": "brother (voc. sg. ἄδελφε) [cf. Philadelphia]", "pos": "noun", "id": 45, "h": "ἀδελφός", "lem": ["ἀδελφός"], "dk": "ἀδελφός", "dt": "N"}, {"les": 7, "g": "ἄνθρωπος, -ου, ὁ, ἡ", "m": "(masc.) human being, person, man, humankind; (fem.) woman, womankind [cf. anthropology, philanthropic]", "pos": "noun", "id": 46, "h": "ἄνθρωπος", "lem": ["ἄνθρωπος"], "dk": "ἄνθρωπος", "dt": "N"}, {"les": 7, "g": "θεός, -οῦ, ὁ, ἡ", "m": "(masc.) god; (fem.) goddess (voc. sg. θεός or θεέ) [cf. theology, atheist]", "pos": "noun", "id": 47, "h": "θεός", "lem": ["θεός"], "dk": "θεός", "dt": "N"}, {"les": 7, "g": "ἵππος, -ου, ὁ, ἡ", "m": "(masc.) horse; (fem.) mare [cf. hippodrome, Philip]", "pos": "noun", "id": 48, "h": "ἵππος", "lem": ["ἵππος"], "dk": "ἵππος", "dt": "N"}, {"les": 7, "g": "λίθος, -ου, ὁ", "m": "stone [cf. paleolithic, monolith]", "pos": "noun", "id": 49, "h": "λίθος", "lem": ["λίθος"], "dk": "λίθος", "dt": "N"}, {"les": 7, "g": "λύπη, -ης, ἡ", "m": "pain, grief", "pos": "noun", "id": 50, "h": "λύπη", "lem": ["λύπη"], "dk": "λύπη", "dt": "N"}, {"les": 7, "g": "ὁδός, -οῦ, ἡ", "m": "way, path, road, journey [cf. exodus, method]", "pos": "noun", "id": 51, "h": "ὁδός", "lem": ["ὁδός"], "dk": "ὁδός", "dt": "N"}, {"les": 7, "g": "ποταμός, -οῦ, ὁ", "m": "river [cf. hippopotamus, Mesopotamia]", "pos": "noun", "id": 52, "h": "ποταμός", "lem": ["ποταμός"], "dk": "ποταμός", "dt": "N"}, {"les": 7, "g": "χαρά, -ᾶς, ἡ", "m": "joy, delight", "pos": "noun", "id": 53, "h": "χαρά", "lem": ["χαρά"], "dk": "χαρά", "dt": "N"}, {"les": 7, "g": "ἀπό (ἀπ’, ἀφ’)", "m": "(preposition + genitive) away from (ἀπ’ before smooth breathing, ἀφ’ before rough breathing) [cf. apocalypse, apogee, apology]", "pos": "prep", "id": 54, "h": "ἀπό (ἀπ’, ἀφ’)", "lem": ["ἀπό"], "dk": null, "dt": null, "cases": [["gen", "away from"]]}, {"les": 8, "g": "εὑρίσκω, εὑρήσω, *ηὗρον / εὗρον*", "m": "find, find out, discover [cf. eureka]", "pos": "verb", "id": 55, "h": "εὑρίσκω", "lem": ["εὑρίσκω"], "dk": null, "dt": null}, {"les": 8, "g": "λείπω, λείψω, *ἔλιπον*", "m": "leave, leave behind [cf. eclipse, ellipsis]", "pos": "verb", "id": 56, "h": "λείπω", "lem": ["λείπω"], "dk": null, "dt": null}, {"les": 8, "g": "ἀπολείπω, *ἀπολείψω, ἀπέλιπον*", "m": "leave behind, abandon (a stronger form of λείπω)", "pos": "verb", "id": 57, "h": "ἀπολείπω", "lem": ["ἀπολείπω"], "dk": null, "dt": null}, {"les": 8, "g": "βίος, -ου, ὁ", "m": "life, lifetime, livelihood [cf. biology]", "pos": "noun", "id": 58, "h": "βίος", "lem": ["βίος"], "dk": "βίος", "dt": "N"}, {"les": 8, "g": "δῶρον, -ου, τό", "m": "gift [cf. Dorothy, Theodore]", "pos": "noun", "id": 59, "h": "δῶρον", "lem": ["δῶρον"], "dk": "δῶρον", "dt": "N"}, {"les": 8, "g": "ἔργον, -ου, τό", "m": "work, task, occupation, deed [cf. ergometer]", "pos": "noun", "id": 60, "h": "ἔργον", "lem": ["ἔργον"], "dk": "ἔργον", "dt": "N"}, {"les": 8, "g": "θησαυρός, -οῦ, ὁ", "m": "treasure, treasury, storehouse [cf. thesaurus]", "pos": "noun", "id": 61, "h": "θησαυρός", "lem": ["θησαυρός"], "dk": "θησαυρός", "dt": "N"}, {"les": 8, "g": "τέκνον, -ου, τό", "m": "child, offspring", "pos": "noun", "id": 62, "h": "τέκνον", "lem": ["τέκνον"], "dk": "τέκνον", "dt": "N"}, {"les": 8, "g": "φυτόν, -οῦ, τό", "m": "plant, tree (something that is grown in a garden or an orchard) [cf. neophyte]", "pos": "noun", "id": 63, "h": "φυτόν", "lem": ["φυτόν"], "dk": "φυτόν", "dt": "N"}, {"les": 8, "g": "ἀγαθός, -ή, -όν", "m": "good (at doing something), brave, (morally) good, virtuous [cf. Agatha]", "pos": "adj", "id": 64, "h": "ἀγαθός", "lem": ["ἀγαθός"], "dk": "ἀγαθός", "dt": "A"}, {"les": 8, "g": "ἄξιος, -α, -ον", "m": "(+ genitive or infinitive) worthy (of, to), deserving (of, to) [cf. axiom]", "pos": "adj", "id": 65, "h": "ἄξιος", "lem": ["ἄξιος"], "dk": "ἄξιος", "dt": "A"}, {"les": 8, "g": "καλός, -ή, -όν", "m": "beautiful, handsome, fair (of appearance), (morally) good, fine, noble [cf. calisthenics, kaleidoscope]", "pos": "adj", "id": 66, "h": "καλός", "lem": ["καλός"], "dk": "καλός", "dt": "A"}, {"les": 9, "g": "δουλεύω, δουλεύσω, *ἐδούλευσα*", "m": "(+ dative) be a slave (to), serve", "pos": "verb", "id": 67, "h": "δουλεύω", "lem": ["δουλεύω"], "dk": null, "dt": null}, {"les": 9, "g": "δεσπότης, -ου, ὁ", "m": "master (of the household), lord, despot (voc. sg. δέσποτα)", "pos": "noun", "id": 68, "h": "δεσπότης", "lem": ["δεσπότης"], "dk": "δεσπότης", "dt": "N"}, {"les": 9, "g": "μαθητής, -οῦ, ὁ", "m": "student, disciple", "pos": "noun", "id": 69, "h": "μαθητής", "lem": ["μαθητής"], "dk": "μαθητής", "dt": "N"}, {"les": 9, "g": "νεανίας, -ου, ὁ", "m": "young man, a youth; (pl.) youth (collectively)", "pos": "noun", "id": 70, "h": "νεανίας", "lem": ["νεανίας"], "dk": "νεανίας", "dt": "N"}, {"les": 9, "g": "οἰκέτης, -ου, ὁ", "m": "servant (of the household), family member", "pos": "noun", "id": 71, "h": "οἰκέτης", "lem": ["οἰκέτης"], "dk": "οἰκέτης", "dt": "N"}, {"les": 9, "g": "ἀθάνατος, -ον", "m": "immortal, undying [cf. Athanasius]", "pos": "adj", "id": 72, "h": "ἀθάνατος", "lem": ["ἀθάνατος"], "dk": "ἀθάνατος", "dt": "A"}, {"les": 9, "g": "ἀνάξιος, -ον", "m": "worthless; (+ genitive or infinitive) unworthy (of, to), undeserving (of, to)", "pos": "adj", "id": 73, "h": "ἀνάξιος", "lem": ["ἀνάξιος"], "dk": "ἀνάξιος", "dt": "A"}, {"les": 9, "g": "δοῦλος, -η, -ον", "m": "enslaved; δοῦλος, -ου, ὁ = slave (male); δούλη, -ης, ἡ = slave (female)", "pos": "adj", "id": 74, "h": "δοῦλος", "lem": ["δοῦλος"], "dk": "δοῦλος", "dt": "A"}, {"les": 9, "g": "ἐλεύθερος, -α, -ον", "m": "(+ genitive) free (from)", "pos": "adj", "id": 75, "h": "ἐλεύθερος", "lem": ["ἐλεύθερος"], "dk": "ἐλεύθερος", "dt": "A"}, {"les": 9, "g": "κακός, -ή, -όν", "m": "ugly, bad (at doing something), cowardly, (morally) bad, evil, wicked [cf. cacophony]", "pos": "adj", "id": 76, "h": "κακός", "lem": ["κακός"], "dk": "κακός", "dt": "A"}, {"les": 9, "g": "πρότερος, -α, -ον", "m": "former, earlier", "pos": "adj", "id": 77, "h": "πρότερος", "lem": ["πρότερος"], "dk": "πρότερος", "dt": "A"}, {"les": 10, "g": "λέγω, ἐρῶ/λέξω, *εἶπον / ἔλεξα*", "m": "say, speak, tell [cf. dialect, dyslexia, prolegomenon]", "pos": "verb", "id": 78, "h": "λέγω", "lem": ["λέγω"], "dk": null, "dt": null}, {"les": 10, "g": "πράττω, πράξω, *ἔπραξα*", "m": "do, act [cf. practice, praxis]", "pos": "verb", "id": 79, "h": "πράττω", "lem": ["πράττω"], "dk": null, "dt": null}, {"les": 10, "g": "φεύγω, φεύξομαι, *ἔφυγον*", "m": "flee, avoid, escape, be in exile", "pos": "verb", "id": 80, "h": "φεύγω", "lem": ["φεύγω"], "dk": null, "dt": null}, {"les": 10, "g": "ἀλήθεια, -ας, ἡ", "m": "truth; τῇ ἀληθείᾳ = in truth, truly, really", "pos": "noun", "id": 81, "h": "ἀλήθεια", "lem": ["ἀλήθεια"], "dk": "ἀλήθεια", "dt": "N"}, {"les": 10, "g": "θάνατος, -ου, ὁ", "m": "death; Θάνατος = Death (personified as a god) [cf. euthanasia, thanatopsis]", "pos": "noun", "id": 82, "h": "θάνατος", "lem": ["θάνατος"], "dk": "θάνατος", "dt": "N"}, {"les": 10, "g": "κίνδυνος, -ου, ὁ", "m": "danger, risk", "pos": "noun", "id": 83, "h": "κίνδυνος", "lem": ["κίνδυνος"], "dk": "κίνδυνος", "dt": "N"}, {"les": 10, "g": "φίλος, -η, -ον", "m": "(+ dative) dear (to); φίλος, -ου, ὁ = friend (male); φίλη, -ης, ἡ = friend (female) [cf. bibliophile, hemophiliac, philatelist]", "pos": "adj", "id": 84, "h": "φίλος", "lem": ["φίλος"], "dk": "φίλος", "dt": "A"}, {"les": 10, "g": "δέ (δ’)", "m": "(postpositive conjunction) and, but (δ’ before a vowel)", "pos": "conj", "id": 85, "h": "δέ (δ’)", "lem": ["δέ"], "dk": null, "dt": null}, {"les": 10, "g": "μέν", "m": "(postpositive particle) indeed", "pos": "part", "id": 86, "h": "μέν", "lem": ["μέν"], "dk": null, "dt": null}, {"les": 10, "g": "μέν…δέ", "m": "(correlatives) on the one hand…on the other hand", "pos": "conj", "id": 87, "h": "μέν…δέ", "lem": ["μέν…δέ"], "dk": null, "dt": null}, {"les": 10, "g": "ὁ μέν…ὁ δέ", "m": "(correlatives) this one…that one; the one…the other; (pl.) some…others", "pos": "conj", "id": 88, "h": "ὁ μέν…ὁ δέ", "lem": ["ὁ μέν…ὁ δέ"], "dk": null, "dt": null}, {"les": 10, "g": "οὖν", "m": "(postpositive particle) therefore, then", "pos": "part", "id": 89, "h": "οὖν", "lem": ["οὖν"], "dk": null, "dt": null}, {"les": 11, "g": "πείθω, πείσω, *ἔπεισα*", "m": "(with acc. + infin.) persuade (to); (mid. + dat.) obey", "pos": "verb", "id": 90, "h": "πείθω", "lem": ["πείθω"], "dk": null, "dt": null}, {"les": 11, "g": "τρέπω, τρέψω, *ἔτρεψα*", "m": "turn; (mid.) betake oneself, move [cf. protreptic]", "pos": "verb", "id": 91, "h": "τρέπω", "lem": ["τρέπω"], "dk": null, "dt": null}, {"les": 11, "g": "ἅμαξα, -ης, ἡ", "m": "cart, wagon", "pos": "noun", "id": 92, "h": "ἅμαξα", "lem": ["ἅμαξα"], "dk": "ἅμαξα", "dt": "N"}, {"les": 11, "g": "λίμνη, -ης, ἡ", "m": "marsh, lake, pond [cf. limnology]", "pos": "noun", "id": 93, "h": "λίμνη", "lem": ["λίμνη"], "dk": "λίμνη", "dt": "N"}, {"les": 11, "g": "τόπος, -ου, ὁ", "m": "place, passage (in a book) [cf. topic, topography, utopia]", "pos": "noun", "id": 94, "h": "τόπος", "lem": ["τόπος"], "dk": "τόπος", "dt": "N"}, {"les": 11, "g": "τρόπος, -ου, ὁ", "m": "turn, way, manner, habit; (pl.) character [cf. trope, entropy, heliotropic, trophy]", "pos": "noun", "id": 95, "h": "τρόπος", "lem": ["τρόπος"], "dk": "τρόπος", "dt": "N"}, {"les": 11, "g": "μακρός, -ά, -όν", "m": "long, long-lasting [cf. macrocosm, macron]", "pos": "adj", "id": 96, "h": "μακρός", "lem": ["μακρός"], "dk": "μακρός", "dt": "A"}, {"les": 11, "g": "μικρός, -ά, -όν", "m": "small, little [cf. micrometer, microscope]", "pos": "adj", "id": 97, "h": "μικρός", "lem": ["μικρός"], "dk": "μικρός", "dt": "A"}, {"les": 11, "g": "πόρρω", "m": "(adv.) far, far off; (prep. + gen.) far away from", "pos": "prep", "id": 98, "h": "πόρρω", "lem": ["πόρρω"], "dk": null, "dt": null, "cases": [["gen", "far away from (also an adverb: far, far off)"]]}, {"les": 11, "g": "ὑπό (ὑπ’, ὑφ’)", "m": "(prep. + gen.) from under, by (under the agency of); (prep. + dat.) under; (prep. + acc.) under, to a place under [cf. hypocrisy, hypodermic, hypotenuse, hypothesis]", "pos": "prep", "id": 99, "h": "ὑπό (ὑπ’, ὑφ’)", "lem": ["ὑπό"], "dk": null, "dt": null, "cases": [["gen", "from under; by (under the agency of)"], ["dat", "under"], ["acc", "under, to a place under"]]}, {"les": 12, "g": "εἰμί, ἔσομαι", "m": "be, exist; (third-pers. sg. + acc. & infin.) it is possible (to)", "pos": "verb", "id": 100, "h": "εἰμί", "lem": ["εἰμί"], "dk": null, "dt": null}, {"les": 12, "g": "λύω, λύσω, *ἔλυσα*", "m": "loosen, release, destroy [cf. analysis]", "pos": "verb", "id": 101, "h": "λύω", "lem": ["λύω"], "dk": null, "dt": null}, {"les": 12, "g": "ἀρχή, -ῆς, ἡ", "m": "beginning, power, rule, political office [cf. archetype, monarchy]", "pos": "noun", "id": 102, "h": "ἀρχή", "lem": ["ἀρχή"], "dk": "ἀρχή", "dt": "N"}, {"les": 12, "g": "εἰρήνη, -ης, ἡ", "m": "peace [cf. Irene, irenic]", "pos": "noun", "id": 103, "h": "εἰρήνη", "lem": ["εἰρήνη"], "dk": "εἰρήνη", "dt": "N"}, {"les": 12, "g": "λόγος, -ου, ὁ", "m": "word, speech, story, argument, reasoning [cf. logic]", "pos": "noun", "id": 104, "h": "λόγος", "lem": ["λόγος"], "dk": "λόγος", "dt": "N"}, {"les": 12, "g": "πόλεμος, -ου, ὁ", "m": "war [cf. polemic]", "pos": "noun", "id": 105, "h": "πόλεμος", "lem": ["πόλεμος"], "dk": "πόλεμος", "dt": "N"}, {"les": 12, "g": "ἐχθρός, -ά, -όν", "m": "(+ dat.) hateful (to), hostile (to); (as a substantive) enemy (personal)", "pos": "adj", "id": 106, "h": "ἐχθρός", "lem": ["ἐχθρός"], "dk": "ἐχθρός", "dt": "A"}, {"les": 12, "g": "πολέμιος, -α, -ον", "m": "(+ dat.) at war (with), hostile (to); (as substantive, usually plural) enemy (in war)", "pos": "adj", "id": 107, "h": "πολέμιος", "lem": ["πολέμιος"], "dk": "πολέμιος", "dt": "A"}, {"les": 12, "g": "διά (δι’)", "m": "(prep. + gen.) through, throughout; (prep. + acc.) on account of (δι’ before a vowel) [cf. diagnosis, diameter]", "pos": "prep", "id": 108, "h": "διά (δι’)", "lem": ["διά"], "dk": null, "dt": null, "cases": [["gen", "through, throughout"], ["acc", "on account of"]]}, {"les": 12, "g": "γε (γ’)", "m": "(enclitic particle) at least, at any rate (γ’ before a vowel)", "pos": "part", "id": 109, "h": "γε (γ’)", "lem": ["γε"], "dk": null, "dt": null}, {"les": 13, "g": "βλέπω, βλέψομαι, *ἔβλεψα*", "m": "see, behold; (with εἰς + acc.) look (at)", "pos": "verb", "id": 110, "h": "βλέπω", "lem": ["βλέπω"], "dk": null, "dt": null}, {"les": 13, "g": "σοφία, -ας, ἡ", "m": "wisdom", "pos": "noun", "id": 111, "h": "σοφία", "lem": ["σοφία"], "dk": "σοφία", "dt": "N"}, {"les": 13, "g": "φιλοσοφία, -ας, ἡ", "m": "philosophy", "pos": "noun", "id": 112, "h": "φιλοσοφία", "lem": ["φιλοσοφία"], "dk": "φιλοσοφία", "dt": "N"}, {"les": 13, "g": "ἐκεῖνος, -η, -ο", "m": "(dem. adj./pron.) that, those, the well-known, the former (as opposed to “the latter”)", "pos": "pron", "id": 113, "h": "ἐκεῖνος", "lem": ["ἐκεῖνος"], "dk": "ἐκεῖνος", "dt": "P"}, {"les": 13, "g": "ὅδε, ἥδε, τόδε", "m": "(dem. adj./pron.) this, these, the following", "pos": "pron", "id": 114, "h": "ὅδε", "lem": ["ὅδε"], "dk": "ὅδε", "dt": "P"}, {"les": 13, "g": "οὗτος, αὕτη, τοῦτο", "m": "(dem. adj./pron.) this, these, that, those, the aforesaid, the well-known, the latter; οὑτοσί = you there!", "pos": "pron", "id": 115, "h": "οὗτος", "lem": ["οὗτος"], "dk": "οὗτος", "dt": "P"}, {"les": 13, "g": "σοφός, -ή, -όν", "m": "wise [cf. sophist, sophomore]", "pos": "adj", "id": 116, "h": "σοφός", "lem": ["σοφός"], "dk": "σοφός", "dt": "A"}, {"les": 13, "g": "φιλόσοφος, -ον", "m": "philosophical; (as a substantive) philosopher", "pos": "adj", "id": 117, "h": "φιλόσοφος", "lem": ["φιλόσοφος"], "dk": "φιλόσοφος", "dt": "A"}, {"les": 13, "g": "νῦν", "m": "(adv.) now, at this time", "pos": "adv", "id": 118, "h": "νῦν", "lem": ["νῦν"], "dk": null, "dt": null}, {"les": 13, "g": "τότε (τότ’, τόθ’)", "m": "(adv.) then, at that time (τότ’ before smooth breathing, τόθ’ before rough breathing)", "pos": "adv", "id": 119, "h": "τότε (τότ’, τόθ’)", "lem": ["τότε"], "dk": null, "dt": null}, {"les": 13, "g": "γάρ", "m": "(postpositive conjunction introducing an explanation) for, for indeed", "pos": "conj", "id": 120, "h": "γάρ", "lem": ["γάρ"], "dk": null, "dt": null}, {"les": 14, "g": "πλήττω, πλήξω, *ἔπληξα*", "m": "strike (with a direct blow) [cf. apoplexy]", "pos": "verb", "id": 121, "h": "πλήττω", "lem": ["πλήττω"], "dk": null, "dt": null}, {"les": 14, "g": "ἐπιπλήττω, *ἐπιπλήξω, ἐπέπληξα*", "m": "strike at, rebuke; takes an object in the dative case", "pos": "verb", "id": 122, "h": "ἐπιπλήττω", "lem": ["ἐπιπλήττω"], "dk": null, "dt": null}, {"les": 14, "g": "φέρω, οἴσω, *ἤνεγκα / ἤνεγκον*", "m": "bear, bring, carry [cf. metaphor, periphery]", "pos": "verb", "id": 123, "h": "φέρω", "lem": ["φέρω"], "dk": null, "dt": null}, {"les": 14, "g": "βιβλίον, -ου, τό", "m": "book [cf. bibliography]", "pos": "noun", "id": 124, "h": "βιβλίον", "lem": ["βιβλίον"], "dk": "βιβλίον", "dt": "N"}, {"les": 14, "g": "ἱμάτιον, -ου, τό", "m": "cloak; (plural) clothes", "pos": "noun", "id": 125, "h": "ἱμάτιον", "lem": ["ἱμάτιον"], "dk": "ἱμάτιον", "dt": "N"}, {"les": 14, "g": "ἐγώ", "m": "(personal pronoun) I, me", "pos": "pron", "id": 126, "h": "ἐγώ", "lem": ["ἐγώ"], "dk": "ἐγώ", "dt": "P"}, {"les": 14, "g": "ἡμεῖς", "m": "(personal pronoun) we, us", "pos": "pron", "id": 127, "h": "ἡμεῖς", "lem": ["ἡμεῖς"], "dk": "ἡμεῖς", "dt": "P"}, {"les": 14, "g": "σύ", "m": "(personal pronoun) you (sg.)", "pos": "pron", "id": 128, "h": "σύ", "lem": ["σύ"], "dk": "σύ", "dt": "P"}, {"les": 14, "g": "ὑμεῖς", "m": "(personal pronoun) you (pl.)", "pos": "pron", "id": 129, "h": "ὑμεῖς", "lem": ["ὑμεῖς"], "dk": "ὑμεῖς", "dt": "P"}, {"les": 14, "g": "αὐτός, -ή, -ό", "m": "(adjective) same; (intensive adjective) -self, very; (personal pronoun) him, her, it, them [cf. autocratic, autonomy, autopsy]", "pos": "pron", "id": 130, "h": "αὐτός", "lem": ["αὐτός"], "dk": "αὐτός", "dt": "P"}, {"les": 14, "g": "ἐπί (ἐπ’, ἐφ’)", "m": "(prep. + gen.) upon, on (the surface of), in the time of; (prep. + dat.) on, at, by (location); (prep. + acc.) to, against (ἐπ’ before smooth breathing, ἐφ’ before rough breathing) [cf. epiglottis, epitaph]", "pos": "prep", "id": 131, "h": "ἐπί (ἐπ’, ἐφ’)", "lem": ["ἐπί"], "dk": null, "dt": null, "cases": [["gen", "upon, on (the surface of), in the time of"], ["dat", "on, at, by (location)"], ["acc", "to, against"]]}, {"les": 15, "g": "ἁρπάζω, ἁρπάσω, *ἥρπασα*", "m": "seize, snatch, plunder [cf. Harpies]", "pos": "verb", "id": 132, "h": "ἁρπάζω", "lem": ["ἁρπάζω"], "dk": null, "dt": null}, {"les": 15, "g": "βάλλω, βαλῶ, *ἔβαλον*", "m": "throw, hit (with a thrown weapon), shoot [cf. ballistics, parable]", "pos": "verb", "id": 133, "h": "βάλλω", "lem": ["βάλλω"], "dk": null, "dt": null}, {"les": 15, "g": "γελάω, γελάσομαι, *ἐγέλασα*", "m": "laugh; (with ἐπί + dat.) laugh (at), ridicule", "pos": "verb", "id": 134, "h": "γελάω", "lem": ["γελάω"], "dk": null, "dt": null}, {"les": 15, "g": "δηλόω, δηλώσω, *ἐδήλωσα*", "m": "make clear, show, explain", "pos": "verb", "id": 135, "h": "δηλόω", "lem": ["δηλόω"], "dk": null, "dt": null}, {"les": 15, "g": "κομίζω, κομιῶ, *ἐκόμισα*", "m": "care for, carry, escort; (mid.) acquire", "pos": "verb", "id": 136, "h": "κομίζω", "lem": ["κομίζω"], "dk": null, "dt": null}, {"les": 15, "g": "τιμάω, τιμήσω, *ἐτίμησα*", "m": "honor, value", "pos": "verb", "id": 137, "h": "τιμάω", "lem": ["τιμάω"], "dk": null, "dt": null}, {"les": 15, "g": "φιλέω, φιλήσω, *ἐφίλησα*", "m": "love, kiss; (+ infin.) be fond of (doing), be accustomed (to) [cf. bibliophile, hemophiliac, philologist]", "pos": "verb", "id": 138, "h": "φιλέω", "lem": ["φιλέω"], "dk": null, "dt": null}, {"les": 15, "g": "ὠφελέω, ὠφελήσω, *ὠφέλησα*", "m": "help, aid", "pos": "verb", "id": 139, "h": "ὠφελέω", "lem": ["ὠφελέω"], "dk": null, "dt": null}, {"les": 15, "g": "τιμή, -ῆς, ἡ", "m": "honor, worth, price [cf. timocracy, Timothy]", "pos": "noun", "id": 140, "h": "τιμή", "lem": ["τιμή"], "dk": "τιμή", "dt": "N"}, {"les": 15, "g": "δῆλος, -η, -ον", "m": "clear, visible, evident", "pos": "adj", "id": 141, "h": "δῆλος", "lem": ["δῆλος"], "dk": "δῆλος", "dt": "A"}, {"les": 16, "g": "ποιέω, ποιήσω, *ἐποίησα*", "m": "make, create, do [cf. poem, poet]", "pos": "verb", "id": 142, "h": "ποιέω", "lem": ["ποιέω"], "dk": null, "dt": null}, {"les": 16, "g": "ἀγών, -ῶνος, ὁ", "m": "contest, competition, struggle [cf. agony, antagonist, protagonist]", "pos": "noun", "id": 143, "h": "ἀγών", "lem": ["ἀγών"], "dk": "ἀγών", "dt": "N"}, {"les": 16, "g": "ἀσπίς, -ίδος, ἡ", "m": "shield", "pos": "noun", "id": 144, "h": "ἀσπίς", "lem": ["ἀσπίς"], "dk": "ἀσπίς", "dt": "N"}, {"les": 16, "g": "κλώψ, κλωπός, ὁ", "m": "thief", "pos": "noun", "id": 145, "h": "κλώψ", "lem": ["κλώψ"], "dk": "κλώψ", "dt": "N"}, {"les": 16, "g": "λέων, -οντος, ὁ", "m": "lion", "pos": "noun", "id": 146, "h": "λέων", "lem": ["λέων"], "dk": "λέων", "dt": "N"}, {"les": 16, "g": "ὄνομα, -ατος, τό", "m": "name [cf. onomatopoeia, anonymous]", "pos": "noun", "id": 147, "h": "ὄνομα", "lem": ["ὄνομα"], "dk": "ὄνομα", "dt": "N"}, {"les": 16, "g": "ῥήτωρ, -ορος, ὁ", "m": "orator, speaker [cf. rhetoric]", "pos": "noun", "id": 148, "h": "ῥήτωρ", "lem": ["ῥήτωρ"], "dk": "ῥήτωρ", "dt": "N"}, {"les": 16, "g": "φύλαξ, -ακος, ὁ", "m": "guard, guardian", "pos": "noun", "id": 149, "h": "φύλαξ", "lem": ["φύλαξ"], "dk": "φύλαξ", "dt": "N"}, {"les": 16, "g": "χάρις, -ιτος, ἡ", "m": "grace, favor, gratitude; χάριν ἔχειν (+ dat.) = be grateful (to) [cf. charisma, Eucharist]", "pos": "noun", "id": 150, "h": "χάρις", "lem": ["χάρις"], "dk": "χάρις", "dt": "N"}, {"les": 16, "g": "χάριν", "m": "(postpositive prep. + gen.) for the sake of", "pos": "prep", "id": 151, "h": "χάριν", "lem": ["χάριν"], "dk": null, "dt": null, "cases": [["gen", "for the sake of (postpositive)"]]}, {"les": 16, "g": "ἤ", "m": "(conjunction) or", "pos": "conj", "id": 152, "h": "ἤ", "lem": ["ἤ"], "dk": null, "dt": null}, {"les": 16, "g": "ἤ…ἤ", "m": "(correlative conjunctions) either…or", "pos": "conj", "id": 153, "h": "ἤ…ἤ", "lem": ["ἤ…ἤ"], "dk": null, "dt": null}, {"les": 17, "g": "αἰδώς, -οῦς, ἡ", "m": "shame (either good or bad sense), modesty, respect", "pos": "noun", "id": 154, "h": "αἰδώς", "lem": ["αἰδώς"], "dk": "αἰδώς", "dt": "N"}, {"les": 17, "g": "γέρας, -ως, τό", "m": "prize, privilege", "pos": "noun", "id": 155, "h": "γέρας", "lem": ["γέρας"], "dk": "γέρας", "dt": "N"}, {"les": 17, "g": "δαίμων, -ονος, ὁ, ἡ", "m": "divine being, guardian spirit [cf. demon]", "pos": "noun", "id": 156, "h": "δαίμων", "lem": ["δαίμων"], "dk": "δαίμων", "dt": "N"}, {"les": 17, "g": "Σωκράτης, -ους, ὁ", "m": "Socrates", "pos": "noun", "id": 157, "h": "Σωκράτης", "lem": ["Σωκράτης"], "dk": "Σωκράτης", "dt": "N"}, {"les": 17, "g": "τεῖχος, -ους, τό", "m": "wall (of a city)", "pos": "noun", "id": 158, "h": "τεῖχος", "lem": ["τεῖχος"], "dk": "τεῖχος", "dt": "N"}, {"les": 17, "g": "τριήρης, -ους, ἡ", "m": "trireme (warship with three banks of oars)", "pos": "noun", "id": 159, "h": "τριήρης", "lem": ["τριήρης"], "dk": "τριήρης", "dt": "N"}, {"les": 17, "g": "ἀληθής, -ές", "m": "true, real, sincere", "pos": "adj", "id": 160, "h": "ἀληθής", "lem": ["ἀληθής"], "dk": "ἀληθής", "dt": "A"}, {"les": 17, "g": "εὐδαίμων, -ον", "m": "happy, fortunate, prosperous [cf. eudaemonism]", "pos": "adj", "id": 161, "h": "εὐδαίμων", "lem": ["εὐδαίμων"], "dk": "εὐδαίμων", "dt": "A"}, {"les": 17, "g": "εὖ", "m": "(adv.) well, kindly; εὖ ἔχειν/πράττειν = fare well", "pos": "adv", "id": 162, "h": "εὖ", "lem": ["εὖ"], "dk": null, "dt": null}, {"les": 17, "g": "κακῶς", "m": "(adv.) badly, wickedly; κακῶς ἔχειν/πράττειν = fare badly", "pos": "adv", "id": 163, "h": "κακῶς", "lem": ["κακῶς"], "dk": null, "dt": null}, {"les": 17, "g": "πρός", "m": "(prep. + gen.) from, by (in oaths); (prep. + dat.) at, near; (prep. + acc.) to, toward, against (basic meaning of πρός = in the direction of, facing) [cf. prosody, prosthesis]", "pos": "prep", "id": 164, "h": "πρός", "lem": ["πρός"], "dk": null, "dt": null, "cases": [["gen", "from, by (in oaths)"], ["dat", "at, near"], ["acc", "to, toward, against"]]}, {"les": 17, "g": "προσβάλλω, προσβαλῶ, *προσέβαλον*", "m": "(+ dat.) attack", "pos": "verb", "id": 165, "h": "προσβάλλω", "lem": ["προσβάλλω"], "dk": null, "dt": null}, {"les": 17, "g": "προσποιέω, προσποιήσω, *προσεποίησα*", "m": "add to; (mid. + infin.) pretend (to)", "pos": "verb", "id": 166, "h": "προσποιέω", "lem": ["προσποιέω"], "dk": null, "dt": null}, {"les": 18, "g": "ἀγγέλλω, ἀγγελῶ, ἤγγειλα", "m": "announce, report", "pos": "verb", "id": 167, "h": "ἀγγέλλω", "lem": ["ἀγγέλλω"], "dk": null, "dt": null}, {"les": 18, "g": "ἐρωτάω, ἐρωτήσω, ἠρώτησα", "m": "(+ double acc.) ask, question", "pos": "verb", "id": 168, "h": "ἐρωτάω", "lem": ["ἐρωτάω"], "dk": null, "dt": null}, {"les": 18, "g": "πωλέω, πωλήσω, ἐπώλησα", "m": "sell [cf. monopoly]", "pos": "verb", "id": 169, "h": "πωλέω", "lem": ["πωλέω"], "dk": null, "dt": null}, {"les": 18, "g": "ἄγγελος, -ου, ὁ", "m": "messenger [cf. angel, evangelism]", "pos": "noun", "id": 170, "h": "ἄγγελος", "lem": ["ἄγγελος"], "dk": "ἄγγελος", "dt": "N"}, {"les": 18, "g": "δραχμή, -ῆς, ἡ", "m": "drachma (unit of money and weight = 6 obols)", "pos": "noun", "id": 171, "h": "δραχμή", "lem": ["δραχμή"], "dk": "δραχμή", "dt": "N"}, {"les": 18, "g": "ὀβολός, -οῦ, ὁ", "m": "obol (small unit of money and weight)", "pos": "noun", "id": 172, "h": "ὀβολός", "lem": ["ὀβολός"], "dk": "ὀβολός", "dt": "N"}, {"les": 18, "g": "μόνος, -η, -ον", "m": "alone, only [cf. monograph, monolithic, monotheism, monk]", "pos": "adj", "id": 173, "h": "μόνος", "lem": ["μόνος"], "dk": "μόνος", "dt": "A"}, {"les": 18, "g": "ὀλίγος, -η, -ον", "m": "little, few [cf. oligarchy]", "pos": "adj", "id": 174, "h": "ὀλίγος", "lem": ["ὀλίγος"], "dk": "ὀλίγος", "dt": "A"}, {"les": 18, "g": "πολύς, πολλή, πολύ", "m": "(irreg. adj.) much, many; οἱ πολλοί = the many, the people [cf. polygraph, polymer, polyphony, polytheism]", "pos": "adj", "id": 175, "h": "πολύς", "lem": ["πολύς"], "dk": "πολύς", "dt": "A"}, {"les": 18, "g": "μόνον", "m": "(neut. sg. acc. of μόνος used as adv.) only", "pos": "adv", "id": 176, "h": "μόνον", "lem": ["μόνον"], "dk": null, "dt": null}, {"les": 18, "g": "οὐ μόνον…ἀλλὰ καί", "m": "(correlatives) not only…but also", "pos": "conj", "id": 177, "h": "οὐ μόνον…ἀλλὰ καί", "lem": ["οὐ μόνον…ἀλλὰ καί"], "dk": null, "dt": null}, {"les": 18, "g": "πολύ or πολλά", "m": "(neuter sg. or pl. acc. of πολύς used as adv.) much", "pos": "adv", "id": 178, "h": "πολύ or πολλά", "lem": ["πολύ", "πολλά"], "dk": null, "dt": null}, {"les": 18, "g": "περί", "m": "(prep. + gen.) about, concerning; (prep. + dat.) around; (prep. + acc.) around (basic meaning of περί = around) (never elided) [cf. period, peripatetic, periphery, pericope]", "pos": "prep", "id": 179, "h": "περί", "lem": ["περί"], "dk": null, "dt": null, "cases": [["gen", "about, concerning"], ["dat", "around"], ["acc", "around"]]}, {"les": 19, "g": "λαμβάνω, λήψομαι, ἔλαβον", "m": "take, receive, grasp, understand [cf. epilepsy, syllable]", "pos": "verb", "id": 180, "h": "λαμβάνω", "lem": ["λαμβάνω"], "dk": null, "dt": null}, {"les": 19, "g": "συλλαμβάνω, συλλήψομαι, συνέλαβον", "m": "gather together, collect, arrest (λαμβάνω compounded with the prefix συν-, “together”)", "pos": "verb", "id": 181, "h": "συλλαμβάνω", "lem": ["συλλαμβάνω"], "dk": null, "dt": null}, {"les": 19, "g": "μένω, μενῶ, ἔμεινα", "m": "remain, stay; (+ acc.) wait for", "pos": "verb", "id": 182, "h": "μένω", "lem": ["μένω"], "dk": null, "dt": null}, {"les": 19, "g": "αἰτία, -ας, ἡ", "m": "blame, guilt, responsibility, accusation, charge, cause [cf. aetiological]", "pos": "noun", "id": 183, "h": "αἰτία", "lem": ["αἰτία"], "dk": "αἰτία", "dt": "N"}, {"les": 19, "g": "ἑαυτοῦ, -ῆς, -οῦ (αὑτοῦ, -ῆς, -οῦ)", "m": "(reflexive pronoun) himself, herself, itself, themselves", "pos": "pron", "id": 184, "h": "ἑαυτοῦ", "lem": ["ἑαυτοῦ"], "dk": "ἑαυτοῦ", "dt": "P"}, {"les": 19, "g": "ἐμαυτοῦ, -ῆς", "m": "(reflexive pronoun) myself", "pos": "pron", "id": 185, "h": "ἐμαυτοῦ", "lem": ["ἐμαυτοῦ"], "dk": "ἐμαυτοῦ", "dt": "P"}, {"les": 19, "g": "ἡμῶν αὐτῶν, -ῶν", "m": "(reflexive pronoun) ourselves", "pos": "pron", "id": 186, "h": "ἡμῶν αὐτῶν", "lem": ["ἡμῶν αὐτῶν"], "dk": "ἡμῶν αὐτῶν", "dt": "P"}, {"les": 19, "g": "σεαυτοῦ, -ῆς (σαυτοῦ, -ῆς)", "m": "(reflexive pronoun) yourself", "pos": "pron", "id": 187, "h": "σεαυτοῦ", "lem": ["σεαυτοῦ"], "dk": "σεαυτοῦ", "dt": "P"}, {"les": 19, "g": "ὑμῶν αὐτῶν, -ῶν", "m": "(reflexive pronoun) yourselves", "pos": "pron", "id": 188, "h": "ὑμῶν αὐτῶν", "lem": ["ὑμῶν αὐτῶν"], "dk": "ὑμῶν αὐτῶν", "dt": "P"}, {"les": 19, "g": "αἴτιος, -α, -ον", "m": "blameworthy; (+ gen.) guilty (of), responsible (for)", "pos": "adj", "id": 189, "h": "αἴτιος", "lem": ["αἴτιος"], "dk": "αἴτιος", "dt": "A"}, {"les": 19, "g": "μετά (μετ’, μεθ’)", "m": "(prep. + gen.) among, with, together with; (prep. + acc.) after (μετ’ before smooth breathing, μεθ’ before rough breathing) [cf. metabolism, metamorphosis, meteor, method]", "pos": "prep", "id": 190, "h": "μετά (μετ’, μεθ’)", "lem": ["μετά"], "dk": null, "dt": null, "cases": [["gen", "among, with, together with"], ["acc", "after"]]}, {"les": 19, "g": "σύν", "m": "(prep. + dat.) with, together with, with the help of [cf. syllogism, symbol, symmetry, synchronic, synod, system, syzygy]", "pos": "prep", "id": 191, "h": "σύν", "lem": ["σύν"], "dk": null, "dt": null, "cases": [["dat", "with, together with, with the help of"]]}, {"les": 20, "pos": "verb", "g": "ζητέω, ζητήσω, ἐζήτησα, ἐζήτηκα", "m": "seek, search for, investigate; (+ infin.) seek (to)", "h": "ζητέω", "id": 192, "lem": ["ζητέω"], "dk": null, "dt": null}, {"les": 20, "pos": "verb", "g": "ῥίπτω, ῥίψω, ἔρρῑψα, ἔρρῑφα", "m": "throw, hurl, cast aside", "h": "ῥίπτω", "id": 193, "lem": ["ῥίπτω"], "dk": null, "dt": null}, {"les": 20, "pos": "noun", "g": "γῆ (contracted from γέᾱ), γῆς, ἡ", "m": "earth, ground, land; Γῆ = Earth (personified) [cf. geodesic, geography, georgic]", "h": "γῆ", "dk": "γῆ", "dt": "N", "id": 194, "lem": ["γῆ"]}, {"les": 20, "pos": "noun", "g": "δένδρον, -ου, τό", "m": "tree [cf. dendrite, philodendron]", "h": "δένδρον", "dk": "δένδρον", "dt": "N", "id": 195, "lem": ["δένδρον"]}, {"les": 20, "pos": "noun", "g": "Ἑλλάς, -άδος, ἡ", "m": "Hellas, Greece", "h": "Ἑλλάς", "dk": "Ἑλλάς", "dt": "N", "id": 196, "lem": ["Ἑλλάς"]}, {"les": 20, "pos": "noun", "g": "Ἕλλην, -ηνος, ὁ, ἡ", "m": "a Hellene, a Greek", "h": "Ἕλλην", "dk": "Ἕλλην", "dt": "N", "id": 197, "lem": ["Ἕλλην"]}, {"les": 20, "pos": "noun", "g": "οὐρανός, -οῦ, ὁ", "m": "sky, heaven; Οὐρανός = Sky (personified) [cf. uranic, Uranus]", "h": "οὐρανός", "dk": "οὐρανός", "dt": "N", "id": 198, "lem": ["οὐρανός"]}, {"les": 20, "pos": "adj", "g": "Ἑλληνικός, -ή, -όν", "m": "Hellenic, Greek", "h": "Ἑλληνικός", "dk": "Ἑλληνικός", "dt": "A", "id": 199, "lem": ["Ἑλληνικός"]}, {"les": 20, "pos": "prep", "g": "κατά (κατ’, καθ’)", "m": "(prep. + gen.) down from, against; (prep. + acc.) down, down along, in accordance with, according to, by (in various idioms) (κατ’ before smooth breathing, καθ’ before rough breathing) [cf. cataclysm, catalyst, catastrophe]", "h": "κατά (κατ’, καθ’)", "lem": ["κατά"], "cases": [["gen", "down from, against"], ["acc", "down, down along, in accordance with, according to, by (in idioms: κατὰ γῆν, by land)"]], "id": 200, "dk": null, "dt": null}, {"les": 20, "pos": "prep", "g": "ὑπέρ", "m": "(prep. + gen.) over, above, on behalf of; (prep. + acc.) over, to a place over, beyond [cf. hyperbole, hyperborean, hypermetric]", "h": "ὑπέρ", "cases": [["gen", "over, above, on behalf of"], ["acc", "over, to a place over, beyond"]], "id": 201, "lem": ["ὑπέρ"], "dk": null, "dt": null}, {"les": 21, "pos": "verb", "g": "ἀποθνῄσκω, ἀποθανοῦμαι, ἀπέθανον, τέθνηκα", "m": "die, be killed", "h": "ἀποθνῄσκω", "id": 202, "lem": ["ἀποθνῄσκω"], "dk": null, "dt": null}, {"les": 21, "pos": "verb", "g": "ἀποκτείνω, ἀποκτενῶ, ἀπέκτεινα, ἀπέκτονα", "m": "kill (always active; for “be killed” Greek uses ἀποθνῄσκω)", "h": "ἀποκτείνω", "id": 203, "lem": ["ἀποκτείνω"], "dk": null, "dt": null}, {"les": 21, "pos": "verb", "g": "φοβέω, φοβήσω, ἐφόβησα, πεφόβηκα", "m": "(act.) frighten; (mid./pass. + acc.) be frightened (of), be afraid (of), fear", "h": "φοβέω", "id": 204, "lem": ["φοβέω"], "dk": null, "dt": null}, {"les": 21, "pos": "noun", "g": "φόβος, -ου, ὁ", "m": "fear, fright [cf. agoraphobia]", "h": "φόβος", "dk": "φόβος", "dt": "N", "id": 205, "lem": ["φόβος"]}, {"les": 21, "pos": "pron", "g": "τίς, τί", "m": "(interrog. adj.) what? which?; (interrog. pron.) who? what?", "h": "τίς", "dk": "τίς", "dt": "P", "id": 206, "lem": ["τίς"]}, {"les": 21, "pos": "pron", "g": "τις, τι", "m": "(indef. adj., enclitic) a, an, a certain, some, any; (indef. pron., enclitic) someone, something, anyone, anything, some, any", "h": "τις", "dk": "τις", "dt": "P", "id": 207, "lem": ["τις"]}, {"les": 21, "pos": "conj", "g": "τινὲς μὲν…τινὲς δέ", "m": "(correlatives) some…others", "h": "τινὲς μὲν…τινὲς δέ", "id": 208, "lem": ["τινὲς μὲν…τινὲς δέ"], "dk": null, "dt": null}, {"les": 21, "pos": "adj", "g": "ἐμός, -ή, -όν", "m": "(poss. adj.) my, mine, my own", "h": "ἐμός", "dk": "ἐμός", "dt": "P", "id": 209, "lem": ["ἐμός"]}, {"les": 21, "pos": "adj", "g": "ἡμέτερος, -ᾱ, -ον", "m": "(poss. adj.) our, ours, our own", "h": "ἡμέτερος", "dk": "ἡμέτερος", "dt": "P", "id": 210, "lem": ["ἡμέτερος"]}, {"les": 21, "pos": "adj", "g": "σός, σή, σόν", "m": "(poss. adj.) your, yours, your own (one person’s)", "h": "σός", "dk": "σός", "dt": "P", "id": 211, "lem": ["σός"]}, {"les": 21, "pos": "adj", "g": "ὑμέτερος, -ᾱ, -ον", "m": "(poss. adj.) your, yours, your own (more than one person’s)", "h": "ὑμέτερος", "dk": "ὑμέτερος", "dt": "P", "id": 212, "lem": ["ὑμέτερος"]}, {"les": 21, "pos": "adv", "g": "τί", "m": "(neut. sg. acc. of τίς used as adv.) why?", "h": "τί (adv.)", "lem": ["τί"], "id": 213, "dk": null, "dt": null}, {"les": 22, "pos": "verb", "g": "ἄγω, ἄξω, ἤγαγον, ἦχα, ἦγμαι", "m": "lead; βίον ἄγειν = lead a life [cf. pedagogue]", "h": "ἄγω", "id": 214, "lem": ["ἄγω"], "dk": null, "dt": null}, {"les": 22, "pos": "noun", "g": "νόμος, -ου, ὁ", "m": "law, custom [cf. autonomy, metronome]", "h": "νόμος", "dk": "νόμος", "dt": "N", "id": 215, "lem": ["νόμος"]}, {"les": 22, "pos": "noun", "g": "ψῡχή, -ῆς, ἡ", "m": "spirit, soul, life [cf. psychedelic, psychology]", "h": "ψυχή", "dk": "ψυχή", "dt": "N", "id": 216, "lem": ["ψυχή"]}, {"les": 22, "pos": "adj", "g": "ἄλλος, -η, -ο", "m": "other, another; οἱ ἄλλοι = the others, the rest [cf. allegory, allergy, allomorph]", "h": "ἄλλος", "dk": "ἄλλος", "dt": "P", "id": 217, "lem": ["ἄλλος"]}, {"les": 22, "pos": "noun", "g": "ζῷον, -ου, τό", "m": "animal [cf. protozoa, zodiac, zoology]", "h": "ζῷον", "dk": "ζῷον", "dt": "N", "id": 218, "lem": ["ζῷον"]}, {"les": 22, "pos": "prep", "g": "παρά (παρ’)", "m": "(prep. + gen.) from, from the side of; (prep. + dat.) at, at the side of, beside, at the house of; (prep. + acc.) to, to the side of, contrary to (παρ’ before a vowel) [cf. paradigm, paradox, parasite, parish]", "h": "παρά (παρ’)", "lem": ["παρά"], "cases": [["gen", "from, from the side of (also the person who is the source of an action)"], ["dat", "at, at the side of, beside, at the house of"], ["acc", "to, to the side of, contrary to"]], "id": 219, "dk": null, "dt": null}, {"les": 22, "pos": "conj", "g": "τε (τ’, θ’)", "m": "(enclitic conj.) and (τ’ before smooth breathing, θ’ before rough breathing)", "h": "τε (τ’, θ’)", "lem": ["τε"], "id": 220, "dk": null, "dt": null}, {"les": 22, "pos": "conj", "g": "τε…καί or τε…τε", "m": "(correlatives) both…and", "h": "τε…καί", "lem": ["τε…καί", "τε…τε"], "id": 221, "dk": null, "dt": null}, {"les": 22, "pos": "conj", "g": "οὐδέ (μηδέ)", "m": "(conj.) and not, nor; (adv.) not even (οὐδ’/μηδ’ before a vowel)", "h": "οὐδέ (μηδέ)", "lem": ["οὐδέ", "μηδέ"], "id": 222, "dk": null, "dt": null}, {"les": 22, "pos": "conj", "g": "οὐδέ (μηδέ)…οὐδέ (μηδέ)", "m": "(correlatives) neither…nor (joins clauses)", "h": "οὐδέ…οὐδέ", "lem": ["οὐδέ…οὐδέ", "μηδέ…μηδέ"], "id": 223, "dk": null, "dt": null}, {"les": 22, "pos": "conj", "g": "οὔτε (μήτε)", "m": "(conj.) and not, nor (οὔτ’/μήτ’ before smooth breathing, οὔθ’/μήθ’ before rough breathing)", "h": "οὔτε (μήτε)", "lem": ["οὔτε", "μήτε"], "id": 224, "dk": null, "dt": null}, {"les": 22, "pos": "conj", "g": "οὔτε (μήτε)…οὔτε (μήτε)", "m": "(correlatives) neither…nor (joins clauses or single words)", "h": "οὔτε…οὔτε", "lem": ["οὔτε…οὔτε", "μήτε…μήτε"], "id": 225, "dk": null, "dt": null}, {"les": 23, "pos": "verb", "g": "ὁράω (imperf. ἑώρων), ὄψομαι, εἶδον, ἑόρᾱκα or ἑώρᾱκα, ἑώρᾱμαι or ὦμμαι", "m": "see, behold, look (at); (pass.) be seen, appear [cf. idea, optic, panorama]", "h": "ὁράω", "id": 226, "lem": ["ὁράω"], "dk": null, "dt": null}, {"les": 23, "pos": "noun", "g": "ἔτος, -ους, τό", "m": "year [cf. etesian]", "h": "ἔτος", "dk": "ἔτος", "dt": "N", "id": 227, "lem": ["ἔτος"]}, {"les": 23, "pos": "noun", "g": "ἡμέρᾱ, -ᾱς, ἡ", "m": "day [cf. ephemeral, hemeralopia]", "h": "ἡμέρα", "dk": "ἡμέρα", "dt": "N", "id": 228, "lem": ["ἡμέρα"]}, {"les": 23, "pos": "noun", "g": "νύξ, νυκτός, ἡ", "m": "night [cf. nyctalopia, nyctitropism]", "h": "νύξ", "dk": "νύξ", "dt": "N", "id": 229, "lem": ["νύξ"]}, {"les": 23, "pos": "noun", "g": "χρόνος, -ου, ὁ", "m": "time [cf. chronology, diachronic]", "h": "χρόνος", "dk": "χρόνος", "dt": "N", "id": 230, "lem": ["χρόνος"]}, {"les": 23, "pos": "pron", "g": "ὅς, ἥ, ὅ", "m": "(relative pronoun) who, which, that", "h": "ὅς", "dk": "ὅς", "dt": "P", "id": 231, "lem": ["ὅς"]}, {"les": 23, "pos": "adj", "g": "πᾶς, πᾶσα, πᾶν", "m": "all, every, whole, entire [cf. diapason, pandemonium, pantheon, pantograph]", "h": "πᾶς", "dk": "πᾶς", "dt": "P", "id": 232, "lem": ["πᾶς"]}, {"les": 23, "pos": "adv", "g": "τήμερον", "m": "(indeclinable adverb) today", "h": "τήμερον", "id": 233, "lem": ["τήμερον"], "dk": null, "dt": null}, {"les": 23, "pos": "prep", "g": "ἀμφί (ἀμφ’)", "m": "(prep. + acc.) around (basic meaning = on both sides of) (ἀμφ’ before a vowel) [cf. amphibious, amphitheater, amphora]", "h": "ἀμφί (ἀμφ’)", "lem": ["ἀμφί"], "cases": [["acc", "around (on both sides of); οἱ ἀμφί τινα = someone’s followers"]], "id": 234, "dk": null, "dt": null}, {"les": 23, "pos": "prep", "g": "ἀνά (ἀν’)", "m": "(prep. + acc.) up, up along, by (in various idioms) (ἀν’ before a vowel) [cf. anachronism, anagram, analogy, anaphora]", "h": "ἀνά (ἀν’)", "lem": ["ἀνά"], "cases": [["acc", "up, up along, by (in idioms: ἀνὰ πᾶσαν ἡμέραν, day by day)"]], "id": 235, "dk": null, "dt": null}, {"les": 23, "pos": "conj", "g": "ἕως", "m": "(subordinating conjunction) while, as long as", "h": "ἕως", "id": 236, "lem": ["ἕως"], "dk": null, "dt": null}], "N": {"ἀγορά": {"kind": "noun", "gender": "f", "type": "1a", "forms": {"noms": "ἀγορά", "gens": "ἀγορᾶς", "dats": "ἀγορᾷ", "accs": "ἀγοράν", "vocs": "ἀγορά", "nomp": "ἀγοραί", "genp": "ἀγορῶν", "datp": "ἀγοραῖς", "accp": "ἀγοράς", "vocp": "ἀγοραί"}}, "ἐπιστολή": {"kind": "noun", "gender": "f", "type": "1h", "forms": {"noms": "ἐπιστολή", "gens": "ἐπιστολῆς", "dats": "ἐπιστολῇ", "accs": "ἐπιστολήν", "vocs": "ἐπιστολή", "nomp": "ἐπιστολαί", "genp": "ἐπιστολῶν", "datp": "ἐπιστολαῖς", "accp": "ἐπιστολάς", "vocp": "ἐπιστολαί"}}, "ἡσυχία": {"kind": "noun", "gender": "f", "type": "1a", "forms": {"noms": "ἡσυχία", "gens": "ἡσυχίας", "dats": "ἡσυχίᾳ", "accs": "ἡσυχίαν", "vocs": "ἡσυχία", "nomp": "ἡσυχίαι", "genp": "ἡσυχιῶν", "datp": "ἡσυχίαις", "accp": "ἡσυχίας", "vocp": "ἡσυχίαι"}}, "θεά": {"kind": "noun", "gender": "f", "type": "1a", "forms": {"noms": "θεά", "gens": "θεᾶς", "dats": "θεᾷ", "accs": "θεάν", "vocs": "θεά", "nomp": "θεαί", "genp": "θεῶν", "datp": "θεαῖς", "accp": "θεάς", "vocp": "θεαί"}}, "σκηνή": {"kind": "noun", "gender": "f", "type": "1h", "forms": {"noms": "σκηνή", "gens": "σκηνῆς", "dats": "σκηνῇ", "accs": "σκηνήν", "vocs": "σκηνή", "nomp": "σκηναί", "genp": "σκηνῶν", "datp": "σκηναῖς", "accp": "σκηνάς", "vocp": "σκηναί"}}, "χώρα": {"kind": "noun", "gender": "f", "type": "1a", "forms": {"noms": "χώρα", "gens": "χώρας", "dats": "χώρᾳ", "accs": "χώραν", "vocs": "χώρα", "nomp": "χῶραι", "genp": "χωρῶν", "datp": "χώραις", "accp": "χώρας", "vocp": "χῶραι"}}, "δέσποινα": {"kind": "noun", "gender": "f", "type": "1sm", "forms": {"noms": "δέσποινα", "gens": "δεσποίνης", "dats": "δεσποίνῃ", "accs": "δέσποιναν", "vocs": "δέσποινα", "nomp": "δέσποιναι", "genp": "δεσποινῶν", "datp": "δεσποίναις", "accp": "δεσποίνας", "vocp": "δέσποιναι"}}, "θάλαττα": {"kind": "noun", "gender": "f", "type": "1sm", "forms": {"noms": "θάλαττα", "gens": "θαλάττης", "dats": "θαλάττῃ", "accs": "θάλατταν", "vocs": "θάλαττα", "nomp": "θάλατται", "genp": "θαλαττῶν", "datp": "θαλάτταις", "accp": "θαλάττας", "vocp": "θάλατται"}}, "θεράπαινα": {"kind": "noun", "gender": "f", "type": "1sm", "forms": {"noms": "θεράπαινα", "gens": "θεραπαίνης", "dats": "θεραπαίνῃ", "accs": "θεράπαιναν", "vocs": "θεράπαινα", "nomp": "θεράπαιναι", "genp": "θεραπαινῶν", "datp": "θεραπαίναις", "accp": "θεραπαίνας", "vocp": "θεράπαιναι"}}, "κλίνη": {"kind": "noun", "gender": "f", "type": "1h", "forms": {"noms": "κλίνη", "gens": "κλίνης", "dats": "κλίνῃ", "accs": "κλίνην", "vocs": "κλίνη", "nomp": "κλῖναι", "genp": "κλινῶν", "datp": "κλίναις", "accp": "κλίνας", "vocp": "κλῖναι"}}, "μοῖρα": {"kind": "noun", "gender": "f", "type": "1sp", "forms": {"noms": "μοῖρα", "gens": "μοίρας", "dats": "μοίρᾳ", "accs": "μοῖραν", "vocs": "μοῖρα", "nomp": "μοῖραι", "genp": "μοιρῶν", "datp": "μοίραις", "accp": "μοίρας", "vocp": "μοῖραι"}}, "ὥρα": {"kind": "noun", "gender": "f", "type": "1a", "forms": {"noms": "ὥρα", "gens": "ὥρας", "dats": "ὥρᾳ", "accs": "ὥραν", "vocs": "ὥρα", "nomp": "ὧραι", "genp": "ὡρῶν", "datp": "ὥραις", "accp": "ὥρας", "vocp": "ὧραι"}}, "κόρη": {"kind": "noun", "gender": "f", "type": "1h", "forms": {"noms": "κόρη", "gens": "κόρης", "dats": "κόρῃ", "accs": "κόρην", "vocs": "κόρη", "nomp": "κόραι", "genp": "κορῶν", "datp": "κόραις", "accp": "κόρας", "vocp": "κόραι"}}, "οἰκία": {"kind": "noun", "gender": "f", "type": "1a", "forms": {"noms": "οἰκία", "gens": "οἰκίας", "dats": "οἰκίᾳ", "accs": "οἰκίαν", "vocs": "οἰκία", "nomp": "οἰκίαι", "genp": "οἰκιῶν", "datp": "οἰκίαις", "accp": "οἰκίας", "vocp": "οἰκίαι"}}, "ἀδελφή": {"kind": "noun", "gender": "f", "type": "1h", "forms": {"noms": "ἀδελφή", "gens": "ἀδελφῆς", "dats": "ἀδελφῇ", "accs": "ἀδελφήν", "vocs": "ἀδελφή", "nomp": "ἀδελφαί", "genp": "ἀδελφῶν", "datp": "ἀδελφαῖς", "accp": "ἀδελφάς", "vocp": "ἀδελφαί"}}, "λύπη": {"kind": "noun", "gender": "f", "type": "1h", "forms": {"noms": "λύπη", "gens": "λύπης", "dats": "λύπῃ", "accs": "λύπην", "vocs": "λύπη", "nomp": "λῦπαι", "genp": "λυπῶν", "datp": "λύπαις", "accp": "λύπας", "vocp": "λῦπαι"}}, "χαρά": {"kind": "noun", "gender": "f", "type": "1a", "forms": {"noms": "χαρά", "gens": "χαρᾶς", "dats": "χαρᾷ", "accs": "χαράν", "vocs": "χαρά", "nomp": "χαραί", "genp": "χαρῶν", "datp": "χαραῖς", "accp": "χαράς", "vocp": "χαραί"}}, "ἀλήθεια": {"kind": "noun", "gender": "f", "type": "1sp", "forms": {"noms": "ἀλήθεια", "gens": "ἀληθείας", "dats": "ἀληθείᾳ", "accs": "ἀλήθειαν", "vocs": "ἀλήθεια", "nomp": "ἀλήθειαι", "genp": "ἀληθειῶν", "datp": "ἀληθείαις", "accp": "ἀληθείας", "vocp": "ἀλήθειαι"}}, "ἅμαξα": {"kind": "noun", "gender": "f", "type": "1sm", "forms": {"noms": "ἅμαξα", "gens": "ἁμάξης", "dats": "ἁμάξῃ", "accs": "ἅμαξαν", "vocs": "ἅμαξα", "nomp": "ἅμαξαι", "genp": "ἁμαξῶν", "datp": "ἁμάξαις", "accp": "ἁμάξας", "vocp": "ἅμαξαι"}}, "λίμνη": {"kind": "noun", "gender": "f", "type": "1h", "forms": {"noms": "λίμνη", "gens": "λίμνης", "dats": "λίμνῃ", "accs": "λίμνην", "vocs": "λίμνη", "nomp": "λίμναι", "genp": "λιμνῶν", "datp": "λίμναις", "accp": "λίμνας", "vocp": "λίμναι"}}, "ἀρχή": {"kind": "noun", "gender": "f", "type": "1h", "forms": {"noms": "ἀρχή", "gens": "ἀρχῆς", "dats": "ἀρχῇ", "accs": "ἀρχήν", "vocs": "ἀρχή", "nomp": "ἀρχαί", "genp": "ἀρχῶν", "datp": "ἀρχαῖς", "accp": "ἀρχάς", "vocp": "ἀρχαί"}}, "εἰρήνη": {"kind": "noun", "gender": "f", "type": "1h", "forms": {"noms": "εἰρήνη", "gens": "εἰρήνης", "dats": "εἰρήνῃ", "accs": "εἰρήνην", "vocs": "εἰρήνη", "nomp": "εἰρῆναι", "genp": "εἰρηνῶν", "datp": "εἰρήναις", "accp": "εἰρήνας", "vocp": "εἰρῆναι"}}, "σοφία": {"kind": "noun", "gender": "f", "type": "1a", "forms": {"noms": "σοφία", "gens": "σοφίας", "dats": "σοφίᾳ", "accs": "σοφίαν", "vocs": "σοφία", "nomp": "σοφίαι", "genp": "σοφιῶν", "datp": "σοφίαις", "accp": "σοφίας", "vocp": "σοφίαι"}}, "φιλοσοφία": {"kind": "noun", "gender": "f", "type": "1a", "forms": {"noms": "φιλοσοφία", "gens": "φιλοσοφίας", "dats": "φιλοσοφίᾳ", "accs": "φιλοσοφίαν", "vocs": "φιλοσοφία", "nomp": "φιλοσοφίαι", "genp": "φιλοσοφιῶν", "datp": "φιλοσοφίαις", "accp": "φιλοσοφίας", "vocp": "φιλοσοφίαι"}}, "τιμή": {"kind": "noun", "gender": "f", "type": "1h", "forms": {"noms": "τιμή", "gens": "τιμῆς", "dats": "τιμῇ", "accs": "τιμήν", "vocs": "τιμή", "nomp": "τιμαί", "genp": "τιμῶν", "datp": "τιμαῖς", "accp": "τιμάς", "vocp": "τιμαί"}}, "δραχμή": {"kind": "noun", "gender": "f", "type": "1h", "forms": {"noms": "δραχμή", "gens": "δραχμῆς", "dats": "δραχμῇ", "accs": "δραχμήν", "vocs": "δραχμή", "nomp": "δραχμαί", "genp": "δραχμῶν", "datp": "δραχμαῖς", "accp": "δραχμάς", "vocp": "δραχμαί"}}, "αἰτία": {"kind": "noun", "gender": "f", "type": "1a", "forms": {"noms": "αἰτία", "gens": "αἰτίας", "dats": "αἰτίᾳ", "accs": "αἰτίαν", "vocs": "αἰτία", "nomp": "αἰτίαι", "genp": "αἰτιῶν", "datp": "αἰτίαις", "accp": "αἰτίας", "vocp": "αἰτίαι"}}, "δεσπότης": {"kind": "noun", "gender": "m", "type": "1mt", "forms": {"noms": "δεσπότης", "gens": "δεσπότου", "dats": "δεσπότῃ", "accs": "δεσπότην", "vocs": "δέσποτα", "nomp": "δεσπόται", "genp": "δεσποτῶν", "datp": "δεσπόταις", "accp": "δεσπότας", "vocp": "δεσπόται"}}, "μαθητής": {"kind": "noun", "gender": "m", "type": "1mt", "forms": {"noms": "μαθητής", "gens": "μαθητοῦ", "dats": "μαθητῇ", "accs": "μαθητήν", "vocs": "μαθητά", "nomp": "μαθηταί", "genp": "μαθητῶν", "datp": "μαθηταῖς", "accp": "μαθητάς", "vocp": "μαθηταί"}}, "νεανίας": {"kind": "noun", "gender": "m", "type": "1ma", "forms": {"noms": "νεανίας", "gens": "νεανίου", "dats": "νεανίᾳ", "accs": "νεανίαν", "vocs": "νεανία", "nomp": "νεανίαι", "genp": "νεανιῶν", "datp": "νεανίαις", "accp": "νεανίας", "vocp": "νεανίαι"}}, "οἰκέτης": {"kind": "noun", "gender": "m", "type": "1mt", "forms": {"noms": "οἰκέτης", "gens": "οἰκέτου", "dats": "οἰκέτῃ", "accs": "οἰκέτην", "vocs": "οἰκέτα", "nomp": "οἰκέται", "genp": "οἰκετῶν", "datp": "οἰκέταις", "accp": "οἰκέτας", "vocp": "οἰκέται"}}, "ἀδελφός": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "ἀδελφός", "gens": "ἀδελφοῦ", "dats": "ἀδελφῷ", "accs": "ἀδελφόν", "vocs": "ἄδελφε", "nomp": "ἀδελφοί", "genp": "ἀδελφῶν", "datp": "ἀδελφοῖς", "accp": "ἀδελφούς", "vocp": "ἀδελφοί"}}, "ἄνθρωπος": {"kind": "noun", "gender": "m/f", "type": "2m", "forms": {"noms": "ἄνθρωπος", "gens": "ἀνθρώπου", "dats": "ἀνθρώπῳ", "accs": "ἄνθρωπον", "vocs": "ἄνθρωπε", "nomp": "ἄνθρωποι", "genp": "ἀνθρώπων", "datp": "ἀνθρώποις", "accp": "ἀνθρώπους", "vocp": "ἄνθρωποι"}}, "θεός": {"kind": "noun", "gender": "m/f", "type": "2m", "forms": {"noms": "θεός", "gens": "θεοῦ", "dats": "θεῷ", "accs": "θεόν", "vocs": "θεός or θεέ", "nomp": "θεοί", "genp": "θεῶν", "datp": "θεοῖς", "accp": "θεούς", "vocp": "θεοί"}}, "ἵππος": {"kind": "noun", "gender": "m/f", "type": "2m", "forms": {"noms": "ἵππος", "gens": "ἵππου", "dats": "ἵππῳ", "accs": "ἵππον", "vocs": "ἵππε", "nomp": "ἵπποι", "genp": "ἵππων", "datp": "ἵπποις", "accp": "ἵππους", "vocp": "ἵπποι"}}, "λίθος": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "λίθος", "gens": "λίθου", "dats": "λίθῳ", "accs": "λίθον", "vocs": "λίθε", "nomp": "λίθοι", "genp": "λίθων", "datp": "λίθοις", "accp": "λίθους", "vocp": "λίθοι"}}, "ὁδός": {"kind": "noun", "gender": "f", "type": "2m", "forms": {"noms": "ὁδός", "gens": "ὁδοῦ", "dats": "ὁδῷ", "accs": "ὁδόν", "vocs": "ὁδέ", "nomp": "ὁδοί", "genp": "ὁδῶν", "datp": "ὁδοῖς", "accp": "ὁδούς", "vocp": "ὁδοί"}}, "ποταμός": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "ποταμός", "gens": "ποταμοῦ", "dats": "ποταμῷ", "accs": "ποταμόν", "vocs": "ποταμέ", "nomp": "ποταμοί", "genp": "ποταμῶν", "datp": "ποταμοῖς", "accp": "ποταμούς", "vocp": "ποταμοί"}}, "βίος": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "βίος", "gens": "βίου", "dats": "βίῳ", "accs": "βίον", "vocs": "βίε", "nomp": "βίοι", "genp": "βίων", "datp": "βίοις", "accp": "βίους", "vocp": "βίοι"}}, "δῶρον": {"kind": "noun", "gender": "n", "type": "2n", "forms": {"noms": "δῶρον", "gens": "δώρου", "dats": "δώρῳ", "accs": "δῶρον", "vocs": "δῶρον", "nomp": "δῶρα", "genp": "δώρων", "datp": "δώροις", "accp": "δῶρα", "vocp": "δῶρα"}}, "ἔργον": {"kind": "noun", "gender": "n", "type": "2n", "forms": {"noms": "ἔργον", "gens": "ἔργου", "dats": "ἔργῳ", "accs": "ἔργον", "vocs": "ἔργον", "nomp": "ἔργα", "genp": "ἔργων", "datp": "ἔργοις", "accp": "ἔργα", "vocp": "ἔργα"}}, "θησαυρός": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "θησαυρός", "gens": "θησαυροῦ", "dats": "θησαυρῷ", "accs": "θησαυρόν", "vocs": "θησαυρέ", "nomp": "θησαυροί", "genp": "θησαυρῶν", "datp": "θησαυροῖς", "accp": "θησαυρούς", "vocp": "θησαυροί"}}, "τέκνον": {"kind": "noun", "gender": "n", "type": "2n", "forms": {"noms": "τέκνον", "gens": "τέκνου", "dats": "τέκνῳ", "accs": "τέκνον", "vocs": "τέκνον", "nomp": "τέκνα", "genp": "τέκνων", "datp": "τέκνοις", "accp": "τέκνα", "vocp": "τέκνα"}}, "φυτόν": {"kind": "noun", "gender": "n", "type": "2n", "forms": {"noms": "φυτόν", "gens": "φυτοῦ", "dats": "φυτῷ", "accs": "φυτόν", "vocs": "φυτόν", "nomp": "φυτά", "genp": "φυτῶν", "datp": "φυτοῖς", "accp": "φυτά", "vocp": "φυτά"}}, "θάνατος": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "θάνατος", "gens": "θανάτου", "dats": "θανάτῳ", "accs": "θάνατον", "vocs": "θάνατε", "nomp": "θάνατοι", "genp": "θανάτων", "datp": "θανάτοις", "accp": "θανάτους", "vocp": "θάνατοι"}}, "κίνδυνος": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "κίνδυνος", "gens": "κινδύνου", "dats": "κινδύνῳ", "accs": "κίνδυνον", "vocs": "κίνδυνε", "nomp": "κίνδυνοι", "genp": "κινδύνων", "datp": "κινδύνοις", "accp": "κινδύνους", "vocp": "κίνδυνοι"}}, "τόπος": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "τόπος", "gens": "τόπου", "dats": "τόπῳ", "accs": "τόπον", "vocs": "τόπε", "nomp": "τόποι", "genp": "τόπων", "datp": "τόποις", "accp": "τόπους", "vocp": "τόποι"}}, "τρόπος": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "τρόπος", "gens": "τρόπου", "dats": "τρόπῳ", "accs": "τρόπον", "vocs": "τρόπε", "nomp": "τρόποι", "genp": "τρόπων", "datp": "τρόποις", "accp": "τρόπους", "vocp": "τρόποι"}}, "λόγος": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "λόγος", "gens": "λόγου", "dats": "λόγῳ", "accs": "λόγον", "vocs": "λόγε", "nomp": "λόγοι", "genp": "λόγων", "datp": "λόγοις", "accp": "λόγους", "vocp": "λόγοι"}}, "πόλεμος": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "πόλεμος", "gens": "πολέμου", "dats": "πολέμῳ", "accs": "πόλεμον", "vocs": "πόλεμε", "nomp": "πόλεμοι", "genp": "πολέμων", "datp": "πολέμοις", "accp": "πολέμους", "vocp": "πόλεμοι"}}, "βιβλίον": {"kind": "noun", "gender": "n", "type": "2n", "forms": {"noms": "βιβλίον", "gens": "βιβλίου", "dats": "βιβλίῳ", "accs": "βιβλίον", "vocs": "βιβλίον", "nomp": "βιβλία", "genp": "βιβλίων", "datp": "βιβλίοις", "accp": "βιβλία", "vocp": "βιβλία"}}, "ἱμάτιον": {"kind": "noun", "gender": "n", "type": "2n", "forms": {"noms": "ἱμάτιον", "gens": "ἱματίου", "dats": "ἱματίῳ", "accs": "ἱμάτιον", "vocs": "ἱμάτιον", "nomp": "ἱμάτια", "genp": "ἱματίων", "datp": "ἱματίοις", "accp": "ἱμάτια", "vocp": "ἱμάτια"}}, "ἄγγελος": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "ἄγγελος", "gens": "ἀγγέλου", "dats": "ἀγγέλῳ", "accs": "ἄγγελον", "vocs": "ἄγγελε", "nomp": "ἄγγελοι", "genp": "ἀγγέλων", "datp": "ἀγγέλοις", "accp": "ἀγγέλους", "vocp": "ἄγγελοι"}}, "ὀβολός": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "ὀβολός", "gens": "ὀβολοῦ", "dats": "ὀβολῷ", "accs": "ὀβολόν", "vocs": "ὀβολέ", "nomp": "ὀβολοί", "genp": "ὀβολῶν", "datp": "ὀβολοῖς", "accp": "ὀβολούς", "vocp": "ὀβολοί"}}, "ἀγών": {"kind": "noun", "gender": "m", "type": "3", "forms": {"noms": "ἀγών", "gens": "ἀγῶνος", "dats": "ἀγῶνι", "accs": "ἀγῶνα", "vocs": "ἀγών", "nomp": "ἀγῶνες", "genp": "ἀγώνων", "datp": "ἀγῶσι(ν)", "accp": "ἀγῶνας", "vocp": "ἀγῶνες"}}, "ἀσπίς": {"kind": "noun", "gender": "f", "type": "3", "forms": {"noms": "ἀσπίς", "gens": "ἀσπίδος", "dats": "ἀσπίδι", "accs": "ἀσπίδα", "vocs": "ἀσπί", "nomp": "ἀσπίδες", "genp": "ἀσπίδων", "datp": "ἀσπίσι(ν)", "accp": "ἀσπίδας", "vocp": "ἀσπίδες"}}, "κλώψ": {"kind": "noun", "gender": "m", "type": "3", "forms": {"noms": "κλώψ", "gens": "κλωπός", "dats": "κλωπί", "accs": "κλῶπα", "vocs": "κλώψ", "nomp": "κλῶπες", "genp": "κλωπῶν", "datp": "κλωψί(ν)", "accp": "κλῶπας", "vocp": "κλῶπες"}}, "λέων": {"kind": "noun", "gender": "m", "type": "3", "forms": {"noms": "λέων", "gens": "λέοντος", "dats": "λέοντι", "accs": "λέοντα", "vocs": "λέον", "nomp": "λέοντες", "genp": "λεόντων", "datp": "λέουσι(ν)", "accp": "λέοντας", "vocp": "λέοντες"}}, "ὄνομα": {"kind": "noun", "gender": "n", "type": "3", "forms": {"noms": "ὄνομα", "gens": "ὀνόματος", "dats": "ὀνόματι", "accs": "ὄνομα", "vocs": "ὄνομα", "nomp": "ὀνόματα", "genp": "ὀνομάτων", "datp": "ὀνόμασι(ν)", "accp": "ὀνόματα", "vocp": "ὀνόματα"}}, "ῥήτωρ": {"kind": "noun", "gender": "m", "type": "3", "forms": {"noms": "ῥήτωρ", "gens": "ῥήτορος", "dats": "ῥήτορι", "accs": "ῥήτορα", "vocs": "ῥῆτορ", "nomp": "ῥήτορες", "genp": "ῥητόρων", "datp": "ῥήτορσι(ν)", "accp": "ῥήτορας", "vocp": "ῥήτορες"}}, "φύλαξ": {"kind": "noun", "gender": "m", "type": "3", "forms": {"noms": "φύλαξ", "gens": "φύλακος", "dats": "φύλακι", "accs": "φύλακα", "vocs": "φύλαξ", "nomp": "φύλακες", "genp": "φυλάκων", "datp": "φύλαξι(ν)", "accp": "φύλακας", "vocp": "φύλακες"}}, "χάρις": {"kind": "noun", "gender": "f", "type": "3", "forms": {"noms": "χάρις", "gens": "χάριτος", "dats": "χάριτι", "accs": "χάριν", "vocs": "χάρι", "nomp": "χάριτες", "genp": "χαρίτων", "datp": "χάρισι(ν)", "accp": "χάριτας", "vocp": "χάριτες"}}, "αἰδώς": {"kind": "noun", "gender": "f", "type": "3", "forms": {"noms": "αἰδώς", "gens": "αἰδοῦς", "dats": "αἰδοῖ", "accs": "αἰδῶ", "vocs": "αἰδώς"}}, "γέρας": {"kind": "noun", "gender": "n", "type": "3", "forms": {"noms": "γέρας", "gens": "γέρως", "dats": "γέραι", "accs": "γέρας", "vocs": "γέρας", "nomp": "γέρα", "genp": "γερῶν", "datp": "γέρασι(ν)", "accp": "γέρα", "vocp": "γέρα"}}, "δαίμων": {"kind": "noun", "gender": "m/f", "type": "3", "forms": {"noms": "δαίμων", "gens": "δαίμονος", "dats": "δαίμονι", "accs": "δαίμονα", "vocs": "δαῖμον", "nomp": "δαίμονες", "genp": "δαιμόνων", "datp": "δαίμοσι(ν)", "accp": "δαίμονας", "vocp": "δαίμονες"}}, "Σωκράτης": {"kind": "noun", "gender": "m", "type": "3", "forms": {"noms": "Σωκράτης", "gens": "Σωκράτους", "dats": "Σωκράτει", "accs": "Σωκράτη", "vocs": "Σώκρατες"}}, "τεῖχος": {"kind": "noun", "gender": "n", "type": "3", "forms": {"noms": "τεῖχος", "gens": "τείχους", "dats": "τείχει", "accs": "τεῖχος", "vocs": "τεῖχος", "nomp": "τείχη", "genp": "τειχῶν", "datp": "τείχεσι(ν)", "accp": "τείχη", "vocp": "τείχη"}}, "τριήρης": {"kind": "noun", "gender": "f", "type": "3", "forms": {"noms": "τριήρης", "gens": "τριήρους", "dats": "τριήρει", "accs": "τριήρη", "vocs": "τριῆρες", "nomp": "τριήρεις", "genp": "τριήρων", "datp": "τριήρεσι(ν)", "accp": "τριήρεις", "vocp": "τριήρεις"}}, "γῆ": {"kind": "noun", "gender": "f", "type": "1c", "forms": {"noms": "γῆ", "gens": "γῆς", "dats": "γῇ", "accs": "γῆν", "vocs": "γῆ"}}, "δένδρον": {"kind": "noun", "gender": "n", "type": "2n", "forms": {"noms": "δένδρον", "gens": "δένδρου", "dats": "δένδρῳ", "accs": "δένδρον", "vocs": "δένδρον", "nomp": "δένδρα", "genp": "δένδρων", "datp": "δένδροις", "accp": "δένδρα", "vocp": "δένδρα"}}, "Ἑλλάς": {"kind": "noun", "gender": "f", "type": "3", "forms": {"noms": "Ἑλλάς", "gens": "Ἑλλάδος", "dats": "Ἑλλάδι", "accs": "Ἑλλάδα", "vocs": "Ἑλλάς"}}, "Ἕλλην": {"kind": "noun", "gender": "m/f", "type": "3", "forms": {"noms": "Ἕλλην", "gens": "Ἕλληνος", "dats": "Ἕλληνι", "accs": "Ἕλληνα", "vocs": "Ἕλλην", "nomp": "Ἕλληνες", "genp": "Ἑλλήνων", "datp": "Ἕλλησι(ν)", "accp": "Ἕλληνας", "vocp": "Ἕλληνες"}}, "οὐρανός": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "οὐρανός", "gens": "οὐρανοῦ", "dats": "οὐρανῷ", "accs": "οὐρανόν", "vocs": "οὐρανέ", "nomp": "οὐρανοί", "genp": "οὐρανῶν", "datp": "οὐρανοῖς", "accp": "οὐρανούς", "vocp": "οὐρανοί"}}, "φόβος": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "φόβος", "gens": "φόβου", "dats": "φόβῳ", "accs": "φόβον", "vocs": "φόβε", "nomp": "φόβοι", "genp": "φόβων", "datp": "φόβοις", "accp": "φόβους", "vocp": "φόβοι"}}, "νόμος": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "νόμος", "gens": "νόμου", "dats": "νόμῳ", "accs": "νόμον", "vocs": "νόμε", "nomp": "νόμοι", "genp": "νόμων", "datp": "νόμοις", "accp": "νόμους", "vocp": "νόμοι"}}, "ψυχή": {"kind": "noun", "gender": "f", "type": "1h", "forms": {"noms": "ψυχή", "gens": "ψυχῆς", "dats": "ψυχῇ", "accs": "ψυχήν", "vocs": "ψυχή", "nomp": "ψυχαί", "genp": "ψυχῶν", "datp": "ψυχαῖς", "accp": "ψυχάς", "vocp": "ψυχαί"}}, "ζῷον": {"kind": "noun", "gender": "n", "type": "2n", "forms": {"noms": "ζῷον", "gens": "ζῴου", "dats": "ζῴῳ", "accs": "ζῷον", "vocs": "ζῷον", "nomp": "ζῷα", "genp": "ζῴων", "datp": "ζῴοις", "accp": "ζῷα", "vocp": "ζῷα"}}, "ἔτος": {"kind": "noun", "gender": "n", "type": "3", "forms": {"noms": "ἔτος", "gens": "ἔτους", "dats": "ἔτει", "accs": "ἔτος", "vocs": "ἔτος", "nomp": "ἔτη", "genp": "ἐτῶν", "datp": "ἔτεσι(ν)", "accp": "ἔτη", "vocp": "ἔτη"}}, "ἡμέρα": {"kind": "noun", "gender": "f", "type": "1a", "forms": {"noms": "ἡμέρα", "gens": "ἡμέρας", "dats": "ἡμέρᾳ", "accs": "ἡμέραν", "vocs": "ἡμέρα", "nomp": "ἡμέραι", "genp": "ἡμερῶν", "datp": "ἡμέραις", "accp": "ἡμέρας", "vocp": "ἡμέραι"}}, "νύξ": {"kind": "noun", "gender": "f", "type": "3", "forms": {"noms": "νύξ", "gens": "νυκτός", "dats": "νυκτί", "accs": "νύκτα", "vocs": "νύξ", "nomp": "νύκτες", "genp": "νυκτῶν", "datp": "νυξί(ν)", "accp": "νύκτας", "vocp": "νύκτες"}}, "χρόνος": {"kind": "noun", "gender": "m", "type": "2m", "forms": {"noms": "χρόνος", "gens": "χρόνου", "dats": "χρόνῳ", "accs": "χρόνον", "vocs": "χρόνε", "nomp": "χρόνοι", "genp": "χρόνων", "datp": "χρόνοις", "accp": "χρόνους", "vocp": "χρόνοι"}}}, "A": {"ἀγαθός": {"kind": "adj", "m": {"noms": "ἀγαθός", "gens": "ἀγαθοῦ", "dats": "ἀγαθῷ", "accs": "ἀγαθόν", "vocs": "ἀγαθέ", "nomp": "ἀγαθοί", "genp": "ἀγαθῶν", "datp": "ἀγαθοῖς", "accp": "ἀγαθούς", "vocp": "ἀγαθοί"}, "f": {"noms": "ἀγαθή", "gens": "ἀγαθῆς", "dats": "ἀγαθῇ", "accs": "ἀγαθήν", "vocs": "ἀγαθή", "nomp": "ἀγαθαί", "genp": "ἀγαθῶν", "datp": "ἀγαθαῖς", "accp": "ἀγαθάς", "vocp": "ἀγαθαί"}, "n": {"noms": "ἀγαθόν", "gens": "ἀγαθοῦ", "dats": "ἀγαθῷ", "accs": "ἀγαθόν", "vocs": "ἀγαθόν", "nomp": "ἀγαθά", "genp": "ἀγαθῶν", "datp": "ἀγαθοῖς", "accp": "ἀγαθά", "vocp": "ἀγαθά"}, "two": false}, "ἄξιος": {"kind": "adj", "m": {"noms": "ἄξιος", "gens": "ἀξίου", "dats": "ἀξίῳ", "accs": "ἄξιον", "vocs": "ἄξιε", "nomp": "ἄξιοι", "genp": "ἀξίων", "datp": "ἀξίοις", "accp": "ἀξίους", "vocp": "ἄξιοι"}, "f": {"noms": "ἀξία", "gens": "ἀξίας", "dats": "ἀξίᾳ", "accs": "ἀξίαν", "vocs": "ἀξία", "nomp": "ἄξιαι", "genp": "ἀξίων", "datp": "ἀξίαις", "accp": "ἀξίας", "vocp": "ἄξιαι"}, "n": {"noms": "ἄξιον", "gens": "ἀξίου", "dats": "ἀξίῳ", "accs": "ἄξιον", "vocs": "ἄξιον", "nomp": "ἄξια", "genp": "ἀξίων", "datp": "ἀξίοις", "accp": "ἄξια", "vocp": "ἄξια"}, "two": false}, "καλός": {"kind": "adj", "m": {"noms": "καλός", "gens": "καλοῦ", "dats": "καλῷ", "accs": "καλόν", "vocs": "καλέ", "nomp": "καλοί", "genp": "καλῶν", "datp": "καλοῖς", "accp": "καλούς", "vocp": "καλοί"}, "f": {"noms": "καλή", "gens": "καλῆς", "dats": "καλῇ", "accs": "καλήν", "vocs": "καλή", "nomp": "καλαί", "genp": "καλῶν", "datp": "καλαῖς", "accp": "καλάς", "vocp": "καλαί"}, "n": {"noms": "καλόν", "gens": "καλοῦ", "dats": "καλῷ", "accs": "καλόν", "vocs": "καλόν", "nomp": "καλά", "genp": "καλῶν", "datp": "καλοῖς", "accp": "καλά", "vocp": "καλά"}, "two": false}, "ἀθάνατος": {"kind": "adj", "m": {"noms": "ἀθάνατος", "gens": "ἀθανάτου", "dats": "ἀθανάτῳ", "accs": "ἀθάνατον", "vocs": "ἀθάνατε", "nomp": "ἀθάνατοι", "genp": "ἀθανάτων", "datp": "ἀθανάτοις", "accp": "ἀθανάτους", "vocp": "ἀθάνατοι"}, "f": {"noms": "ἀθάνατος", "gens": "ἀθανάτου", "dats": "ἀθανάτῳ", "accs": "ἀθάνατον", "vocs": "ἀθάνατε", "nomp": "ἀθάνατοι", "genp": "ἀθανάτων", "datp": "ἀθανάτοις", "accp": "ἀθανάτους", "vocp": "ἀθάνατοι"}, "n": {"noms": "ἀθάνατον", "gens": "ἀθανάτου", "dats": "ἀθανάτῳ", "accs": "ἀθάνατον", "vocs": "ἀθάνατον", "nomp": "ἀθάνατα", "genp": "ἀθανάτων", "datp": "ἀθανάτοις", "accp": "ἀθάνατα", "vocp": "ἀθάνατα"}, "two": true}, "ἀνάξιος": {"kind": "adj", "m": {"noms": "ἀνάξιος", "gens": "ἀναξίου", "dats": "ἀναξίῳ", "accs": "ἀνάξιον", "vocs": "ἀνάξιε", "nomp": "ἀνάξιοι", "genp": "ἀναξίων", "datp": "ἀναξίοις", "accp": "ἀναξίους", "vocp": "ἀνάξιοι"}, "f": {"noms": "ἀνάξιος", "gens": "ἀναξίου", "dats": "ἀναξίῳ", "accs": "ἀνάξιον", "vocs": "ἀνάξιε", "nomp": "ἀνάξιοι", "genp": "ἀναξίων", "datp": "ἀναξίοις", "accp": "ἀναξίους", "vocp": "ἀνάξιοι"}, "n": {"noms": "ἀνάξιον", "gens": "ἀναξίου", "dats": "ἀναξίῳ", "accs": "ἀνάξιον", "vocs": "ἀνάξιον", "nomp": "ἀνάξια", "genp": "ἀναξίων", "datp": "ἀναξίοις", "accp": "ἀνάξια", "vocp": "ἀνάξια"}, "two": true}, "δοῦλος": {"kind": "adj", "m": {"noms": "δοῦλος", "gens": "δούλου", "dats": "δούλῳ", "accs": "δοῦλον", "vocs": "δοῦλε", "nomp": "δοῦλοι", "genp": "δούλων", "datp": "δούλοις", "accp": "δούλους", "vocp": "δοῦλοι"}, "f": {"noms": "δούλη", "gens": "δούλης", "dats": "δούλῃ", "accs": "δούλην", "vocs": "δούλη", "nomp": "δοῦλαι", "genp": "δούλων", "datp": "δούλαις", "accp": "δούλας", "vocp": "δοῦλαι"}, "n": {"noms": "δοῦλον", "gens": "δούλου", "dats": "δούλῳ", "accs": "δοῦλον", "vocs": "δοῦλον", "nomp": "δοῦλα", "genp": "δούλων", "datp": "δούλοις", "accp": "δοῦλα", "vocp": "δοῦλα"}, "two": false}, "ἐλεύθερος": {"kind": "adj", "m": {"noms": "ἐλεύθερος", "gens": "ἐλευθέρου", "dats": "ἐλευθέρῳ", "accs": "ἐλεύθερον", "vocs": "ἐλεύθερε", "nomp": "ἐλεύθεροι", "genp": "ἐλευθέρων", "datp": "ἐλευθέροις", "accp": "ἐλευθέρους", "vocp": "ἐλεύθεροι"}, "f": {"noms": "ἐλευθέρα", "gens": "ἐλευθέρας", "dats": "ἐλευθέρᾳ", "accs": "ἐλευθέραν", "vocs": "ἐλευθέρα", "nomp": "ἐλεύθεραι", "genp": "ἐλευθέρων", "datp": "ἐλευθέραις", "accp": "ἐλευθέρας", "vocp": "ἐλεύθεραι"}, "n": {"noms": "ἐλεύθερον", "gens": "ἐλευθέρου", "dats": "ἐλευθέρῳ", "accs": "ἐλεύθερον", "vocs": "ἐλεύθερον", "nomp": "ἐλεύθερα", "genp": "ἐλευθέρων", "datp": "ἐλευθέροις", "accp": "ἐλεύθερα", "vocp": "ἐλεύθερα"}, "two": false}, "κακός": {"kind": "adj", "m": {"noms": "κακός", "gens": "κακοῦ", "dats": "κακῷ", "accs": "κακόν", "vocs": "κακέ", "nomp": "κακοί", "genp": "κακῶν", "datp": "κακοῖς", "accp": "κακούς", "vocp": "κακοί"}, "f": {"noms": "κακή", "gens": "κακῆς", "dats": "κακῇ", "accs": "κακήν", "vocs": "κακή", "nomp": "κακαί", "genp": "κακῶν", "datp": "κακαῖς", "accp": "κακάς", "vocp": "κακαί"}, "n": {"noms": "κακόν", "gens": "κακοῦ", "dats": "κακῷ", "accs": "κακόν", "vocs": "κακόν", "nomp": "κακά", "genp": "κακῶν", "datp": "κακοῖς", "accp": "κακά", "vocp": "κακά"}, "two": false}, "πρότερος": {"kind": "adj", "m": {"noms": "πρότερος", "gens": "προτέρου", "dats": "προτέρῳ", "accs": "πρότερον", "vocs": "πρότερε", "nomp": "πρότεροι", "genp": "προτέρων", "datp": "προτέροις", "accp": "προτέρους", "vocp": "πρότεροι"}, "f": {"noms": "προτέρα", "gens": "προτέρας", "dats": "προτέρᾳ", "accs": "προτέραν", "vocs": "προτέρα", "nomp": "πρότεραι", "genp": "προτέρων", "datp": "προτέραις", "accp": "προτέρας", "vocp": "πρότεραι"}, "n": {"noms": "πρότερον", "gens": "προτέρου", "dats": "προτέρῳ", "accs": "πρότερον", "vocs": "πρότερον", "nomp": "πρότερα", "genp": "προτέρων", "datp": "προτέροις", "accp": "πρότερα", "vocp": "πρότερα"}, "two": false}, "φίλος": {"kind": "adj", "m": {"noms": "φίλος", "gens": "φίλου", "dats": "φίλῳ", "accs": "φίλον", "vocs": "φίλε", "nomp": "φίλοι", "genp": "φίλων", "datp": "φίλοις", "accp": "φίλους", "vocp": "φίλοι"}, "f": {"noms": "φίλη", "gens": "φίλης", "dats": "φίλῃ", "accs": "φίλην", "vocs": "φίλη", "nomp": "φίλαι", "genp": "φίλων", "datp": "φίλαις", "accp": "φίλας", "vocp": "φίλαι"}, "n": {"noms": "φίλον", "gens": "φίλου", "dats": "φίλῳ", "accs": "φίλον", "vocs": "φίλον", "nomp": "φίλα", "genp": "φίλων", "datp": "φίλοις", "accp": "φίλα", "vocp": "φίλα"}, "two": false}, "μακρός": {"kind": "adj", "m": {"noms": "μακρός", "gens": "μακροῦ", "dats": "μακρῷ", "accs": "μακρόν", "vocs": "μακρέ", "nomp": "μακροί", "genp": "μακρῶν", "datp": "μακροῖς", "accp": "μακρούς", "vocp": "μακροί"}, "f": {"noms": "μακρά", "gens": "μακρᾶς", "dats": "μακρᾷ", "accs": "μακράν", "vocs": "μακρά", "nomp": "μακραί", "genp": "μακρῶν", "datp": "μακραῖς", "accp": "μακράς", "vocp": "μακραί"}, "n": {"noms": "μακρόν", "gens": "μακροῦ", "dats": "μακρῷ", "accs": "μακρόν", "vocs": "μακρόν", "nomp": "μακρά", "genp": "μακρῶν", "datp": "μακροῖς", "accp": "μακρά", "vocp": "μακρά"}, "two": false}, "μικρός": {"kind": "adj", "m": {"noms": "μικρός", "gens": "μικροῦ", "dats": "μικρῷ", "accs": "μικρόν", "vocs": "μικρέ", "nomp": "μικροί", "genp": "μικρῶν", "datp": "μικροῖς", "accp": "μικρούς", "vocp": "μικροί"}, "f": {"noms": "μικρά", "gens": "μικρᾶς", "dats": "μικρᾷ", "accs": "μικράν", "vocs": "μικρά", "nomp": "μικραί", "genp": "μικρῶν", "datp": "μικραῖς", "accp": "μικράς", "vocp": "μικραί"}, "n": {"noms": "μικρόν", "gens": "μικροῦ", "dats": "μικρῷ", "accs": "μικρόν", "vocs": "μικρόν", "nomp": "μικρά", "genp": "μικρῶν", "datp": "μικροῖς", "accp": "μικρά", "vocp": "μικρά"}, "two": false}, "ἐχθρός": {"kind": "adj", "m": {"noms": "ἐχθρός", "gens": "ἐχθροῦ", "dats": "ἐχθρῷ", "accs": "ἐχθρόν", "vocs": "ἐχθρέ", "nomp": "ἐχθροί", "genp": "ἐχθρῶν", "datp": "ἐχθροῖς", "accp": "ἐχθρούς", "vocp": "ἐχθροί"}, "f": {"noms": "ἐχθρά", "gens": "ἐχθρᾶς", "dats": "ἐχθρᾷ", "accs": "ἐχθράν", "vocs": "ἐχθρά", "nomp": "ἐχθραί", "genp": "ἐχθρῶν", "datp": "ἐχθραῖς", "accp": "ἐχθράς", "vocp": "ἐχθραί"}, "n": {"noms": "ἐχθρόν", "gens": "ἐχθροῦ", "dats": "ἐχθρῷ", "accs": "ἐχθρόν", "vocs": "ἐχθρόν", "nomp": "ἐχθρά", "genp": "ἐχθρῶν", "datp": "ἐχθροῖς", "accp": "ἐχθρά", "vocp": "ἐχθρά"}, "two": false}, "πολέμιος": {"kind": "adj", "m": {"noms": "πολέμιος", "gens": "πολεμίου", "dats": "πολεμίῳ", "accs": "πολέμιον", "vocs": "πολέμιε", "nomp": "πολέμιοι", "genp": "πολεμίων", "datp": "πολεμίοις", "accp": "πολεμίους", "vocp": "πολέμιοι"}, "f": {"noms": "πολεμία", "gens": "πολεμίας", "dats": "πολεμίᾳ", "accs": "πολεμίαν", "vocs": "πολεμία", "nomp": "πολέμιαι", "genp": "πολεμίων", "datp": "πολεμίαις", "accp": "πολεμίας", "vocp": "πολέμιαι"}, "n": {"noms": "πολέμιον", "gens": "πολεμίου", "dats": "πολεμίῳ", "accs": "πολέμιον", "vocs": "πολέμιον", "nomp": "πολέμια", "genp": "πολεμίων", "datp": "πολεμίοις", "accp": "πολέμια", "vocp": "πολέμια"}, "two": false}, "σοφός": {"kind": "adj", "m": {"noms": "σοφός", "gens": "σοφοῦ", "dats": "σοφῷ", "accs": "σοφόν", "vocs": "σοφέ", "nomp": "σοφοί", "genp": "σοφῶν", "datp": "σοφοῖς", "accp": "σοφούς", "vocp": "σοφοί"}, "f": {"noms": "σοφή", "gens": "σοφῆς", "dats": "σοφῇ", "accs": "σοφήν", "vocs": "σοφή", "nomp": "σοφαί", "genp": "σοφῶν", "datp": "σοφαῖς", "accp": "σοφάς", "vocp": "σοφαί"}, "n": {"noms": "σοφόν", "gens": "σοφοῦ", "dats": "σοφῷ", "accs": "σοφόν", "vocs": "σοφόν", "nomp": "σοφά", "genp": "σοφῶν", "datp": "σοφοῖς", "accp": "σοφά", "vocp": "σοφά"}, "two": false}, "φιλόσοφος": {"kind": "adj", "m": {"noms": "φιλόσοφος", "gens": "φιλοσόφου", "dats": "φιλοσόφῳ", "accs": "φιλόσοφον", "vocs": "φιλόσοφε", "nomp": "φιλόσοφοι", "genp": "φιλοσόφων", "datp": "φιλοσόφοις", "accp": "φιλοσόφους", "vocp": "φιλόσοφοι"}, "f": {"noms": "φιλόσοφος", "gens": "φιλοσόφου", "dats": "φιλοσόφῳ", "accs": "φιλόσοφον", "vocs": "φιλόσοφε", "nomp": "φιλόσοφοι", "genp": "φιλοσόφων", "datp": "φιλοσόφοις", "accp": "φιλοσόφους", "vocp": "φιλόσοφοι"}, "n": {"noms": "φιλόσοφον", "gens": "φιλοσόφου", "dats": "φιλοσόφῳ", "accs": "φιλόσοφον", "vocs": "φιλόσοφον", "nomp": "φιλόσοφα", "genp": "φιλοσόφων", "datp": "φιλοσόφοις", "accp": "φιλόσοφα", "vocp": "φιλόσοφα"}, "two": true}, "δῆλος": {"kind": "adj", "m": {"noms": "δῆλος", "gens": "δήλου", "dats": "δήλῳ", "accs": "δῆλον", "vocs": "δῆλε", "nomp": "δῆλοι", "genp": "δήλων", "datp": "δήλοις", "accp": "δήλους", "vocp": "δῆλοι"}, "f": {"noms": "δήλη", "gens": "δήλης", "dats": "δήλῃ", "accs": "δήλην", "vocs": "δήλη", "nomp": "δῆλαι", "genp": "δήλων", "datp": "δήλαις", "accp": "δήλας", "vocp": "δῆλαι"}, "n": {"noms": "δῆλον", "gens": "δήλου", "dats": "δήλῳ", "accs": "δῆλον", "vocs": "δῆλον", "nomp": "δῆλα", "genp": "δήλων", "datp": "δήλοις", "accp": "δῆλα", "vocp": "δῆλα"}, "two": false}, "μόνος": {"kind": "adj", "m": {"noms": "μόνος", "gens": "μόνου", "dats": "μόνῳ", "accs": "μόνον", "vocs": "μόνε", "nomp": "μόνοι", "genp": "μόνων", "datp": "μόνοις", "accp": "μόνους", "vocp": "μόνοι"}, "f": {"noms": "μόνη", "gens": "μόνης", "dats": "μόνῃ", "accs": "μόνην", "vocs": "μόνη", "nomp": "μόναι", "genp": "μόνων", "datp": "μόναις", "accp": "μόνας", "vocp": "μόναι"}, "n": {"noms": "μόνον", "gens": "μόνου", "dats": "μόνῳ", "accs": "μόνον", "vocs": "μόνον", "nomp": "μόνα", "genp": "μόνων", "datp": "μόνοις", "accp": "μόνα", "vocp": "μόνα"}, "two": false}, "ὀλίγος": {"kind": "adj", "m": {"noms": "ὀλίγος", "gens": "ὀλίγου", "dats": "ὀλίγῳ", "accs": "ὀλίγον", "vocs": "ὀλίγε", "nomp": "ὀλίγοι", "genp": "ὀλίγων", "datp": "ὀλίγοις", "accp": "ὀλίγους", "vocp": "ὀλίγοι"}, "f": {"noms": "ὀλίγη", "gens": "ὀλίγης", "dats": "ὀλίγῃ", "accs": "ὀλίγην", "vocs": "ὀλίγη", "nomp": "ὀλίγαι", "genp": "ὀλίγων", "datp": "ὀλίγαις", "accp": "ὀλίγας", "vocp": "ὀλίγαι"}, "n": {"noms": "ὀλίγον", "gens": "ὀλίγου", "dats": "ὀλίγῳ", "accs": "ὀλίγον", "vocs": "ὀλίγον", "nomp": "ὀλίγα", "genp": "ὀλίγων", "datp": "ὀλίγοις", "accp": "ὀλίγα", "vocp": "ὀλίγα"}, "two": false}, "αἴτιος": {"kind": "adj", "m": {"noms": "αἴτιος", "gens": "αἰτίου", "dats": "αἰτίῳ", "accs": "αἴτιον", "vocs": "αἴτιε", "nomp": "αἴτιοι", "genp": "αἰτίων", "datp": "αἰτίοις", "accp": "αἰτίους", "vocp": "αἴτιοι"}, "f": {"noms": "αἰτία", "gens": "αἰτίας", "dats": "αἰτίᾳ", "accs": "αἰτίαν", "vocs": "αἰτία", "nomp": "αἴτιαι", "genp": "αἰτίων", "datp": "αἰτίαις", "accp": "αἰτίας", "vocp": "αἴτιαι"}, "n": {"noms": "αἴτιον", "gens": "αἰτίου", "dats": "αἰτίῳ", "accs": "αἴτιον", "vocs": "αἴτιον", "nomp": "αἴτια", "genp": "αἰτίων", "datp": "αἰτίοις", "accp": "αἴτια", "vocp": "αἴτια"}, "two": false}, "ἀληθής": {"kind": "adj", "m": {"noms": "ἀληθής", "gens": "ἀληθοῦς", "dats": "ἀληθεῖ", "accs": "ἀληθῆ", "vocs": "ἀληθές", "nomp": "ἀληθεῖς", "genp": "ἀληθῶν", "datp": "ἀληθέσι(ν)", "accp": "ἀληθεῖς", "vocp": "ἀληθεῖς"}, "f": {"noms": "ἀληθής", "gens": "ἀληθοῦς", "dats": "ἀληθεῖ", "accs": "ἀληθῆ", "vocs": "ἀληθές", "nomp": "ἀληθεῖς", "genp": "ἀληθῶν", "datp": "ἀληθέσι(ν)", "accp": "ἀληθεῖς", "vocp": "ἀληθεῖς"}, "n": {"noms": "ἀληθές", "gens": "ἀληθοῦς", "dats": "ἀληθεῖ", "accs": "ἀληθές", "vocs": "ἀληθές", "nomp": "ἀληθῆ", "genp": "ἀληθῶν", "datp": "ἀληθέσι(ν)", "accp": "ἀληθῆ", "vocp": "ἀληθῆ"}, "two": true}, "εὐδαίμων": {"kind": "adj", "m": {"noms": "εὐδαίμων", "gens": "εὐδαίμονος", "dats": "εὐδαίμονι", "accs": "εὐδαίμονα", "vocs": "εὔδαιμον", "nomp": "εὐδαίμονες", "genp": "εὐδαιμόνων", "datp": "εὐδαίμοσι(ν)", "accp": "εὐδαίμονας", "vocp": "εὐδαίμονες"}, "f": {"noms": "εὐδαίμων", "gens": "εὐδαίμονος", "dats": "εὐδαίμονι", "accs": "εὐδαίμονα", "vocs": "εὔδαιμον", "nomp": "εὐδαίμονες", "genp": "εὐδαιμόνων", "datp": "εὐδαίμοσι(ν)", "accp": "εὐδαίμονας", "vocp": "εὐδαίμονες"}, "n": {"noms": "εὔδαιμον", "gens": "εὐδαίμονος", "dats": "εὐδαίμονι", "accs": "εὔδαιμον", "vocs": "εὔδαιμον", "nomp": "εὐδαίμονα", "genp": "εὐδαιμόνων", "datp": "εὐδαίμοσι(ν)", "accp": "εὐδαίμονα", "vocp": "εὐδαίμονα"}, "two": true}, "πολύς": {"kind": "adj", "m": {"noms": "πολύς", "gens": "πολλοῦ", "dats": "πολλῷ", "accs": "πολύν", "vocs": "—", "nomp": "πολλοί", "genp": "πολλῶν", "datp": "πολλοῖς", "accp": "πολλούς", "vocp": "—"}, "f": {"noms": "πολλή", "gens": "πολλῆς", "dats": "πολλῇ", "accs": "πολλήν", "vocs": "—", "nomp": "πολλαί", "genp": "πολλῶν", "datp": "πολλαῖς", "accp": "πολλάς", "vocp": "—"}, "n": {"noms": "πολύ", "gens": "πολλοῦ", "dats": "πολλῷ", "accs": "πολύ", "vocs": "—", "nomp": "πολλά", "genp": "πολλῶν", "datp": "πολλοῖς", "accp": "πολλά", "vocp": "—"}, "two": false}, "Ἑλληνικός": {"kind": "adj", "two": false, "m": {"noms": "Ἑλληνικός", "gens": "Ἑλληνικοῦ", "dats": "Ἑλληνικῷ", "accs": "Ἑλληνικόν", "vocs": "Ἑλληνικέ", "nomp": "Ἑλληνικοί", "genp": "Ἑλληνικῶν", "datp": "Ἑλληνικοῖς", "accp": "Ἑλληνικούς", "vocp": "Ἑλληνικοί"}, "f": {"noms": "Ἑλληνική", "gens": "Ἑλληνικῆς", "dats": "Ἑλληνικῇ", "accs": "Ἑλληνικήν", "vocs": "Ἑλληνική", "nomp": "Ἑλληνικαί", "genp": "Ἑλληνικῶν", "datp": "Ἑλληνικαῖς", "accp": "Ἑλληνικάς", "vocp": "Ἑλληνικαί"}, "n": {"noms": "Ἑλληνικόν", "gens": "Ἑλληνικοῦ", "dats": "Ἑλληνικῷ", "accs": "Ἑλληνικόν", "vocs": "Ἑλληνικόν", "nomp": "Ἑλληνικά", "genp": "Ἑλληνικῶν", "datp": "Ἑλληνικοῖς", "accp": "Ἑλληνικά", "vocp": "Ἑλληνικά"}}}, "P": {"ἐγώ": {"kind": "pron", "m": {"noms": "ἐγώ", "gens": "ἐμοῦ, μου", "dats": "ἐμοί, μοι", "accs": "ἐμέ, με", "nomp": "ἡμεῖς", "genp": "ἡμῶν", "datp": "ἡμῖν", "accp": "ἡμᾶς"}, "f": null, "n": null, "note": "1st person: singular ἐγώ, plural ἡμεῖς. The unaccented forms are enclitic."}, "σύ": {"kind": "pron", "m": {"noms": "σύ", "gens": "σοῦ, σου", "dats": "σοί, σοι", "accs": "σέ, σε", "nomp": "ὑμεῖς", "genp": "ὑμῶν", "datp": "ὑμῖν", "accp": "ὑμᾶς"}, "f": null, "n": null, "note": "2nd person: singular σύ, plural ὑμεῖς. The unaccented forms are enclitic."}, "ἡμεῖς": {"kind": "pron", "m": {"noms": "ἐγώ", "gens": "ἐμοῦ, μου", "dats": "ἐμοί, μοι", "accs": "ἐμέ, με", "nomp": "ἡμεῖς", "genp": "ἡμῶν", "datp": "ἡμῖν", "accp": "ἡμᾶς"}, "f": null, "n": null, "note": "1st person: singular ἐγώ, plural ἡμεῖς. The unaccented forms are enclitic."}, "ὑμεῖς": {"kind": "pron", "m": {"noms": "σύ", "gens": "σοῦ, σου", "dats": "σοί, σοι", "accs": "σέ, σε", "nomp": "ὑμεῖς", "genp": "ὑμῶν", "datp": "ὑμῖν", "accp": "ὑμᾶς"}, "f": null, "n": null, "note": "2nd person: singular σύ, plural ὑμεῖς. The unaccented forms are enclitic."}, "αὐτός": {"kind": "pron", "m": {"noms": "αὐτός", "gens": "αὐτοῦ", "dats": "αὐτῷ", "accs": "αὐτόν", "nomp": "αὐτοί", "genp": "αὐτῶν", "datp": "αὐτοῖς", "accp": "αὐτούς"}, "f": {"noms": "αὐτή", "gens": "αὐτῆς", "dats": "αὐτῇ", "accs": "αὐτήν", "nomp": "αὐταί", "genp": "αὐτῶν", "datp": "αὐταῖς", "accp": "αὐτάς"}, "n": {"noms": "αὐτό", "gens": "αὐτοῦ", "dats": "αὐτῷ", "accs": "αὐτό", "nomp": "αὐτά", "genp": "αὐτῶν", "datp": "αὐτοῖς", "accp": "αὐτά"}, "note": "Neuter singular nom./acc. is αὐτό (no -ν)."}, "οὗτος": {"kind": "pron", "m": {"noms": "οὗτος", "gens": "τούτου", "dats": "τούτῳ", "accs": "τοῦτον", "nomp": "οὗτοι", "genp": "τούτων", "datp": "τούτοις", "accp": "τούτους"}, "f": {"noms": "αὕτη", "gens": "ταύτης", "dats": "ταύτῃ", "accs": "ταύτην", "nomp": "αὗται", "genp": "τούτων", "datp": "ταύταις", "accp": "ταύτας"}, "n": {"noms": "τοῦτο", "gens": "τούτου", "dats": "τούτῳ", "accs": "τοῦτο", "nomp": "ταῦτα", "genp": "τούτων", "datp": "τούτοις", "accp": "ταῦτα"}, "note": "Rough breathing where the article has one; τ- where the article has τ-. Stem vowel ου/αυ follows the ending’s vowel."}, "ἐκεῖνος": {"kind": "pron", "m": {"noms": "ἐκεῖνος", "gens": "ἐκείνου", "dats": "ἐκείνῳ", "accs": "ἐκεῖνον", "nomp": "ἐκεῖνοι", "genp": "ἐκείνων", "datp": "ἐκείνοις", "accp": "ἐκείνους"}, "f": {"noms": "ἐκείνη", "gens": "ἐκείνης", "dats": "ἐκείνῃ", "accs": "ἐκείνην", "nomp": "ἐκεῖναι", "genp": "ἐκείνων", "datp": "ἐκείναις", "accp": "ἐκείνας"}, "n": {"noms": "ἐκεῖνο", "gens": "ἐκείνου", "dats": "ἐκείνῳ", "accs": "ἐκεῖνο", "nomp": "ἐκεῖνα", "genp": "ἐκείνων", "datp": "ἐκείνοις", "accp": "ἐκεῖνα"}, "note": "Neuter singular nom./acc. is ἐκεῖνο (no -ν)."}, "ὅδε": {"kind": "pron", "m": {"noms": "ὅδε", "gens": "τοῦδε", "dats": "τῷδε", "accs": "τόνδε", "nomp": "οἵδε", "genp": "τῶνδε", "datp": "τοῖσδε", "accp": "τούσδε"}, "f": {"noms": "ἥδε", "gens": "τῆσδε", "dats": "τῇδε", "accs": "τήνδε", "nomp": "αἵδε", "genp": "τῶνδε", "datp": "ταῖσδε", "accp": "τάσδε"}, "n": {"noms": "τόδε", "gens": "τοῦδε", "dats": "τῷδε", "accs": "τόδε", "nomp": "τάδε", "genp": "τῶνδε", "datp": "τοῖσδε", "accp": "τάδε"}, "note": "The article + enclitic -δε."}, "ἑαυτοῦ": {"kind": "pron", "m": {"noms": "—", "gens": "ἑαυτοῦ", "dats": "ἑαυτῷ", "accs": "ἑαυτόν", "nomp": "—", "genp": "ἑαυτῶν", "datp": "ἑαυτοῖς", "accp": "ἑαυτούς"}, "f": {"noms": "—", "gens": "ἑαυτῆς", "dats": "ἑαυτῇ", "accs": "ἑαυτήν", "nomp": "—", "genp": "ἑαυτῶν", "datp": "ἑαυταῖς", "accp": "ἑαυτάς"}, "n": {"noms": "—", "gens": "ἑαυτοῦ", "dats": "ἑαυτῷ", "accs": "ἑαυτό", "nomp": "—", "genp": "ἑαυτῶν", "datp": "ἑαυτοῖς", "accp": "ἑαυτά"}, "note": "No nominative. Contracted forms (αὑτοῦ, αὑτῷ…) are common."}, "ἐμαυτοῦ": {"kind": "pron", "m": {"noms": "—", "gens": "ἐμαυτοῦ", "dats": "ἐμαυτῷ", "accs": "ἐμαυτόν", "nomp": "—", "genp": "ἡμῶν αὐτῶν", "datp": "ἡμῖν αὐτοῖς", "accp": "ἡμᾶς αὐτούς"}, "f": {"noms": "—", "gens": "ἐμαυτῆς", "dats": "ἐμαυτῇ", "accs": "ἐμαυτήν", "nomp": "—", "genp": "ἡμῶν αὐτῶν", "datp": "ἡμῖν αὐταῖς", "accp": "ἡμᾶς αὐτάς"}, "n": null, "note": "Plural: the personal pronoun + αὐτός written as two words. No neuter."}, "ἡμῶν αὐτῶν": {"kind": "pron", "m": {"noms": "—", "gens": "ἐμαυτοῦ", "dats": "ἐμαυτῷ", "accs": "ἐμαυτόν", "nomp": "—", "genp": "ἡμῶν αὐτῶν", "datp": "ἡμῖν αὐτοῖς", "accp": "ἡμᾶς αὐτούς"}, "f": {"noms": "—", "gens": "ἐμαυτῆς", "dats": "ἐμαυτῇ", "accs": "ἐμαυτήν", "nomp": "—", "genp": "ἡμῶν αὐτῶν", "datp": "ἡμῖν αὐταῖς", "accp": "ἡμᾶς αὐτάς"}, "n": null, "note": "Plural: the personal pronoun + αὐτός written as two words. No neuter."}, "σεαυτοῦ": {"kind": "pron", "m": {"noms": "—", "gens": "σεαυτοῦ", "dats": "σεαυτῷ", "accs": "σεαυτόν", "nomp": "—", "genp": "ὑμῶν αὐτῶν", "datp": "ὑμῖν αὐτοῖς", "accp": "ὑμᾶς αὐτούς"}, "f": {"noms": "—", "gens": "σεαυτῆς", "dats": "σεαυτῇ", "accs": "σεαυτήν", "nomp": "—", "genp": "ὑμῶν αὐτῶν", "datp": "ὑμῖν αὐταῖς", "accp": "ὑμᾶς αὐτάς"}, "n": null, "note": "Contracted σαυτοῦ, σαυτῷ… are common. No neuter."}, "ὑμῶν αὐτῶν": {"kind": "pron", "m": {"noms": "—", "gens": "σεαυτοῦ", "dats": "σεαυτῷ", "accs": "σεαυτόν", "nomp": "—", "genp": "ὑμῶν αὐτῶν", "datp": "ὑμῖν αὐτοῖς", "accp": "ὑμᾶς αὐτούς"}, "f": {"noms": "—", "gens": "σεαυτῆς", "dats": "σεαυτῇ", "accs": "σεαυτήν", "nomp": "—", "genp": "ὑμῶν αὐτῶν", "datp": "ὑμῖν αὐταῖς", "accp": "ὑμᾶς αὐτάς"}, "n": null, "note": "Contracted σαυτοῦ, σαυτῷ… are common. No neuter."}, "ὅς": {"kind": "pron", "m": {"noms": "ὅς", "gens": "οὗ", "dats": "ᾧ", "accs": "ὅν", "nomp": "οἵ", "genp": "ὧν", "datp": "οἷς", "accp": "οὕς"}, "f": {"noms": "ἥ", "gens": "ἧς", "dats": "ᾗ", "accs": "ἥν", "nomp": "αἵ", "genp": "ὧν", "datp": "αἷς", "accp": "ἅς"}, "n": {"noms": "ὅ", "gens": "οὗ", "dats": "ᾧ", "accs": "ὅ", "nomp": "ἅ", "genp": "ὧν", "datp": "οἷς", "accp": "ἅ"}, "note": "Agrees with its antecedent in gender and number; its case comes from its job in its own clause. Compare the article: rough breathing and an accent everywhere."}, "τίς": {"kind": "pron", "m": {"noms": "τίς", "gens": "τίνος, τοῦ", "dats": "τίνι, τῷ", "accs": "τίνα", "nomp": "τίνες", "genp": "τίνων", "datp": "τίσι(ν)", "accp": "τίνας"}, "f": null, "n": {"noms": "τί", "gens": "τίνος, τοῦ", "dats": "τίνι, τῷ", "accs": "τί", "nomp": "τίνα", "genp": "τίνων", "datp": "τίσι(ν)", "accp": "τίνα"}, "note": "The first column is masculine AND feminine. Always accented on the first syllable; the acute never turns grave."}, "τις": {"kind": "pron", "m": {"noms": "τις", "gens": "τινός, του", "dats": "τινί, τῳ", "accs": "τινά", "nomp": "τινές", "genp": "τινῶν", "datp": "τισί(ν)", "accp": "τινάς"}, "f": null, "n": {"noms": "τι", "gens": "τινός, του", "dats": "τινί, τῳ", "accs": "τι", "nomp": "τινά, ἄττα", "genp": "τινῶν", "datp": "τισί(ν)", "accp": "τινά, ἄττα"}, "note": "The first column is masculine AND feminine. Enclitic: it usually follows the word it goes with (ἄνθρωπός τις, a certain man)."}, "πᾶς": {"kind": "pron", "m": {"noms": "πᾶς", "gens": "παντός", "dats": "παντί", "accs": "πάντα", "nomp": "πάντες", "genp": "πάντων", "datp": "πᾶσι(ν)", "accp": "πάντας"}, "f": {"noms": "πᾶσα", "gens": "πάσης", "dats": "πάσῃ", "accs": "πᾶσαν", "nomp": "πᾶσαι", "genp": "πασῶν", "datp": "πάσαις", "accp": "πάσας"}, "n": {"noms": "πᾶν", "gens": "παντός", "dats": "παντί", "accs": "πᾶν", "nomp": "πάντα", "genp": "πάντων", "datp": "πᾶσι(ν)", "accp": "πάντα"}, "note": "Masc./neut. are third declension (stem παντ-); fem. is first declension, short α. Predicate position = all; attributive = whole; no article = every."}, "ἄλλος": {"kind": "pron", "m": {"noms": "ἄλλος", "gens": "ἄλλου", "dats": "ἄλλῳ", "accs": "ἄλλον", "nomp": "ἄλλοι", "genp": "ἄλλων", "datp": "ἄλλοις", "accp": "ἄλλους"}, "f": {"noms": "ἄλλη", "gens": "ἄλλης", "dats": "ἄλλῃ", "accs": "ἄλλην", "nomp": "ἄλλαι", "genp": "ἄλλων", "datp": "ἄλλαις", "accp": "ἄλλας"}, "n": {"noms": "ἄλλο", "gens": "ἄλλου", "dats": "ἄλλῳ", "accs": "ἄλλο", "nomp": "ἄλλα", "genp": "ἄλλων", "datp": "ἄλλοις", "accp": "ἄλλα"}, "note": "Declined like αὐτός and ἐκεῖνος: neuter nom./acc. singular in -ο, not -ον."}, "ἐμός": {"kind": "pron", "m": {"noms": "ἐμός", "gens": "ἐμοῦ", "dats": "ἐμῷ", "accs": "ἐμόν", "nomp": "ἐμοί", "genp": "ἐμῶν", "datp": "ἐμοῖς", "accp": "ἐμούς"}, "f": {"noms": "ἐμή", "gens": "ἐμῆς", "dats": "ἐμῇ", "accs": "ἐμήν", "nomp": "ἐμαί", "genp": "ἐμῶν", "datp": "ἐμαῖς", "accp": "ἐμάς"}, "n": {"noms": "ἐμόν", "gens": "ἐμοῦ", "dats": "ἐμῷ", "accs": "ἐμόν", "nomp": "ἐμά", "genp": "ἐμῶν", "datp": "ἐμοῖς", "accp": "ἐμά"}, "note": "Declined like ἀγαθός. Stands in attributive position: ὁ ἐμὸς ἵππος, my horse."}, "σός": {"kind": "pron", "m": {"noms": "σός", "gens": "σοῦ", "dats": "σῷ", "accs": "σόν", "nomp": "σοί", "genp": "σῶν", "datp": "σοῖς", "accp": "σούς"}, "f": {"noms": "σή", "gens": "σῆς", "dats": "σῇ", "accs": "σήν", "nomp": "σαί", "genp": "σῶν", "datp": "σαῖς", "accp": "σάς"}, "n": {"noms": "σόν", "gens": "σοῦ", "dats": "σῷ", "accs": "σόν", "nomp": "σά", "genp": "σῶν", "datp": "σοῖς", "accp": "σά"}, "note": "Declined like ἀγαθός. Your (one person’s)."}, "ἡμέτερος": {"kind": "pron", "m": {"noms": "ἡμέτερος", "gens": "ἡμετέρου", "dats": "ἡμετέρῳ", "accs": "ἡμέτερον", "nomp": "ἡμέτεροι", "genp": "ἡμετέρων", "datp": "ἡμετέροις", "accp": "ἡμετέρους"}, "f": {"noms": "ἡμετέρα", "gens": "ἡμετέρας", "dats": "ἡμετέρᾳ", "accs": "ἡμετέραν", "nomp": "ἡμέτεραι", "genp": "ἡμετέρων", "datp": "ἡμετέραις", "accp": "ἡμετέρας"}, "n": {"noms": "ἡμέτερον", "gens": "ἡμετέρου", "dats": "ἡμετέρῳ", "accs": "ἡμέτερον", "nomp": "ἡμέτερα", "genp": "ἡμετέρων", "datp": "ἡμετέροις", "accp": "ἡμέτερα"}, "note": "Declined like ἐλεύθερος (long α after ρ)."}, "ὑμέτερος": {"kind": "pron", "m": {"noms": "ὑμέτερος", "gens": "ὑμετέρου", "dats": "ὑμετέρῳ", "accs": "ὑμέτερον", "nomp": "ὑμέτεροι", "genp": "ὑμετέρων", "datp": "ὑμετέροις", "accp": "ὑμετέρους"}, "f": {"noms": "ὑμετέρα", "gens": "ὑμετέρας", "dats": "ὑμετέρᾳ", "accs": "ὑμετέραν", "nomp": "ὑμέτεραι", "genp": "ὑμετέρων", "datp": "ὑμετέραις", "accp": "ὑμετέρας"}, "n": {"noms": "ὑμέτερον", "gens": "ὑμετέρου", "dats": "ὑμετέρῳ", "accs": "ὑμέτερον", "nomp": "ὑμέτερα", "genp": "ὑμετέρων", "datp": "ὑμετέροις", "accp": "ὑμέτερα"}, "note": "Declined like ἐλεύθερος. Your (more than one person’s)."}}};
@@ -534,7 +848,7 @@ function gHTML(g){return esc(g).replace(/\*(.+?)\*/g,"<i>$1</i>")}
 function gPlain(g){return g.replace(/\*/g,"")}
 function splitCf(m){const cf=(m.match(/\[cf\. ([^\]]+)\]/)||[])[1];return {main:m.replace(/\s*\[cf\.[^\]]*\]/,"").trim(),cf}}
 function short(m){
-  let s=splitCf(m).main;
+  let s=splitCf(m).main.replace(/^\((?:adv\.|adverb|conj\.|conjunction|postpositive [^)]*|enclitic [^)]*|interjection[^)]*|correlatives?|correlative conjunctions|dem\. adj\.\/pron\.|personal pronoun|reflexive pronoun|relative pronoun|irreg\. adj\.|poss\. adj\.|indeclinable adverb|subordinating conjunction)\)\s*/i,"");
   if(s.length>52 && s.includes(";")) s=s.split(";")[0];
   if(s.length>60){const c=s.lastIndexOf(",",56);s=(c>20?s.slice(0,c):s.slice(0,56))+"…"}
   return s;
@@ -1079,7 +1393,7 @@ window.focusKeys=()=>{if(!matchMedia("(pointer:coarse)").matches)setTimeout(()=>
 
 /* ================= Top-level tabs ================= */
 {
-const TOP=["reference","dictionary"];
+const TOP=["reference","dictionary","daily"];
 function refSub(s){
   document.querySelectorAll("[data-rsub]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.rsub===s));
   document.getElementById("r-forms").hidden=s!=="forms";
@@ -1092,13 +1406,15 @@ function showTop(t){
   document.querySelectorAll(".view").forEach(el=>el.hidden=el.id!=="v-"+t);
   document.querySelectorAll("[data-top]").forEach(b=>b.setAttribute("aria-selected",b.dataset.top===t));
   if(t==="dictionary"&&tab==="keys") focusKeys();
+  if(t==="daily"&&window.dailyShow) dailyShow();
+  store("top",t);
 }
 document.querySelectorAll("[data-top]").forEach(b=>b.onclick=()=>{location.hash=b.dataset.top;showTop(b.dataset.top);window.scrollTo({top:0})});
 document.querySelectorAll("[data-rsub]").forEach(b=>b.onclick=()=>{refSub(b.dataset.rsub);window.scrollTo({top:0})});
 window.addEventListener("hashchange",()=>showTop(location.hash.slice(1)));
 document.querySelectorAll("[data-jump]").forEach(a=>a.onclick=e=>{e.preventDefault();const t=document.getElementById(a.dataset.jump);if(t)t.scrollIntoView({behavior:"smooth",block:"start"})});
 refSub(load("rsub","forms"));
-showTop(location.hash.slice(1));
+showTop(location.hash.slice(1)||load("top",matchMedia("(max-width:700px)").matches?"daily":"reference"));
 }
 
 
@@ -1150,6 +1466,7 @@ const SFX=(()=>{
   };
 })();
 window.SFX=SFX;
+window.UIFX={anim:(el,cls)=>{if(!el)return;el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls)},burst:(el)=>burst(el),toast:(t)=>toast(t)};
 
 /* ---------- helpers ---------- */
 const anim=(el,cls)=>{if(!el)return;el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls)};
@@ -1265,6 +1582,442 @@ document.querySelectorAll("[data-rsub]").forEach(b=>b.addEventListener("click",(
 
 render();
 }
+
+
+/* ================= Daily: path, streaks, lessons ================= */
+{
+const FX=window.UIFX||{anim(){},burst(){},toast(){}};
+const S=window.SFX||{good(){},bad(){},win(){},flip(){},streak(){},tick(){},soft(){},select(){}};
+const D=load("daily",{});
+D.done=D.done||{};D.days=D.days||{};D.str=D.str||{};D.xp=D.xp||0;D.streak=D.streak||0;D.best=D.best||0;D.goal=D.goal||3;
+const save=()=>store("daily",D);
+const day=(o=0)=>{const d=new Date();d.setDate(d.getDate()+o);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const liveStreak=()=>(D.last===day()||D.last===day(-1))?D.streak:0;
+const today=()=>D.days[day()]||{xp:0,n:0};
+
+/* ---------- curriculum ---------- */
+const UNITS=[
+ {t:"First words",les:[3,4,5],forms:["article","v:pres","prep"]},
+ {t:"Tenses take shape",les:[6,7,8],forms:["v:impf","v:fut","v:aor","noun","adj"]},
+ {t:"The middle voice",les:[9,10,11],forms:["v:presmp","v:impfmp","noun","adj","prep"]},
+ {t:"To be, and pronouns",les:[12,13,14],forms:["v:eimi","v:eimiimpf","v:eimifut","v:futmid","v:aormid","pron"]},
+ {t:"Contracts & 3rd declension",les:[15,16,17],forms:["v:timao","v:poieo","v:deloo","noun","adj","prep"]},
+ {t:"Perfect & reflexives",les:[18,19,20],forms:["v:perf","v:plpf","pron","noun","prep"]},
+ {t:"Who, what, all",les:[21,22,23],forms:["v:perfmp","pron","noun","adj","prep"]},
+ {t:"Grand review",les:LESSONS,final:true},
+];
+const VT={
+ pres:["παιδεύω","present active",["παιδεύω","παιδεύεις","παιδεύει","παιδεύομεν","παιδεύετε","παιδεύουσι(ν)"]],
+ impf:["παιδεύω","imperfect active",["ἐπαίδευον","ἐπαίδευες","ἐπαίδευε(ν)","ἐπαιδεύομεν","ἐπαιδεύετε","ἐπαίδευον"]],
+ fut:["παιδεύω","future active",["παιδεύσω","παιδεύσεις","παιδεύσει","παιδεύσομεν","παιδεύσετε","παιδεύσουσι(ν)"]],
+ aor:["παιδεύω","aorist active",["ἐπαίδευσα","ἐπαίδευσας","ἐπαίδευσε(ν)","ἐπαιδεύσαμεν","ἐπαιδεύσατε","ἐπαίδευσαν"]],
+ presmp:["παιδεύω","present middle/passive",["παιδεύομαι","παιδεύῃ","παιδεύεται","παιδευόμεθα","παιδεύεσθε","παιδεύονται"]],
+ impfmp:["παιδεύω","imperfect middle/passive",["ἐπαιδευόμην","ἐπαιδεύου","ἐπαιδεύετο","ἐπαιδευόμεθα","ἐπαιδεύεσθε","ἐπαιδεύοντο"]],
+ futmid:["παιδεύω","future middle",["παιδεύσομαι","παιδεύσῃ","παιδεύσεται","παιδευσόμεθα","παιδεύσεσθε","παιδεύσονται"]],
+ aormid:["παιδεύω","aorist middle",["ἐπαιδευσάμην","ἐπαιδεύσω","ἐπαιδεύσατο","ἐπαιδευσάμεθα","ἐπαιδεύσασθε","ἐπαιδεύσαντο"]],
+ perf:["παιδεύω","perfect active",["πεπαίδευκα","πεπαίδευκας","πεπαίδευκε(ν)","πεπαιδεύκαμεν","πεπαιδεύκατε","πεπαιδεύκασι(ν)"]],
+ plpf:["παιδεύω","pluperfect active",["ἐπεπαιδεύκη","ἐπεπαιδεύκης","ἐπεπαιδεύκει(ν)","ἐπεπαιδεύκεμεν","ἐπεπαιδεύκετε","ἐπεπαιδεύκεσαν"]],
+ perfmp:["παιδεύω","perfect middle/passive",["πεπαίδευμαι","πεπαίδευσαι","πεπαίδευται","πεπαιδεύμεθα","πεπαίδευσθε","πεπαίδευνται"]],
+ eimi:["εἰμί","present",["εἰμί","εἶ","ἐστί(ν)","ἐσμέν","ἐστέ","εἰσί(ν)"]],
+ eimiimpf:["εἰμί","imperfect",["ἦ","ἦσθα","ἦν","ἦμεν","ἦτε","ἦσαν"]],
+ eimifut:["εἰμί","future",["ἔσομαι","ἔσῃ","ἔσται","ἐσόμεθα","ἔσεσθε","ἔσονται"]],
+ timao:["τιμάω","present active",["τιμῶ","τιμᾷς","τιμᾷ","τιμῶμεν","τιμᾶτε","τιμῶσι(ν)"]],
+ poieo:["ποιέω","present active",["ποιῶ","ποιεῖς","ποιεῖ","ποιοῦμεν","ποιεῖτε","ποιοῦσι(ν)"]],
+ deloo:["δηλόω","present active",["δηλῶ","δηλοῖς","δηλοῖ","δηλοῦμεν","δηλοῦτε","δηλοῦσι(ν)"]],
+};
+const PERS=["1st sg.","2nd sg.","3rd sg.","1st pl.","2nd pl.","3rd pl."];
+const CN={nom:"nominative",gen:"genitive",dat:"dative",acc:"accusative",voc:"vocative"};
+const GN={m:"masculine",f:"feminine",n:"neuter"};
+const lbl=(k,g)=>`${CN[k.slice(0,3)]} ${k[3]==="s"?"singular":"plural"}${g?", "+GN[g]:""}`;
+
+const KINDS=[["words","Words I"],["words","Words II"],["forms","Forms"],["speed","Speed round"],["boss","Unit challenge"]];
+const NODES=[];UNITS.forEach((u,ui)=>KINDS.forEach(([k,t],ki)=>NODES.push({id:ui+"-"+ki,ui,kind:k,title:t})));
+const curIndex=()=>{const i=NODES.findIndex(n=>!D.done[n.id]);return i<0?NODES.length:i};
+
+/* ---------- word pools ---------- */
+const clean=v=>v&&v.m&&v.h;
+function unitPool(ui,{review=true}={}){
+  const u=UNITS[ui];
+  const cur=V.filter(v=>u.les.includes(v.les));
+  if(u.final||!review) return cur;
+  const prev=V.filter(v=>v.les<u.les[0]);
+  return {cur,prev};
+}
+const weight=v=>(6-(D.str[v.id]||0))+(missed.has(v.id)?3:0);
+function pick(list,n){
+  const out=[],pool=list.slice();
+  while(out.length<n&&pool.length){
+    const tot=pool.reduce((s,v)=>s+weight(v),0);let r=Math.random()*tot,i=0;
+    for(;i<pool.length;i++){r-=weight(pool[i]);if(r<=0)break}
+    out.push(pool.splice(Math.min(i,pool.length-1),1)[0]);
+  }
+  return out;
+}
+function wordsFor(ui,n){
+  const u=UNITS[ui];
+  if(u.final) return pick(V,n);
+  const {cur,prev}=unitPool(ui);
+  const a=Math.min(cur.length,Math.round(n*(prev.length?.72:1)));
+  return shuffle(pick(cur,a).concat(pick(prev,n-a)));
+}
+function formsFor(ui){
+  if(UNITS[ui].final) return [...new Set(UNITS.flatMap(u=>u.forms||[]))];
+  const own=UNITS[ui].forms, older=UNITS.slice(0,ui).flatMap(u=>u.forms||[]);
+  return own.concat(own,older.length?[rnd(older),rnd(older)]:[]);
+}
+function lessonsUpTo(ui){return V.filter(v=>v.les<=(UNITS[Math.min(ui,6)].les.slice(-1)[0]))}
+
+/* ---------- question builders ---------- */
+const gkx=s=>`<span class="gk">${esc(s)}</span>`;
+function distinct(correct,pool,key,n=3){
+  const seen=new Set([key(correct)]),out=[correct];
+  for(const x of shuffle(pool)){const k=key(x);if(!k||seen.has(k))continue;seen.add(k);out.push(x);if(out.length>n)break}
+  return shuffle(out);
+}
+const samePos=v=>{const p=V.filter(x=>x.pos===v.pos&&x.id!==v.id);return p.length>=6?p:V.filter(x=>x.id!==v.id)};
+const mean=v=>short(v.m);
+function qG2E(v){const o=distinct(v,samePos(v),mean);
+  return {kind:"mc",tag:"What does this mean?",prompt:`<div class="q-big gk">${esc(v.h)}</div>`,options:o.map(x=>({html:esc(mean(x)),ok:x===v})),answer:`${gkx(v.h)} = ${esc(mean(v))}`,v}}
+function qE2G(v){const o=distinct(v,samePos(v),x=>x.h);
+  return {kind:"mc",gk:true,tag:"Pick the Greek",prompt:`<div class="q-en">${esc(mean(v))}</div>`,options:o.map(x=>({html:esc(x.h),ok:x===v})),answer:`${esc(mean(v))} = ${gkx(v.h)}`,v}}
+function qTF(v){const ok=Math.random()<.5,shown=ok?v:distinct(v,samePos(v),mean,1).find(x=>x!==v);
+  return {kind:"tf",tag:"True or false?",prompt:`<div class="q-big gk">${esc(v.h)}</div><div class="q-eq">means</div><div class="q-en">${esc(mean(shown))}</div>`,ok,answer:`${gkx(v.h)} = ${esc(mean(v))}`,v}}
+const typeable=v=>v.lem&&v.lem.length&&!/[ …]|\.\.\./.test(v.lem[0]);
+function qType(v){if(!typeable(v))return qE2G(v);
+  return {kind:"type",tag:"Write it in Greek",prompt:`<div class="q-en">${esc(mean(v))}</div><div class="q-sub">${POS[v.pos].replace(/s$/,"").toLowerCase()} · accents not needed</div>`,
+    check:a=>{const b=bare(toGreek(a));return !!b&&(v.lem.some(l=>bare(l)===b)||bare(v.h)===b)},answer:gkx(v.h),v}}
+function qMatch(vs){const ws=[];const seenH=new Set(),seenM=new Set();
+  for(const v of vs){if(seenH.has(v.h)||seenM.has(mean(v)))continue;seenH.add(v.h);seenM.add(mean(v));ws.push(v);if(ws.length===5)break}
+  return ws.length<3?qG2E(vs[0]):{kind:"match",tag:"Match the pairs",ws}}
+function qArticle(){const g=rnd(["m","f","n"]),c=rnd(["nom","gen","dat","acc"]),i=rnd([0,1]);const cor=ART[g][c][i];
+  const all=[...new Set(["m","f","n"].flatMap(G=>["nom","gen","dat","acc"].flatMap(C=>ART[G][C])))];
+  const o=distinct(cor,all,x=>x);
+  return {kind:"mc",gk:true,tag:"The article",prompt:`<div class="q-en">${CN[c]} ${i?"plural":"singular"}, ${GN[g]}</div>`,options:o.map(x=>({html:esc(x),ok:x===cor})),answer:`${CN[c]} ${i?"pl.":"sg."} ${GN[g]} = ${gkx(cor)}`}}
+function tableOf(v){
+  if(v.dt==="N"){const F=NOUNS[v.dk]?.forms;return F?[Object.entries(F).map(([k,f])=>({k,f}))]:null}
+  const d=v.dt==="A"?ADJS[v.dk]:PRONS[v.dk];if(!d)return null;
+  return [["m","f","n"].filter(g=>d[g]).flatMap(g=>Object.entries(d[g]).map(([k,f])=>({k,f,g})))];
+}
+function qForm(v){
+  const T=tableOf(v);if(!T)return qG2E(v);
+  const rows=T[0].filter(x=>x.f&&x.f!=="—"&&!/ or |, /.test(x.f));
+  if(rows.length<4) return qG2E(v);
+  const tgt=rnd(rows),two=v.dt!=="N"&&new Set(rows.map(r=>r.g)).size>1;
+  if(Math.random()<.55){
+    const o=distinct(tgt.f,rows.map(r=>r.f),x=>bare(x));
+    return {kind:"mc",gk:true,tag:"Give the form",prompt:`<div class="q-big gk">${esc(v.h)}</div><div class="q-en">${lbl(tgt.k,two?tgt.g:null)}</div>`,options:o.map(x=>({html:esc(x),ok:bare(x)===bare(tgt.f)})),answer:`${lbl(tgt.k,two?tgt.g:null)} = ${gkx(tgt.f)}`,v};
+  }
+  const okL=new Set(rows.filter(r=>bare(r.f)===bare(tgt.f)).map(r=>lbl(r.k,two?r.g:null)));
+  const others=[...new Set(rows.map(r=>lbl(r.k,two?r.g:null)))].filter(l=>!okL.has(l));
+  const cor=lbl(tgt.k,two?tgt.g:null);const o=shuffle([cor,...shuffle(others).slice(0,3)]);
+  return {kind:"mc",tag:"Identify the form",prompt:`<div class="q-big gk">${esc(tgt.f)}</div><div class="q-sub">from ${gkx(v.h)}</div>`,options:o.map(x=>({html:esc(x),ok:okL.has(x)})),answer:`${gkx(tgt.f)} = ${[...okL].join(" or ")}`,v};
+}
+function qVerb(key){
+  const [lem,ten,F]=VT[key];const sib=Object.values(VT).filter(t=>t[0]===lem);
+  const i=Math.floor(Math.random()*6),cor=F[i];
+  if(Math.random()<.55){
+    const pool=sib.flatMap(t=>t[2]);const o=distinct(cor,pool,x=>bare(x));
+    return {kind:"mc",gk:true,tag:"Conjugate",prompt:`<div class="q-big gk">${esc(lem)}</div><div class="q-en">${PERS[i]} ${ten}</div>`,options:o.map(x=>({html:esc(x),ok:bare(x)===bare(cor)})),answer:`${PERS[i]} ${ten} = ${gkx(cor)}`};
+  }
+  const all=sib.flatMap(t=>t[2].map((f,j)=>({f,l:PERS[j]+" "+t[1]})));
+  const okL=new Set(all.filter(x=>bare(x.f)===bare(cor)).map(x=>x.l));
+  const o=shuffle([PERS[i]+" "+ten,...shuffle([...new Set(all.map(x=>x.l))].filter(l=>!okL.has(l))).slice(0,3)]);
+  return {kind:"mc",tag:"Parse it",prompt:`<div class="q-big gk">${esc(cor)}</div><div class="q-sub">from ${gkx(lem)}</div>`,options:o.map(x=>({html:esc(x),ok:okL.has(x)})),answer:`${gkx(cor)} = ${[...okL].join(" or ")}`};
+}
+const PREPU=V.filter(v=>v.pos==="prep").flatMap(v=>v.cases.map(([c,m])=>({v,c,m})));
+function qPrep(pool){
+  const ps=pool.filter(v=>v.pos==="prep");const v=ps.length?rnd(ps):rnd(PREPU).v;const [c,m]=rnd(v.cases);
+  if(Math.random()<.5||v.cases.length<2){
+    const o=distinct({m},PREPU.filter(u=>u.m!==m),u=>u.m);
+    return {kind:"mc",tag:"Preposition",prompt:`<div class="q-big gk">${esc(v.h)}</div><div class="q-en">+ ${CN[c]}</div>`,options:o.map(x=>({html:esc(x.m),ok:x.m===m})),answer:`${gkx(v.h)} + ${c}. = ${esc(m)}`,v};
+  }
+  const right=v.cases.filter(x=>x[1]===m).map(x=>x[0]);
+  return {kind:"mc",tag:"Which case?",prompt:`<div class="q-big gk">${esc(v.h)} + ?</div><div class="q-en">“${esc(m)}”</div>`,options:["gen","dat","acc"].map(x=>({html:CN[x],ok:right.includes(x)})),answer:`${gkx(v.h)} + ${right.map(x=>CN[x]).join(" / ")} = ${esc(m)}`,v};
+}
+function qFormKey(key,ui){
+  const pool=lessonsUpTo(ui);
+  if(key==="article") return qArticle();
+  if(key==="prep") return qPrep(UNITS[ui].final?V:V.filter(v=>UNITS[ui].les.includes(v.les)).concat(pool));
+  if(key.startsWith("v:")) return qVerb(key.slice(2));
+  const dt={noun:"N",adj:"A",pron:"P"}[key];
+  const cands=pool.filter(v=>v.dt===dt&&tableOf(v));
+  return cands.length?qForm(rnd(cands)):qArticle();
+}
+function vocabQ(v,i){return [qG2E,qE2G,qTF,qG2E,qType,qE2G,qTF,qType][i%8](v)}
+
+/* ---------- lesson plans ---------- */
+function plan(node){
+  const ui=node.ui;
+  if(node.kind==="words"){const ws=wordsFor(ui,12);const qs=ws.slice(0,8).map(vocabQ);qs.splice(4,0,qMatch(ws.slice(7).concat(ws.slice(0,2))));qs.push(qType(ws[8]||ws[0]));return shuffleKeepMatch(qs)}
+  if(node.kind==="forms"){const fk=formsFor(ui);const qs=[];for(let i=0;i<6;i++)qs.push(qFormKey(rnd(fk),ui));const ws=wordsFor(ui,8);qs.push(qG2E(ws[0]),qE2G(ws[1]),qTF(ws[2]));qs.splice(4,0,qMatch(ws.slice(3)));return qs}
+  if(node.kind==="boss"){const fk=formsFor(ui);const ws=wordsFor(ui,12);const qs=ws.slice(0,7).map(vocabQ);for(let i=0;i<5;i++)qs.push(qFormKey(rnd(fk),ui));return shuffle(qs).concat([qMatch(ws.slice(7))])}
+  return [];
+}
+function shuffleKeepMatch(qs){const m=qs.filter(q=>q.kind==="match"),r=shuffle(qs.filter(q=>q.kind!=="match"));r.splice(4,0,...m);return r}
+
+/* ---------- path view ---------- */
+const HERO=`<svg class="hero-svg" viewBox="0 0 64 76" aria-hidden="true">
+ <ellipse cx="32" cy="72" rx="15" ry="3.5" fill="#000" opacity=".35"/>
+ <path d="M24 60l-2 10h7l1-9zM40 60l2 10h-7l-1-9z" fill="#c9a37a"/>
+ <rect x="20" y="69" width="10" height="4" rx="2" fill="#6b4a2f"/><rect x="34" y="69" width="10" height="4" rx="2" fill="#6b4a2f"/>
+ <path d="M18 44q14-6 28 0l-2 18q-12 4-24 0z" fill="#5b4f80"/>
+ <path d="M20 58h24l-1 4q-11 3-22 0z" fill="#3e355c"/>
+ <circle cx="32" cy="34" r="13" fill="#e9c9a3"/>
+ <path d="M18 33q0-17 14-17t14 17l-4 1q0-12-10-12t-10 12z" fill="#d9b25b"/>
+ <path d="M19 31h26v4q-3 0-4 4h-4v-6h-10v6h-4q-1-4-4-4z" fill="#c99d45"/>
+ <path d="M32 6c10 0 17 5 18 13-6-4-12-5-18-4-6-1-12 0-18 4 1-8 8-13 18-13z" fill="#b9a3ff"/>
+ <path d="M32 4c2 0 3 2 3 4v10h-6V8c0-2 1-4 3-4z" fill="#8e78e0"/>
+ <circle cx="28" cy="38" r="1.7" fill="#2b2233"/><circle cx="36" cy="38" r="1.7" fill="#2b2233"/>
+ <path d="M29 43q3 2 6 0" stroke="#2b2233" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+ <circle cx="49" cy="51" r="10" fill="#b9a3ff" stroke="#8e78e0" stroke-width="2"/><circle cx="49" cy="51" r="4" fill="none" stroke="#5b4f80" stroke-width="2"/>
+ <path d="M13 40l3 30" stroke="#9a8770" stroke-width="2.4" stroke-linecap="round"/><path d="M11 36l2-6 3 6z" fill="#cfd3dc"/>
+</svg>`;
+const ICON={
+ words:`<svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .6-4.5 4 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.5-4 6-.6z" fill="currentColor"/></svg>`,
+ forms:`<svg viewBox="0 0 24 24"><path d="M5 4h10l4 4v12H5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 11h8M8 15h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+ speed:`<svg viewBox="0 0 24 24"><path d="M13 2L5 13h6l-1 9 8-11h-6z" fill="currentColor"/></svg>`,
+ boss:`<svg viewBox="0 0 24 24"><path d="M3 18l2-11 4.5 4L12 4l2.5 7L19 7l2 11z" fill="currentColor"/><rect x="3" y="18.5" width="18" height="2.5" rx="1" fill="currentColor"/></svg>`,
+ check:`<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+ lock:`<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg>`,
+ flame:`<svg viewBox="0 0 24 24"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-4-1-6 1-9z" fill="currentColor"/></svg>`,
+};
+const OFF=[0,48,72,48,0,-48,-72,-48];
+let lastCur=null;
+function drawPath(){
+  const host=$("#daily");if(!host)return;
+  const cur=curIndex(),t=today(),st=liveStreak(),doneToday=D.last===day();
+  const week=[...Array(7)].map((_,i)=>{const o=i-6,k=day(o),d=new Date();d.setDate(d.getDate()+o);return {on:!!D.days[k]&&D.days[k].n>0,today:o===0,l:"SMTWTFS"[d.getDay()]}});
+  const ring=Math.min(1,t.n/D.goal),C=2*Math.PI*20;
+  let html=`<div class="dl-stats">
+    <div class="dl-stat streak ${doneToday?"lit":""}" title="Day streak">${ICON.flame}<b>${st}</b><span>day streak</span></div>
+    <div class="dl-stat goal" title="Daily goal"><svg viewBox="0 0 48 48" class="ringsvg"><circle cx="24" cy="24" r="20" class="rbg"/><circle cx="24" cy="24" r="20" class="rfg" style="stroke-dasharray:${C};stroke-dashoffset:${C*(1-ring)}"/></svg><b>${Math.min(t.n,D.goal)}/${D.goal}</b><span>today’s goal</span></div>
+    <div class="dl-stat xp"><b>${D.xp}</b><span>total XP</span></div>
+  </div>
+  <div class="dl-week">${week.map(w=>`<div class="wd ${w.on?"on":""} ${w.today?"td":""}"><i></i><span>${w.l}</span></div>`).join("")}</div>
+  <div class="dl-msg">${doneToday?(t.n>=D.goal?"Goal complete. Anything more is a bonus.":"Streak saved for today. Keep going to hit your goal."):(st?`Do one level today to keep your ${st}-day streak.`:"Do one level today to start a streak.")}</div>
+  <div class="dl-extras">
+    <button class="dl-x" data-x="weak"><b>Weak words</b><span>Your misses and shaky words</span></button>
+    <button class="dl-x" data-x="lightning"><b>Lightning round</b><span>60 seconds, as many as you can</span></button>
+    <button class="dl-x" data-x="matchrush"><b>Match rush</b><span>Three quick boards</span></button>
+  </div>
+  <div class="dl-path">`;
+  let ni=0;
+  UNITS.forEach((u,ui)=>{
+    const ls=u.final?"all lessons":`Lessons ${u.les[0]}–${u.les[u.les.length-1]}`;
+    const unitDone=KINDS.every((_,ki)=>D.done[ui+"-"+ki]);
+    html+=`<div class="dl-unit u${ui%4}"><div class="dl-uhead"><span>Unit ${ui+1} · ${ls}</span><b>${esc(u.t)}</b>${unitDone?`<em>complete</em>`:""}</div><div class="dl-nodes">`;
+    KINDS.forEach(([k,title],ki)=>{
+      const n=NODES[ni],state=D.done[n.id]?"done":ni===cur?"cur":"lock";
+      html+=`<div class="dl-nodewrap" style="--x:${OFF[ni%8]}px"><button class="dl-node ${state} k-${k}" data-n="${ni}" aria-label="${esc(title)}, unit ${ui+1}${state==="lock"?", locked":state==="done"?", completed":""}">${state==="done"?ICON.check:state==="lock"?ICON.lock:ICON[k]}</button>${state==="cur"?`<div class="hero ${lastCur!==null&&lastCur!==cur?"arrive":""}">${HERO}</div><div class="dl-start">START</div>`:""}<div class="dl-label">${esc(title)}</div></div>`;
+      ni++;
+    });
+    html+=`</div></div>`;
+  });
+  html+=cur>=NODES.length?`<div class="dl-fin">You’ve finished the whole path. Replay any level, or use the games above for daily review.</div>`:"";
+  html+=`</div>`;
+  host.innerHTML=html;
+  if(lastCur!==null&&lastCur!==cur){S.streak();setTimeout(()=>FX.burst(host.querySelector(".hero")),250)}
+  lastCur=cur;
+  host.querySelectorAll(".dl-node").forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.n,n=NODES[i];
+    if(b.classList.contains("lock")){S.soft();FX.anim(b,"nudge");FX.toast("Finish the level before this one first");return}
+    S.tick();start(n);
+  });
+  host.querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>{S.tick();extra(b.dataset.x)});
+}
+function scrollToCur(smooth){const h=document.querySelector("#daily .dl-node.cur");if(!h)return;const r=h.getBoundingClientRect();if(r.top<120||r.bottom>innerHeight-110)h.scrollIntoView({block:"center",behavior:smooth?"smooth":"auto"})}
+window.dailyShow=()=>{drawPath();window.scrollTo(0,0);setTimeout(()=>scrollToCur(false),30)};
+
+/* ---------- lesson engine ---------- */
+let L=null;
+const ov=()=>$("#dl-ov");
+function start(node,custom){
+  let qs,mode="lesson";
+  if(custom){qs=custom.qs;mode=custom.mode||"lesson"}
+  else if(node.kind==="speed"){return speed(node)}
+  else qs=plan(node);
+  L={node,qs:qs.slice(),orig:qs.length,i:0,first:0,tot:qs.length,retried:new Set(),t0:Date.now(),mode,title:custom?.title||(node?`Unit ${node.ui+1} · ${node.title}`:"Practice"),combo:0,best:0};
+  open();next();
+}
+function open(){const o=ov();o.hidden=false;document.body.classList.add("dl-lock");FX.anim(o,"enter")}
+function close(){const o=ov();o.hidden=true;o.innerHTML="";document.body.classList.remove("dl-lock");L=null;if(SP){clearInterval(SP.timer);SP=null}drawPath()}
+function frame(body,foot){
+  const pct=L?Math.round(L.i/(L.tot)*100):0;
+  ov().innerHTML=`<div class="dl-ovin"><div class="dl-bar"><button class="dl-close" aria-label="Quit lesson">✕</button><div class="dl-prog"><i style="width:${pct}%"></i></div>${L&&L.combo>=3?`<div class="dl-combo">${ICON.flame}${L.combo}</div>`:`<div class="dl-combo dim">${L?L.title.replace(/^Unit \d+ · /,""):""}</div>`}</div>
+    <div class="dl-body">${body}</div><div class="dl-foot">${foot}</div></div>`;
+  ov().querySelector(".dl-close").onclick=()=>{if(L&&L.i>0&&!confirmQuit())return;close()};
+}
+let quitArmed=0;
+function confirmQuit(){if(Date.now()-quitArmed<2500)return true;quitArmed=Date.now();FX.toast("Tap ✕ again to quit (progress in this level is lost)");return false}
+function next(){
+  if(!L)return;
+  if(L.i>=L.qs.length)return finish();
+  const q=L.qs[L.i];q.sel=null;
+  if(q.kind==="match")return renderMatch(q);
+  let body=`<div class="q-tag">${q.tag}</div><div class="q-prompt">${q.prompt}</div>`;
+  if(q.kind==="mc") body+=`<div class="q-opts ${q.gk?"gkopts":""}">${q.options.map((o,i)=>`<button class="q-opt" data-i="${i}"><kbd>${i+1}</kbd><span>${o.html}</span></button>`).join("")}</div>`;
+  if(q.kind==="tf") body+=`<div class="q-opts tf"><button class="q-opt" data-i="1"><kbd>1</kbd><span>True</span></button><button class="q-opt" data-i="0"><kbd>2</kbd><span>False</span></button></div>`;
+  if(q.kind==="type") body+=`<div class="q-type"><input id="q-in" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type here (Latin letters work)" aria-label="Your answer"><div class="q-prev" id="q-prev"></div>
+    <div class="q-kbd">${"α β γ δ ε ζ η θ ι κ λ μ ν ξ ο π ρ σ τ υ φ χ ψ ω".split(" ").map(k=>`<button data-k="${k}">${k}</button>`).join("")}<button data-k="del" class="w" aria-label="Backspace">⌫</button></div></div>`;
+  frame(body,`<button class="dl-check" id="dl-check" disabled>Check</button>`);
+  FX.anim(ov().querySelector(".dl-body"),"slidein");
+  const chk=$("#dl-check");
+  ov().querySelectorAll(".q-opt").forEach(b=>b.onclick=()=>{ov().querySelectorAll(".q-opt").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");q.sel=+b.dataset.i;chk.disabled=false;S.select()});
+  if(q.kind==="type"){const inp=$("#q-in"),pv=$("#q-prev");const up=()=>{pv.textContent=finalSigma(toGreek(inp.value))||" ";chk.disabled=!inp.value.trim()};inp.oninput=up;up();
+    if(!matchMedia("(pointer:coarse)").matches)inp.focus();
+    ov().querySelectorAll(".q-kbd button").forEach(b=>b.onclick=()=>{inp.value=b.dataset.k==="del"?inp.value.slice(0,-1):inp.value+b.dataset.k;up();S.tick();if(!matchMedia("(pointer:coarse)").matches)inp.focus()})}
+  chk.onclick=()=>check(q);
+}
+function check(q){
+  let ok;
+  if(q.kind==="mc") ok=q.options[q.sel]?.ok;
+  else if(q.kind==="tf") ok=(q.sel===1)===q.ok;
+  else if(q.kind==="type") ok=q.check($("#q-in").value);
+  ok=!!ok;
+  ov().querySelectorAll(".q-opt").forEach(b=>{const i=+b.dataset.i;b.disabled=true;
+    if(q.kind==="mc"&&q.options[i].ok)b.classList.add("right");
+    if(q.kind==="tf"&&((i===1)===q.ok))b.classList.add("right");
+    if(i===q.sel&&!ok)b.classList.add("wrong")});
+  const inp=$("#q-in");if(inp)inp.disabled=true;
+  grade(q,ok);
+  const praise=["Nice!","Correct!","Great!","Exactly.","Well done!","Perfect.","Εὖ γε!"];
+  ov().querySelector(".dl-foot").innerHTML=`<div class="dl-fb ${ok?"ok":"no"}"><div><b>${ok?rnd(praise):"Not quite"}</b>${ok?"":`<div class="dl-ans">Correct answer: ${q.answer}</div>`}</div><button class="dl-check ${ok?"":"red"}" id="dl-cont">Continue</button></div>`;
+  FX.anim(ov().querySelector(".dl-fb"),"sheet");
+  $("#dl-cont").onclick=()=>{L.i++;next()};
+  $("#dl-cont").focus({preventScroll:true});
+}
+function grade(q,ok){
+  const firstTry=!L.retried.has(q);
+  if(ok){S.good();L.combo++;L.best=Math.max(L.best,L.combo);if(firstTry)L.first++;if(L.combo>0&&L.combo%5===0)setTimeout(()=>S.streak(),130)}
+  else{S.bad();L.combo=0;if(firstTry){L.retried.add(q);const c=Object.assign({},q);L.retried.add(c);L.qs.push(c);L.tot++}}
+  if(q.v){D.str[q.v.id]=ok?Math.min(5,(D.str[q.v.id]||0)+1):0;if(!ok)markMissed(q.v)}
+}
+function renderMatch(q){
+  const ws=q.ws,L1=shuffle(ws.map(v=>v.id)),R1=shuffle(ws.map(v=>v.id));let selL=null,selR=null,done=new Set(),miss=0;
+  const draw=()=>{
+    frame(`<div class="q-tag">${q.tag}</div><div class="q-match"><div>${L1.map(id=>{const v=V[id];return `<button class="mt gk ${done.has(id)?"ok":""} ${selL===id?"sel":""}" data-s="L" data-id="${id}" ${done.has(id)?"disabled":""}>${esc(v.h)}</button>`}).join("")}</div><div>${R1.map(id=>{const v=V[id];return `<button class="mt ${done.has(id)?"ok":""} ${selR===id?"sel":""}" data-s="R" data-id="${id}" ${done.has(id)?"disabled":""}>${esc(mean(v))}</button>`}).join("")}</div></div>`,
+      `<button class="dl-check" disabled>${done.size}/${ws.length} matched</button>`);
+    ov().querySelectorAll(".mt").forEach(b=>b.onclick=()=>{
+      const id=+b.dataset.id;if(b.dataset.s==="L")selL=id;else selR=id;S.select();
+      if(selL!==null&&selR!==null){
+        if(selL===selR){done.add(selL);S.good();L.combo++;D.str[selL]=Math.min(5,(D.str[selL]||0)+1);selL=selR=null;draw();
+          ov().querySelectorAll(`.mt[data-id="${[...done].pop()}"]`).forEach(x=>FX.anim(x,"pairpop"));
+          if(done.size===ws.length){if(!miss)L.first++;setTimeout(()=>{L.i++;next()},550)}return}
+        miss++;S.bad();L.combo=0;markMissed(V[selL]);const a=ov().querySelector(`.mt[data-s="L"][data-id="${selL}"]`),c=ov().querySelector(`.mt[data-s="R"][data-id="${selR}"]`);[a,c].forEach(x=>x&&x.classList.add("bad"));selL=selR=null;setTimeout(draw,420);return}
+      draw();
+    });
+  };
+  draw();FX.anim(ov().querySelector(".dl-body"),"slidein");
+}
+
+/* ---------- speed rounds ---------- */
+let SP=null;
+function speed(node,opts={}){
+  const pool=opts.pool||(node?(UNITS[node.ui].final?V:V.filter(v=>v.les<=UNITS[node.ui].les.slice(-1)[0])):V);
+  L={node,qs:[],i:0,first:0,tot:1,retried:new Set(),t0:Date.now(),mode:"speed",title:opts.title||"Speed round",combo:0,best:0};
+  SP={left:60,score:0,wrong:0,pool,need:node?8:0,timer:null};open();
+  frame(`<div class="sp-intro"><div class="sp-bolt">${ICON.speed}</div><h3>${esc(L.title)}</h3><p>60 seconds. Tap the right answer as fast as you can. ${SP.need?`Get ${SP.need} right to pass.`:""}</p></div>`,`<button class="dl-check" id="sp-go">Start</button>`);
+  $("#sp-go").onclick=()=>{SP.timer=setInterval(()=>{SP.left--;const t=$("#sp-t");if(t){t.textContent=SP.left;t.parentElement.classList.toggle("low",SP.left<=10)}if(SP.left<=10&&SP.left>0)S.tick();if(SP.left<=0){clearInterval(SP.timer);spEnd()}},1000);spQ()};
+}
+function spQ(){
+  if(!SP)return;
+  const v=pick(SP.pool,1)[0],q=Math.random()<.5?qTF(v):qG2E(v);
+  const body=`<div class="sp-hud"><div class="sp-time"><span id="sp-t">${SP.left}</span>s</div><div class="sp-score">${SP.score}</div></div><div class="q-prompt">${q.prompt}</div>`+
+    (q.kind==="tf"?`<div class="q-opts tf"><button class="q-opt" data-i="1"><kbd>1</kbd><span>True</span></button><button class="q-opt" data-i="0"><kbd>2</kbd><span>False</span></button></div>`:
+     `<div class="q-opts">${q.options.map((o,i)=>`<button class="q-opt" data-i="${i}"><kbd>${i+1}</kbd><span>${o.html}</span></button>`).join("")}</div>`);
+  frame(body,``);ov().querySelector(".dl-prog i").style.width=((60-SP.left)/60*100)+"%";
+  FX.anim(ov().querySelector(".dl-body"),"pop");
+  ov().querySelectorAll(".q-opt").forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i,ok=q.kind==="tf"?((i===1)===q.ok):q.options[i].ok;
+    b.classList.add(ok?"right":"wrong");
+    if(ok){SP.score++;S.good();L.combo++}else{SP.wrong++;S.bad();L.combo=0;markMissed(v)}
+    D.str[v.id]=ok?Math.min(5,(D.str[v.id]||0)+1):0;
+    setTimeout(spQ,ok?160:520);
+  });
+}
+function spEnd(){
+  const sc=SP.score,pass=sc>=SP.need;const xp=Math.max(3,Math.round(sc*1.2));
+  L.first=sc;L.tot=sc+SP.wrong;
+  results({xp,pass,headline:pass?"Time!":"Out of time",sub:`${sc} correct${SP.wrong?`, ${SP.wrong} missed`:""}${SP.need&&!pass?` · need ${SP.need} to pass`:""}`});
+}
+
+/* ---------- extras ---------- */
+function unlockedPool(){const ui=Math.min(NODES[Math.min(curIndex(),NODES.length-1)].ui,6);return V.filter(v=>v.les<=UNITS[ui].les.slice(-1)[0])}
+function extra(x){
+  const pool=unlockedPool();
+  if(x==="lightning") return speed(null,{pool,title:"Lightning round"});
+  if(x==="weak"){
+    const ms=V.filter(v=>missed.has(v.id)),weak=pool.filter(v=>(D.str[v.id]||0)<2&&D.str[v.id]!==undefined);
+    let ws=shuffle(ms).slice(0,8);if(ws.length<8)ws=ws.concat(pick(weak.filter(v=>!ws.includes(v)),8-ws.length));if(ws.length<8)ws=ws.concat(pick(pool.filter(v=>!ws.includes(v)),8-ws.length));
+    const qs=ws.map(vocabQ);qs.splice(4,0,qMatch(shuffle(ws).slice(0,5)));
+    return start(null,{qs,title:"Weak words"});
+  }
+  if(x==="matchrush"){const qs=[0,1,2].map(()=>qMatch(pick(pool,7)));return start(null,{qs,title:"Match rush"})}
+}
+
+/* ---------- results + progress ---------- */
+function finish(){
+  const firstAcc=L.orig?Math.min(100,Math.round(L.first/L.orig*100)):100;
+  const base=L.node?.kind==="boss"?20:L.node?.kind==="forms"?14:12;
+  const pass=L.node?.kind==="boss"?firstAcc>=80:true;
+  const xp=base+(firstAcc===100?5:0);
+  results({xp,pass,headline:pass?(firstAcc===100?"Flawless!":"Level complete!"):"So close",sub:`${firstAcc}% right on the first try${L.best>=5?` · best combo ${L.best}`:""}${!pass?" · need 80% to pass the challenge":""}`});
+}
+function results({xp,pass,headline,sub}){
+  if(SP){clearInterval(SP.timer)}
+  const before=liveStreak(),wasToday=D.last===day();
+  D.xp+=xp;const t=today();t.xp+=xp;t.n+=1;D.days[day()]=t;
+  let streakUp=false;
+  if(!wasToday){D.streak=(D.last===day(-1))?D.streak+1:1;D.last=day();D.best=Math.max(D.best,D.streak);streakUp=true}
+  if(L.node&&pass) D.done[L.node.id]=true;
+  save();
+  const secs=Math.round((Date.now()-L.t0)/1000),goalHit=t.n===D.goal;
+  const body=`<div class="res">
+    <div class="res-hero ${pass?"":"sad"}">${HERO}</div>
+    <h2>${headline}</h2><p class="res-sub">${sub}</p>
+    <div class="res-cards"><div><span>XP</span><b class="countup" data-to="${xp}">+0</b></div><div><span>Time</span><b>${Math.floor(secs/60)}:${String(secs%60).padStart(2,"0")}</b></div><div class="${streakUp?"hot":""}"><span>Streak</span><b>${ICON.flame}<em class="${streakUp?"flip":""}">${streakUp?before:liveStreak()}</em></b></div></div>
+    ${streakUp?`<p class="res-note">${D.streak===1?"Streak started. Come back tomorrow to make it 2.":`Streak extended to ${D.streak} days.`}</p>`:goalHit?`<p class="res-note">Daily goal reached.</p>`:""}
+    ${!pass?`<p class="res-note">Missed words were added to your Missed pile in the Dictionary.</p>`:""}
+  </div>`;
+  frame(body,`<button class="dl-check" id="res-go">${pass?"Continue":"Back to the path"}</button>`);
+  ov().querySelector(".dl-prog i").style.width="100%";
+  if(pass){S.win();setTimeout(()=>FX.burst(ov().querySelector(".res-hero")),150)}else S.soft();
+  const cu=ov().querySelector(".countup");let n=0;const iv=setInterval(()=>{n=Math.min(xp,n+Math.ceil(xp/12));cu.textContent="+"+n;if(n>=xp)clearInterval(iv)},40);
+  if(streakUp)setTimeout(()=>{const e=ov().querySelector(".res-cards em");if(e){e.textContent=D.streak;FX.anim(e.parentElement,"flamepop");S.streak()}},900);
+  $("#res-go").onclick=()=>{close();setTimeout(()=>scrollToCur(true),60)};
+  $("#res-go").focus({preventScroll:true});
+}
+
+/* ---------- keyboard in lessons ---------- */
+window.addEventListener("keydown",e=>{
+  const o=ov();if(!o||o.hidden)return;
+  e.stopPropagation();
+  if(e.key==="Escape"){if(!L||L.i===0||confirmQuit())close();return}
+  const inInput=e.target.tagName==="INPUT";
+  if(/^[1-4]$/.test(e.key)&&!inInput){const b=o.querySelectorAll(".q-opt:not([disabled])")[+e.key-1];if(b){b.click();e.preventDefault()}return}
+  if(e.key==="Enter"){const c=$("#dl-cont")||$("#res-go")||$("#sp-go")||$("#dl-check");if(c&&!c.disabled){c.click();e.preventDefault()}}
+},true);
+
+
+/* ---------- settings sheet ---------- */
+const SET=$("#set");
+function drawGoal(){const g=$("#set-goal");g.innerHTML=[1,2,3,4,5].map(n=>`<button class="dl-g" data-sg="${n}" aria-pressed="${D.goal===n}" aria-label="${n} level${n>1?"s":""} per day">${n}</button>`).join("");
+  g.querySelectorAll("[data-sg]").forEach(b=>b.onclick=()=>{D.goal=+b.dataset.sg;save();drawGoal();drawPath();S.tick()})}
+function openSet(){SET.hidden=false;document.body.classList.add("dl-lock");drawGoal();FX.anim(SET,"enter");setTimeout(()=>$("#set-close").focus({preventScroll:true}),50)}
+function closeSet(){SET.hidden=true;if(ov().hidden)document.body.classList.remove("dl-lock");$("#set-open").focus({preventScroll:true})}
+$("#set-open").onclick=()=>{S.tick();openSet()};
+$("#set-close").onclick=closeSet;
+SET.addEventListener("click",e=>{if(e.target===SET)closeSet()});
+window.addEventListener("keydown",e=>{if(!SET.hidden&&e.key==="Escape"){e.stopPropagation();closeSet()}},true);
+$("#set-reset").onclick=e=>{const b=e.currentTarget;
+  if(b.dataset.sure){for(const k of Object.keys(D))delete D[k];Object.assign(D,{done:{},days:{},str:{},xp:0,streak:0,best:0,goal:3});save();lastCur=null;drawPath();drawGoal();delete b.dataset.sure;b.textContent="Cleared";S.soft();setTimeout(()=>b.textContent="Reset",1600)}
+  else{b.dataset.sure=1;b.textContent="Tap again";setTimeout(()=>{if(b.dataset.sure){delete b.dataset.sure;b.textContent="Reset"}},3000)}};
+
+drawPath();
+if(!document.getElementById("v-daily").hidden) window.dailyShow();
+}
+
+if('serviceWorker' in navigator&&location.protocol==='https:'&&/github\.io$/.test(location.hostname))navigator.serviceWorker.register('sw.js').catch(()=>{});
 
 {const h=document.querySelector("header.top");const set=()=>document.documentElement.style.setProperty("--hh",h.offsetHeight+"px");set();addEventListener("resize",set);}
 </script>
