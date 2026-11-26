@@ -697,7 +697,7 @@ body.dl-lock{overflow:hidden}
 }
 
 .dl-nodes{padding-top:48px}
-@media (min-width:701px){.dl-ov{align-items:center}.dl-ovin{height:min(100%,760px)}}
+@media (min-width:701px){.dl-ov{align-items:center}.dl-ovin{height:min(100%,860px)}}
 
 .toast{max-width:min(90vw,420px);text-align:center;white-space:normal}
 
@@ -845,6 +845,12 @@ header.top h1{display:flex;align-items:center;gap:10px}
   .ccap{font-size:.7rem}.ccap span{display:none}
 }
 @media (prefers-reduced-motion: reduce){.camp{display:none}}
+
+/* scenes placed in empty space: no backdrop, scale to fit */
+.camp.slotted::before{display:none}
+.dl-ovin{position:relative}
+.camp.slotted .ccap{top:0}
+@media (max-width:700px){.camp.slotted .ccap span{display:none}}
 </style>
 </head>
 <body>
@@ -2328,13 +2334,39 @@ const BAD={
 /* ---------- engine ---------- */
 let busy=false,last="",on=load("camp",true);
 const pickFrom=o=>{const ks=Object.keys(o).filter(k=>k!==last);const k=rnd(ks);last=k;return o[k]()};
+/* find the empty space on screen for a scene */
+const MIN=104,MAX=150;
+function slot(){
+  const vh=(window.visualViewport?visualViewport.height:innerHeight);
+  const ovEl=document.getElementById("dl-ov");
+  if(!ovEl.hidden){
+    const box=ovEl.querySelector(".dl-ovin"),body=ovEl.querySelector(".dl-body");if(!box||!body) return null;
+    const top=body.querySelector(".q-prompt,.res-cards,.sp-hud"),bot=body.querySelector(".q-opts,.q-type,.q-match")||ovEl.querySelector(".dl-foot");
+    if(!top||!bot) return null;
+    const b=box.getBoundingClientRect(),t=top.getBoundingClientRect(),o=bot.getBoundingClientRect();
+    const gTop=t.bottom+6,gBot=Math.min(o.top,vh)-6,free=gBot-gTop;
+    if(free<MIN) return null;
+    const h=Math.min(MAX,free);
+    return {host:box,css:`position:absolute;left:0;right:0;top:${(gTop-b.top)+(free-h)/2}px;height:${h}px;bottom:auto`,cls:"slotted"};
+  }
+  const vis=[document.getElementById("view"),document.getElementById("p-search"),document.getElementById("p-keys")].find(e=>e&&!e.hidden&&e.offsetParent);
+  const nav=document.querySelector(".botnav"),navH=nav&&getComputedStyle(nav).display!=="none"?nav.getBoundingClientRect().height:0;
+  const limit=vh-navH-8;
+  if(vis){
+    const r=vis.getBoundingClientRect(),gTop=Math.max(r.bottom+8,(document.querySelector("header.top")?.getBoundingClientRect().bottom||0)+8),free=limit-gTop;
+    if(free>=MIN){const h=Math.min(MAX,free);return {host:document.body,css:`position:fixed;left:0;right:0;top:${gTop+(free-h)/2}px;height:${h}px;bottom:auto`,cls:"slotted"}}
+  }
+  return {host:document.body,css:"",cls:""};
+}
 function play(sc){
-  if(busy||!on) return;busy=true;
-  const lesson=!document.getElementById("dl-ov").hidden;
-  const el=document.createElement("div");el.className="camp"+(lesson?" inlesson":"");
+  if(busy||!on) return;
+  const sl=slot();if(!sl) return;
+  busy=true;
+  const el=document.createElement("div");el.className="camp "+sl.cls;
+  if(sl.css) el.style.cssText=sl.css;
   el.innerHTML=`<div class="stage">${sc.html}</div><div class="ccap"><b>${sc.t}</b><span class="${/[α-ω]/.test(sc.src)?"gk":""}">${sc.src}</span></div>`;
   el.style.setProperty("--dur",sc.dur+"ms");
-  (lesson?document.getElementById("dl-ov"):document.body).appendChild(el);
+  sl.host.appendChild(el);
   if(S[sc.snd]) setTimeout(()=>S[sc.snd](),sc.snd==="alala"?500:120);
   setTimeout(()=>el.classList.add("out"),sc.dur-350);
   setTimeout(()=>{el.remove();busy=false},sc.dur);
