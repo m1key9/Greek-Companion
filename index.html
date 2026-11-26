@@ -700,6 +700,28 @@ body.dl-lock{overflow:hidden}
 @media (min-width:701px){.dl-ov{align-items:center}.dl-ovin{height:min(100%,760px)}}
 
 .toast{max-width:min(90vw,420px);text-align:center;white-space:normal}
+
+/* Alexander */
+.hero-svg .arm{transform-box:view-box;transform-origin:43px 44.5px;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.hero-svg .shout{opacity:0;transition:opacity .15s}
+.hero.cheer .hero-svg .arm,.res-hero.raise .hero-svg .arm{transform:rotate(-148deg)}
+.hero.cheer .hero-svg .shout,.res-hero.raise .hero-svg .shout{opacity:1}
+.hero.cheer .hero-svg .mouth,.res-hero.raise .hero-svg .mouth{opacity:0}
+.hero{overflow:visible}
+.say{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translate(-50%,6px) scale(.8);opacity:0;background:#fbfaff;color:#1b1626;border-radius:12px;padding:5px 11px;font:700 .95rem var(--f);white-space:nowrap;box-shadow:0 8px 20px -8px rgba(0,0,0,.6);transition:opacity .2s,transform .25s cubic-bezier(.3,1.6,.5,1)}
+.say::after{content:"";position:absolute;left:50%;top:100%;border:6px solid transparent;border-top-color:#fbfaff;transform:translateX(-50%)}
+.say.show{opacity:1;transform:translate(-50%,0) scale(1)}
+.quote{position:relative;margin:4px auto 12px;max-width:440px;background:#fbfaff;color:#1b1626;border-radius:16px;padding:12px 16px 10px;display:flex;flex-direction:column;gap:3px;box-shadow:0 14px 34px -16px rgba(0,0,0,.7)}
+.quote::before{content:"";position:absolute;left:50%;bottom:100%;border:9px solid transparent;border-bottom-color:#fbfaff;transform:translateX(-50%)}
+.quote .gk{font-size:1.18rem;font-weight:500;line-height:1.35}
+.quote em{font-size:.9rem;color:#4a4458}
+.quote small{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#8a8496;margin-top:2px}
+@media (prefers-reduced-motion: no-preference){
+  .hero.cheer{animation:jump .6s cubic-bezier(.3,.7,.3,1) 2}
+  @keyframes jump{0%,100%{transform:none}40%{transform:translateY(-14px)}60%{transform:translateY(-14px) rotate(-3deg)}}
+  .quote{animation:quotein .5s cubic-bezier(.3,1.4,.5,1) .5s both}
+  @keyframes quotein{from{opacity:0;transform:translateY(-6px) scale(.92)}to{opacity:1;transform:none}}
+}
 </style>
 </head>
 <body>
@@ -814,6 +836,7 @@ body.dl-lock{overflow:hidden}
   <h2 class="set-h2">Edit history</h2>
   <section class="set-group">
    <ol class="log">
+    <li><time>Nov 26, 2026</time><span>Alexander the Great joins the Daily path, with quotes from Plutarch and Arrian and a war cry. True/false answers now always show the real meaning.</span></li>
     <li><time>Nov 26, 2026</time><span>Daily review path with streaks, levels and speed rounds. Phone app mode, installable from the home screen. Settings and About.</span></li>
     <li><time>Nov 26, 2026</time><span>Sound effects, gentle animations and a calmer, centered layout.</span></li>
     <li><time>Nov 26, 2026</time><span>Moved to its own permanent website on GitHub Pages.</span></li>
@@ -1450,6 +1473,17 @@ const SFX=(()=>{
     s.connect(bp);bp.connect(g);g.connect(master);s.start(t);
   }
   const bell=(f,t,d,v)=>{tone(f,t,d,"sine",v);tone(f*2.01,t,d*.6,"sine",v*.18)};
+  function voice(t0,dur,pts,forms,trem,tremDepth,vol,det=1){
+    const c=ac();if(!c)return;const t=c.currentTime+t0;
+    const o=c.createOscillator();o.type="sawtooth";o.frequency.setValueAtTime(pts[0][1]*det,t);pts.slice(1).forEach(([dt,f])=>o.frequency.linearRampToValueAtTime(f*det,t+dt));
+    const vib=c.createOscillator(),vg=c.createGain();vib.frequency.value=5.2;vg.gain.value=pts[0][1]*.018;vib.connect(vg);vg.connect(o.frequency);
+    let src=o;
+    if(trem){const amp=c.createGain();amp.gain.value=1-tremDepth/2;const lfo=c.createOscillator(),lg=c.createGain();lfo.frequency.value=trem;lg.gain.value=tremDepth/2;lfo.connect(lg);lg.connect(amp.gain);o.connect(amp);src=amp;lfo.start(t);lfo.stop(t+dur+.05)}
+    const sum=c.createGain();sum.gain.value=1;
+    forms.forEach(([f,q,g])=>{const bp=c.createBiquadFilter();bp.type="bandpass";bp.frequency.value=f;bp.Q.value=q;const gg=c.createGain();gg.gain.value=g;src.connect(bp);bp.connect(gg);gg.connect(sum)});
+    const env=c.createGain();env.gain.setValueAtTime(0.0001,t);env.gain.exponentialRampToValueAtTime(vol,t+.05);env.gain.setValueAtTime(vol,t+Math.max(.06,dur-.14));env.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    sum.connect(env);env.connect(master);o.start(t);vib.start(t);o.stop(t+dur+.05);vib.stop(t+dur+.05);
+  }
   return {
     get on(){return on},
     set(v){on=v;store("sfx",v);if(v)this.tick()},
@@ -1461,6 +1495,8 @@ const SFX=(()=>{
     bad(){tone(207.7,0,.2,"triangle",.42,164.8);tone(155.6,.05,.22,"sine",.25)},
     soft(){tone(330,0,.12,"sine",.16,294)},
     streak(){[1568,1976,2349,3136].forEach((f,i)=>bell(f,.05+i*.06,.3,.18))},
+    alala(){const F=[[820,5,1.6],[1300,7,1],[2650,9,.35]];voice(0,1.3,[[0,560],[.16,840],[.95,880],[1.3,620]],F,7.4,.95,1.1);voice(.02,1.28,[[0,560],[.16,840],[.95,880],[1.3,620]],F,7.1,.9,.55,1.012);noise(0,.1,900,.12)},
+    hooray(){voice(0,.2,[[0,215],[.2,250]],[[420,5,1.6],[950,6,.8]],0,0,1);voice(.18,.6,[[0,300],[.12,350],[.6,250]],[[760,5,1.6],[1220,7,1],[2500,9,.3]],0,0,1.15);noise(.17,.07,1800,.18)},
     win(){[523.25,659.25,783.99,1046.5].forEach((f,i)=>bell(f,i*.085,i===3?.9:.35,.42));tone(261.6,.0,.9,"sine",.12)},
     reduce
   };
@@ -1676,12 +1712,13 @@ function distinct(correct,pool,key,n=3){
 }
 const samePos=v=>{const p=V.filter(x=>x.pos===v.pos&&x.id!==v.id);return p.length>=6?p:V.filter(x=>x.id!==v.id)};
 const mean=v=>short(v.m);
+const full=v=>splitCf(v.m).main;
 function qG2E(v){const o=distinct(v,samePos(v),mean);
-  return {kind:"mc",tag:"What does this mean?",prompt:`<div class="q-big gk">${esc(v.h)}</div>`,options:o.map(x=>({html:esc(mean(x)),ok:x===v})),answer:`${gkx(v.h)} = ${esc(mean(v))}`,v}}
+  return {kind:"mc",tag:"What does this mean?",prompt:`<div class="q-big gk">${esc(v.h)}</div>`,options:o.map(x=>({html:esc(mean(x)),ok:x===v})),answer:`${gkx(v.h)} = ${esc(full(v))}`,v}}
 function qE2G(v){const o=distinct(v,samePos(v),x=>x.h);
-  return {kind:"mc",gk:true,tag:"Pick the Greek",prompt:`<div class="q-en">${esc(mean(v))}</div>`,options:o.map(x=>({html:esc(x.h),ok:x===v})),answer:`${esc(mean(v))} = ${gkx(v.h)}`,v}}
+  return {kind:"mc",gk:true,tag:"Pick the Greek",prompt:`<div class="q-en">${esc(mean(v))}</div>`,options:o.map(x=>({html:esc(x.h),ok:x===v})),answer:`${esc(full(v))} = ${gkx(v.h)}`,v}}
 function qTF(v){const ok=Math.random()<.5,shown=ok?v:distinct(v,samePos(v),mean,1).find(x=>x!==v);
-  return {kind:"tf",tag:"True or false?",prompt:`<div class="q-big gk">${esc(v.h)}</div><div class="q-eq">means</div><div class="q-en">${esc(mean(shown))}</div>`,ok,answer:`${gkx(v.h)} = ${esc(mean(v))}`,v}}
+  return {kind:"tf",tag:"True or false?",prompt:`<div class="q-big gk">${esc(v.h)}</div><div class="q-eq">means</div><div class="q-en">${esc(mean(shown))}</div>`,ok,answer:`${gkx(v.h)} = ${esc(full(v))}`,v}}
 const typeable=v=>v.lem&&v.lem.length&&!/[ …]|\.\.\./.test(v.lem[0]);
 function qType(v){if(!typeable(v))return qE2G(v);
   return {kind:"type",tag:"Write it in Greek",prompt:`<div class="q-en">${esc(mean(v))}</div><div class="q-sub">${POS[v.pos].replace(/s$/,"").toLowerCase()} · accents not needed</div>`,
@@ -1756,22 +1793,41 @@ function plan(node){
 function shuffleKeepMatch(qs){const m=qs.filter(q=>q.kind==="match"),r=shuffle(qs.filter(q=>q.kind!=="match"));r.splice(4,0,...m);return r}
 
 /* ---------- path view ---------- */
-const HERO=`<svg class="hero-svg" viewBox="0 0 64 76" aria-hidden="true">
- <ellipse cx="32" cy="72" rx="15" ry="3.5" fill="#000" opacity=".35"/>
- <path d="M24 60l-2 10h7l1-9zM40 60l2 10h-7l-1-9z" fill="#c9a37a"/>
- <rect x="20" y="69" width="10" height="4" rx="2" fill="#6b4a2f"/><rect x="34" y="69" width="10" height="4" rx="2" fill="#6b4a2f"/>
- <path d="M18 44q14-6 28 0l-2 18q-12 4-24 0z" fill="#5b4f80"/>
- <path d="M20 58h24l-1 4q-11 3-22 0z" fill="#3e355c"/>
- <circle cx="32" cy="34" r="13" fill="#e9c9a3"/>
- <path d="M18 33q0-17 14-17t14 17l-4 1q0-12-10-12t-10 12z" fill="#d9b25b"/>
- <path d="M19 31h26v4q-3 0-4 4h-4v-6h-10v6h-4q-1-4-4-4z" fill="#c99d45"/>
- <path d="M32 6c10 0 17 5 18 13-6-4-12-5-18-4-6-1-12 0-18 4 1-8 8-13 18-13z" fill="#b9a3ff"/>
- <path d="M32 4c2 0 3 2 3 4v10h-6V8c0-2 1-4 3-4z" fill="#8e78e0"/>
- <circle cx="28" cy="38" r="1.7" fill="#2b2233"/><circle cx="36" cy="38" r="1.7" fill="#2b2233"/>
- <path d="M29 43q3 2 6 0" stroke="#2b2233" stroke-width="1.4" fill="none" stroke-linecap="round"/>
- <circle cx="49" cy="51" r="10" fill="#b9a3ff" stroke="#8e78e0" stroke-width="2"/><circle cx="49" cy="51" r="4" fill="none" stroke="#5b4f80" stroke-width="2"/>
- <path d="M13 40l3 30" stroke="#9a8770" stroke-width="2.4" stroke-linecap="round"/><path d="M11 36l2-6 3 6z" fill="#cfd3dc"/>
+const HERO=`<svg class="hero-svg" viewBox="0 0 64 80" aria-hidden="true">
+ <ellipse cx="32" cy="76" rx="15" ry="3.5" fill="#000" opacity=".35"/>
+ <path d="M19 41q13-5 26 0l4 26q-17 5-34 0z" fill="#dcd7e4"/>
+ <path d="M25 60l-2 12h6l1-11zM39 60l2 12h-6l-1-11z" fill="#e9c9a3"/>
+ <rect x="22" y="71" width="8.5" height="3.4" rx="1.6" fill="#8a5a33"/><rect x="33.5" y="71" width="8.5" height="3.4" rx="1.6" fill="#8a5a33"/>
+ <path d="M24 66h5M35 66h5" stroke="#8a5a33" stroke-width="1.2"/>
+ <g fill="#f4efe2" stroke="#d9b25b" stroke-width=".6">${[0,1,2,3,4,5].map(i=>`<rect x="${20.6+i*3.85}" y="55.5" width="3.3" height="7.5" rx="1.1"/>`).join("")}</g>
+ <path d="M19.5 42q12.5-5 25 0l-1.6 14q-10.9 3-21.8 0z" fill="#fbfaff" stroke="#d6d0e0" stroke-width=".7"/>
+ <rect x="20.6" y="52.5" width="22.8" height="3" rx="1" fill="#d9b25b"/>
+ <g transform="translate(32 46.5)" fill="#d9b25b"><circle r="1.5"/>${[0,1,2,3,4,5,6,7].map(k=>`<path d="M0 -1.6L.55 -3.8L-.55 -3.8Z" transform="rotate(${k*45})"/>`).join("")}</g>
+ <circle cx="32" cy="29.5" r="11" fill="#eccfa9"/>
+ <path d="M20.2 31Q18.6 16.8 29.6 15.2Q32.6 10.8 35.8 15Q46.2 16.6 43.8 31Q42.4 24.6 38.4 23.6Q35.6 18.8 32.2 22.4Q28.6 19 25.4 23.4Q21.8 24.4 20.2 31Z" fill="#f2cf73"/>
+ <path d="M30 15.6q2.4-3.8 5.6-.4q-2.6-.8-3.4 3.6q-.8-2.4-2.2-3.2z" fill="#e2b752"/>
+ <circle cx="20.8" cy="31.6" r="2.9" fill="#f2cf73"/><circle cx="43.2" cy="31.6" r="2.9" fill="#f2cf73"/>
+ <circle cx="28" cy="31.8" r="1.6" fill="#2b2233"/><circle cx="36" cy="31.8" r="1.6" fill="#2b2233"/>
+ <circle cx="25.6" cy="35.2" r="1.8" fill="#f19c8f" opacity=".35"/><circle cx="38.4" cy="35.2" r="1.8" fill="#f19c8f" opacity=".35"/>
+ <path class="mouth" d="M29 36.6q3 2.2 6 0" stroke="#2b2233" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+ <ellipse class="shout" cx="32" cy="37.4" rx="2.3" ry="2.6" fill="#5a2730"/>
+ <circle cx="14.5" cy="52" r="9.2" fill="#fbfaff" stroke="#d9b25b" stroke-width="2"/>
+ <g transform="translate(14.5 52)" fill="#d9b25b"><circle r="2"/>${[0,1,2,3,4,5,6,7].map(k=>`<path d="M0 -2.2L.8 -6.4L-.8 -6.4Z" transform="rotate(${k*45+22.5})"/>`).join("")}</g>
+ <g class="arm">
+  <path d="M42.6 43.6q5.6 2.6 6.6 11.2l-3.2 1.2q-1.6-6.4-5-9.4z" fill="#eccfa9"/>
+  <path d="M41.8 42.8q3.4.4 5 2.6l-3 2.6q-1.6-1.6-3.2-2z" fill="#fbfaff" stroke="#d6d0e0" stroke-width=".6"/>
+  <path d="M47.6 59.8l1.9-.5 5.4 15.2-1.4 1.6-1.3-.4z" fill="#e6e9f1" stroke="#a9b0be" stroke-width=".5"/>
+  <rect x="44.4" y="57.2" width="7.6" height="2.2" rx="1" fill="#d9b25b" transform="rotate(-18 48.2 58.3)"/>
+  <circle cx="47.7" cy="56.6" r="2.7" fill="#eccfa9"/>
+ </g>
 </svg>`;
+const QUOTES=[
+ ["οὐ κλέπτω τὴν νίκην.","I do not steal victory.","Plutarch, Alexander 31"],
+ ["εἰ μὴ Ἀλέξανδρος ἤμην, Διογένης ἂν ἤμην.","If I were not Alexander, I would be Diogenes.","Plutarch, Alexander 14"],
+ ["δουλικώτατόν ἐστι τὸ τρυφᾶν, βασιλικώτατον δὲ τὸ πονεῖν.","Luxury is the most slavish thing; toil is the most kingly.","Plutarch, Alexander 40"],
+ ["τουτὶ μέν, ὦ φίλοι, τὸ ῥέον αἷμα, καὶ οὐκ ἰχώρ.","What flows here, friends, is blood, not the ichor of the gods.","Plutarch, Alexander 28"],
+ ["τῷ κρατίστῳ.","To the strongest.","Arrian, Anabasis 7.26"],
+];
 const ICON={
  words:`<svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .6-4.5 4 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.5-4 6-.6z" fill="currentColor"/></svg>`,
  forms:`<svg viewBox="0 0 24 24"><path d="M5 4h10l4 4v12H5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 11h8M8 15h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
@@ -1826,6 +1882,15 @@ function drawPath(){
   host.querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>{S.tick();extra(b.dataset.x)});
 }
 function scrollToCur(smooth){const h=document.querySelector("#daily .dl-node.cur");if(!h)return;const r=h.getBoundingClientRect();if(r.top<120||r.bottom>innerHeight-110)h.scrollIntoView({block:"center",behavior:smooth?"smooth":"auto"})}
+function cheer(){
+  const h=document.querySelector("#daily .hero");if(!h)return;
+  h.classList.remove("cheer");void h.offsetWidth;h.classList.add("cheer");
+  let b=h.querySelector(".say");if(!b){b=document.createElement("div");b.className="say";h.appendChild(b)}
+  b.innerHTML=`<span class="gk">ἀλαλαί!</span>`;b.classList.remove("show");void b.offsetWidth;b.classList.add("show");
+  S.alala&&S.alala();
+  clearTimeout(cheer.t);cheer.t=setTimeout(()=>{h.classList.remove("cheer");b.classList.remove("show")},1900);
+}
+document.querySelectorAll('[data-top="daily"]').forEach(btn=>btn.addEventListener("click",()=>setTimeout(cheer,380)));
 window.dailyShow=()=>{drawPath();window.scrollTo(0,0);setTimeout(()=>scrollToCur(false),30)};
 
 /* ---------- lesson engine ---------- */
@@ -1881,7 +1946,8 @@ function check(q){
   const inp=$("#q-in");if(inp)inp.disabled=true;
   grade(q,ok);
   const praise=["Nice!","Correct!","Great!","Exactly.","Well done!","Perfect.","Εὖ γε!"];
-  ov().querySelector(".dl-foot").innerHTML=`<div class="dl-fb ${ok?"ok":"no"}"><div><b>${ok?rnd(praise):"Not quite"}</b>${ok?"":`<div class="dl-ans">Correct answer: ${q.answer}</div>`}</div><button class="dl-check ${ok?"":"red"}" id="dl-cont">Continue</button></div>`;
+  const extra=ok?(q.kind==="tf"&&!q.ok?`<div class="dl-ans">Right, it’s false. ${q.answer}</div>`:""):`<div class="dl-ans">${q.kind==="tf"?`Correct answer: ${q.ok?"True":"False"}. `:"Correct answer: "}${q.answer}</div>`;
+  ov().querySelector(".dl-foot").innerHTML=`<div class="dl-fb ${ok?"ok":"no"}"><div><b>${ok?rnd(praise):"Not quite"}</b>${extra}</div><button class="dl-check ${ok?"":"red"}" id="dl-cont">Continue</button></div>`;
   FX.anim(ov().querySelector(".dl-fb"),"sheet");
   $("#dl-cont").onclick=()=>{L.i++;next()};
   $("#dl-cont").focus({preventScroll:true});
@@ -1974,6 +2040,7 @@ function results({xp,pass,headline,sub}){
   const secs=Math.round((Date.now()-L.t0)/1000),goalHit=t.n===D.goal;
   const body=`<div class="res">
     <div class="res-hero ${pass?"":"sad"}">${HERO}</div>
+    ${pass?(()=>{const [g,e,src]=rnd(QUOTES);return `<div class="quote"><span class="gk">${g}</span><em>“${e}”</em><small>Alexander · ${src}</small></div>`})():""}
     <h2>${headline}</h2><p class="res-sub">${sub}</p>
     <div class="res-cards"><div><span>XP</span><b class="countup" data-to="${xp}">+0</b></div><div><span>Time</span><b>${Math.floor(secs/60)}:${String(secs%60).padStart(2,"0")}</b></div><div class="${streakUp?"hot":""}"><span>Streak</span><b>${ICON.flame}<em class="${streakUp?"flip":""}">${streakUp?before:liveStreak()}</em></b></div></div>
     ${streakUp?`<p class="res-note">${D.streak===1?"Streak started. Come back tomorrow to make it 2.":`Streak extended to ${D.streak} days.`}</p>`:goalHit?`<p class="res-note">Daily goal reached.</p>`:""}
@@ -1981,7 +2048,7 @@ function results({xp,pass,headline,sub}){
   </div>`;
   frame(body,`<button class="dl-check" id="res-go">${pass?"Continue":"Back to the path"}</button>`);
   ov().querySelector(".dl-prog i").style.width="100%";
-  if(pass){S.win();setTimeout(()=>FX.burst(ov().querySelector(".res-hero")),150)}else S.soft();
+  if(pass){S.win();setTimeout(()=>{const h=ov().querySelector(".res-hero");if(h){h.classList.add("raise");FX.burst(h)}S.hooray&&S.hooray()},420)}else S.soft();
   const cu=ov().querySelector(".countup");let n=0;const iv=setInterval(()=>{n=Math.min(xp,n+Math.ceil(xp/12));cu.textContent="+"+n;if(n>=xp)clearInterval(iv)},40);
   if(streakUp)setTimeout(()=>{const e=ov().querySelector(".res-cards em");if(e){e.textContent=D.streak;FX.anim(e.parentElement,"flamepop");S.streak()}},900);
   $("#res-go").onclick=()=>{close();setTimeout(()=>scrollToCur(true),60)};
