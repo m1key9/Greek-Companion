@@ -722,6 +722,15 @@ body.dl-lock{overflow:hidden}
   .quote{animation:quotein .5s cubic-bezier(.3,1.4,.5,1) .5s both}
   @keyframes quotein{from{opacity:0;transform:translateY(-6px) scale(.92)}to{opacity:1;transform:none}}
 }
+
+.sp-reveal{margin-top:12px;border-radius:12px;padding:10px 14px;font-size:.95rem;line-height:1.4;animation:sheet .25s ease}
+.sp-reveal.ok{background:#1b2c21}.sp-reveal.no{background:#33201d}
+.sp-reveal .gk{font-size:1.08rem}
+.sp-review{margin-top:16px;width:100%;max-width:440px;text-align:left;background:var(--panel);border-radius:14px;padding:12px 14px;max-height:30vh;overflow:auto}
+.sp-review b{display:block;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.sp-review div{display:grid;grid-template-columns:minmax(0,40%) 1fr;gap:10px;padding:6px 0;border-top:1px solid #24222b;font-size:.85rem}
+.sp-review div:first-of-type{border-top:0}
+.sp-review .gk{font-size:1rem}
 /* ================= Campaign scenes ================= */
 .camp{position:fixed;left:0;right:0;bottom:18px;height:156px;z-index:45;pointer-events:none;overflow:hidden;animation:campin .35s ease both}
 .camp.inlesson{position:absolute;top:58px;bottom:auto;height:150px;z-index:5}
@@ -2122,7 +2131,7 @@ let SP=null;
 function speed(node,opts={}){
   const pool=opts.pool||(node?(UNITS[node.ui].final?V:V.filter(v=>v.les<=UNITS[node.ui].les.slice(-1)[0])):V);
   L={node,qs:[],i:0,first:0,tot:1,retried:new Set(),t0:Date.now(),mode:"speed",title:opts.title||"Speed round",combo:0,best:0};
-  SP={left:60,score:0,wrong:0,pool,need:node?8:0,timer:null};open();
+  SP={left:60,score:0,wrong:0,pool,need:node?8:0,timer:null,missed:[]};open();
   frame(`<div class="sp-intro"><div class="sp-bolt">${ICON.speed}</div><h3>${esc(L.title)}</h3><p>60 seconds. Tap the right answer as fast as you can. ${SP.need?`Get ${SP.need} right to pass.`:""}</p></div>`,`<button class="dl-check" id="sp-go">Start</button>`);
   $("#sp-go").onclick=()=>{SP.timer=setInterval(()=>{SP.left--;const t=$("#sp-t");if(t){t.textContent=SP.left;t.parentElement.classList.toggle("low",SP.left<=10)}if(SP.left<=10&&SP.left>0)S.tick();if(SP.left<=0){clearInterval(SP.timer);spEnd()}},1000);spQ()};
 }
@@ -2134,18 +2143,25 @@ function spQ(){
      `<div class="q-opts">${q.options.map((o,i)=>`<button class="q-opt" data-i="${i}"><kbd>${i+1}</kbd><span>${o.html}</span></button>`).join("")}</div>`);
   frame(body,``);ov().querySelector(".dl-prog i").style.width=((60-SP.left)/60*100)+"%";
   FX.anim(ov().querySelector(".dl-body"),"pop");
+  let done=false;
   ov().querySelectorAll(".q-opt").forEach(b=>b.onclick=()=>{
+    if(done)return;done=true;
     const i=+b.dataset.i,ok=q.kind==="tf"?((i===1)===q.ok):q.options[i].ok;
-    b.classList.add(ok?"right":"wrong");
-    if(ok){SP.score++;S.good();L.combo++}else{SP.wrong++;S.bad();L.combo=0;markMissed(v)}
+    ov().querySelectorAll(".q-opt").forEach(x=>{x.disabled=true;const j=+x.dataset.i;if(q.kind==="tf"?((j===1)===q.ok):q.options[j].ok)x.classList.add("right")});
+    if(!ok)b.classList.add("wrong");
+    if(ok){SP.score++;S.good();L.combo++}else{SP.wrong++;S.bad();L.combo=0;markMissed(v);if(!SP.missed.some(x=>x.id===v.id))SP.missed.push(v)}
     D.str[v.id]=ok?Math.min(5,(D.str[v.id]||0)+1):0;
-    setTimeout(spQ,ok?160:520);
+    const reveal=!ok||(q.kind==="tf"&&!q.ok);
+    if(reveal){const r=document.createElement("div");r.className="sp-reveal "+(ok?"ok":"no");r.innerHTML=`${ok?"Right, it’s false.":"Answer:"} ${q.answer}`;ov().querySelector(".dl-body").appendChild(r)}
+    setTimeout(spQ,ok?(reveal?1300:180):1800);
   });
 }
 function spEnd(){
   const sc=SP.score,pass=sc>=SP.need;const xp=Math.max(3,Math.round(sc*1.2));
   L.first=sc;L.tot=sc+SP.wrong;
-  results({xp,pass,headline:pass?"Time!":"Out of time",sub:`${sc} correct${SP.wrong?`, ${SP.wrong} missed`:""}${SP.need&&!pass?` · need ${SP.need} to pass`:""}`});
+  const review=SP.missed.slice(0,12);
+  results({xp,pass,headline:pass?"Time!":"Out of time",sub:`${sc} correct${SP.wrong?`, ${SP.wrong} missed`:""}${SP.need&&!pass?` · need ${SP.need} to pass`:""}`,
+    review:review.length?`<div class="sp-review"><b>Review these</b>${review.map(v=>`<div><span class="gk">${esc(v.h)}</span><span>${esc(full(v))}</span></div>`).join("")}</div>`:""});
 }
 
 /* ---------- extras ---------- */
@@ -2170,7 +2186,7 @@ function finish(){
   const xp=base+(firstAcc===100?5:0);
   results({xp,pass,headline:pass?(firstAcc===100?"Flawless!":"Level complete!"):"So close",sub:`${firstAcc}% right on the first try${L.best>=5?` · best combo ${L.best}`:""}${!pass?" · need 80% to pass the challenge":""}`});
 }
-function results({xp,pass,headline,sub}){
+function results({xp,pass,headline,sub,review=""}){
   if(SP){clearInterval(SP.timer)}
   const before=liveStreak(),wasToday=D.last===day();
   D.xp+=xp;const t=today();t.xp+=xp;t.n+=1;D.days[day()]=t;
@@ -2186,6 +2202,7 @@ function results({xp,pass,headline,sub}){
     <div class="res-cards"><div><span>XP</span><b class="countup" data-to="${xp}">+0</b></div><div><span>Time</span><b>${Math.floor(secs/60)}:${String(secs%60).padStart(2,"0")}</b></div><div class="${streakUp?"hot":""}"><span>Streak</span><b>${ICON.flame}<em class="${streakUp?"flip":""}">${streakUp?before:liveStreak()}</em></b></div></div>
     ${streakUp?`<p class="res-note">${D.streak===1?"Streak started. Come back tomorrow to make it 2.":`Streak extended to ${D.streak} days.`}</p>`:goalHit?`<p class="res-note">Daily goal reached.</p>`:""}
     ${!pass?`<p class="res-note">Missed words were added to your Missed pile in the Dictionary.</p>`:""}
+    ${review}
   </div>`;
   frame(body,`<button class="dl-check" id="res-go">${pass?"Continue":"Back to the path"}</button>`);
   ov().querySelector(".dl-prog i").style.width="100%";
