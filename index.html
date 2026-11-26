@@ -300,16 +300,148 @@ footer{max-width:1320px;margin:0 auto;padding:0 24px 32px;color:var(--muted);fon
 .refscope .side{top:calc(var(--hh,96px) + 16px);max-height:calc(100vh - var(--hh,96px) - 32px);overflow:auto;scrollbar-width:thin}
 @media (max-width:1050px){.refscope .side{max-height:none;overflow:visible}}
 @media (max-width:640px){.refscope .side{top:16px}}
+
+/* ================= Polish: layout, calm, motion ================= */
+/* centred frame */
+.hwrap{max-width:1200px}
+.refscope .sheet{max-width:1200px;gap:36px;padding-top:12px}
+.refscope .cwrap{max-width:1080px}
+footer{max-width:1200px;text-align:center;padding-top:8px}
+body{font-size:14.5px}
+
+/* header: quieter, with sound toggle */
+header.top{background:rgba(17,16,20,.82);backdrop-filter:saturate(1.2) blur(14px);-webkit-backdrop-filter:saturate(1.2) blur(14px)}
+.hright{display:flex;align-items:flex-end;gap:10px}
+.sfx{align-self:center;margin-bottom:6px;width:36px;height:36px;border-radius:50%;border:1px solid var(--rule);background:none;color:var(--muted);display:grid;place-items:center;cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+.sfx:hover{color:var(--ink);border-color:var(--accent-dim)}
+.sfx[aria-pressed="true"]{color:var(--accent)}
+.sfx svg{width:17px;height:17px}
+.sfx .w{transition:opacity .2s}
+.sfx[aria-pressed="false"] .w{opacity:0}
+.sfx .x{opacity:0;transition:opacity .2s}
+.sfx[aria-pressed="false"] .x{opacity:1}
+.toptabs button{position:relative;transition:color .2s}
+.toptabs button::after{content:"";position:absolute;left:16px;right:16px;bottom:-1px;height:2px;border-radius:2px;background:var(--accent);transform:scaleX(0);transition:transform .25s ease}
+.toptabs button[aria-selected="true"]{border-bottom-color:transparent}
+.toptabs button[aria-selected="true"]::after{transform:scaleX(1)}
+
+/* reference: one centred segmented switch */
+.rsub{justify-content:center;padding-top:22px}
+.rsub{gap:0}
+.seg{border-radius:0;padding:8px 20px;transition:all .2s}
+.seg:first-child{border-radius:999px 0 0 999px}
+.seg:last-child{border-radius:0 999px 999px 0;border-left:0}
+.refscope .fjump{position:sticky;top:var(--hh,96px);z-index:4;justify-content:center;gap:4px 6px;padding:10px 0 12px;margin:0 0 6px;background:linear-gradient(var(--bg) 70%,rgba(17,16,20,0))}
+.refscope .fjump a,.refscope .cjump a{padding:4px 10px;border-radius:999px;transition:color .2s,background .2s}
+.refscope .fjump a.on,.refscope .cjump a.on{color:var(--ink);background:var(--tint)}
+.refscope .cjump{justify-content:center;position:sticky;top:var(--hh,96px);z-index:4;padding:10px 0;background:linear-gradient(var(--bg) 70%,rgba(17,16,20,0))}
+.refscope section>h2,.refscope .cgroup>h2{font-size:1.08rem;margin-bottom:14px}
+.refscope main{gap:40px}
+.refscope .card{border:1px solid transparent;transition:border-color .25s,transform .25s}
+.refscope .card:hover{border-color:#2c2938}
+.refscope .citem{transition:border-color .25s;border:1px solid transparent}
+.refscope .citem:hover{border-color:#2c2938}
+.refscope tbody tr{transition:background .15s}
+.refscope tbody tr:not(.div):hover td,.refscope tbody tr:not(.div):hover th{background:#1c1a22}
+
+/* dictionary: centred tools, calmer chrome */
+.labscope .wrap{max-width:1000px}
+.labscope nav.tabs{justify-content:safe center}
+.labscope nav.tabs button{position:relative;transition:color .2s,opacity .2s}
+.labscope nav.tabs button[aria-selected="true"]{border-bottom-color:transparent}
+.labscope nav.tabs button::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:2px;border-radius:2px;background:var(--accent);transform:scaleX(0);transition:transform .25s ease}
+.labscope nav.tabs button[aria-selected="true"]::after{transform:scaleX(1)}
+.labscope .scoreline{justify-content:center;margin:2px 0 14px;gap:8px}
+.labscope .scoreline span{background:var(--panel);border-radius:999px;padding:3px 12px}
+.labscope .scoreline b{display:inline-block}
+.labscope #view[data-mode=flash],.labscope #view[data-mode=quiz],.labscope #view[data-mode=type],
+.labscope #deck[data-mode=flash],.labscope #deck[data-mode=quiz],.labscope #deck[data-mode=type]{max-width:720px;margin-left:auto;margin-right:auto}
+.labscope #view[data-mode=match],.labscope #view[data-mode=memory],.labscope #deck[data-mode=match],.labscope #deck[data-mode=memory]{max-width:860px;margin-left:auto;margin-right:auto}
+.labscope details.deck{border-color:transparent;background:var(--panel);border-radius:10px;padding:10px 16px}
+.labscope details.deck summary{list-style:none;display:flex;align-items:center;gap:8px}
+.labscope details.deck summary::-webkit-details-marker{display:none}
+.labscope details.deck summary::before{content:"";width:7px;height:7px;border-right:1.5px solid var(--accent);border-bottom:1.5px solid var(--accent);transform:rotate(-45deg);transition:transform .2s;margin-right:2px}
+.labscope details.deck[open] summary::before{transform:rotate(45deg)}
+.labscope .bar{justify-content:center;text-align:center}
+.labscope .bar .note{margin:0 auto}
+.labscope .card{border:1px solid transparent}
+.labscope .flash{min-height:290px;background:radial-gradient(120% 90% at 50% 0%,#211d2c 0%,var(--panel) 60%);border:1px solid #2a2635;box-shadow:0 10px 30px -18px rgba(0,0,0,.8);transition:border-color .25s,box-shadow .25s}
+.labscope .flash:hover{border-color:var(--accent-dim);box-shadow:0 14px 36px -18px rgba(185,163,255,.25)}
+.labscope .big{letter-spacing:.005em}
+.labscope .kbdhint{opacity:.7}
+.labscope .prog{height:3px;background:#24212c}
+.labscope .prog i{transition:width .35s ease;background:linear-gradient(90deg,var(--accent-dim),var(--accent))}
+.labscope .btn{transition:border-color .2s,background .2s,transform .08s}
+.labscope .btn:active,.labscope .opt:active,.labscope .tile:active,.labscope .chip:active{transform:scale(.97)}
+.labscope .btn.primary:hover{filter:brightness(1.08)}
+.labscope .opt{transition:border-color .2s,background .2s,transform .1s}
+.labscope .opt:hover{border-color:var(--accent-dim)}
+.labscope .tile{transition:border-color .2s,background .2s,transform .15s,box-shadow .2s}
+.labscope .tile:hover{border-color:var(--accent-dim);transform:translateY(-2px)}
+.labscope .tile[aria-pressed="true"]{transform:translateY(-3px);box-shadow:0 0 0 2px var(--accent) inset,0 10px 24px -14px rgba(185,163,255,.5)}
+.labscope .tile.gone{opacity:0;pointer-events:none;transform:scale(.9);transition:none}
+.labscope .mcard{transition:transform .15s,border-color .2s}
+.labscope .mcard.down:hover{transform:translateY(-2px);border-color:var(--accent)}
+.labscope .fb{transition:color .2s}
+.refscope .dentry{transition:background .15s}
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion: no-preference){
+  .view.enter,#r-forms.enter,#r-syntax.enter,.labscope #view.enter,.labscope .refscope.enter{animation:rise .38s cubic-bezier(.2,.7,.2,1)}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .refscope .rv{opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
+  .refscope .rv.in{opacity:1;transform:none}
+  .labscope .cardin{animation:cardin .35s cubic-bezier(.2,.7,.2,1)}
+  @keyframes cardin{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+  .labscope .flash.reveal{animation:reveal .42s cubic-bezier(.2,.7,.2,1)}
+  @keyframes reveal{0%{transform:perspective(900px) rotateX(10deg) scale(.985)}60%{transform:perspective(900px) rotateX(-2deg)}100%{transform:none}}
+  .labscope .flash.reveal .meaning,.labscope .flash.reveal .cf,.labscope .flash.reveal div[style*="dashed"]{animation:fadein .45s ease .05s both}
+  @keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .labscope .opt.ok,.labscope .chip.ok{animation:okpop .45s cubic-bezier(.2,.9,.3,1.3)}
+  @keyframes okpop{0%{transform:scale(1)}40%{transform:scale(1.035);box-shadow:0 0 0 3px rgba(127,207,152,.25)}100%{transform:scale(1)}}
+  .labscope .opt.no,.labscope .chip.no,.labscope .tile.wrong{animation:shake .38s ease}
+  @keyframes shake{0%,100%{transform:none}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+  .labscope .fb.ok,.labscope .fb.no{animation:fadein .3s ease}
+  .labscope .tile.gone.pop{animation:dissolve .5s ease forwards}
+  @keyframes dissolve{0%{opacity:1;transform:scale(1);filter:none;background:var(--goodbg);border-color:var(--good)}35%{opacity:1;transform:scale(1.04);background:var(--goodbg);border-color:var(--good)}100%{opacity:0;transform:scale(.86);filter:blur(4px)}}
+  .labscope .mcard.flipin{animation:flipin .32s cubic-bezier(.2,.7,.2,1)}
+  @keyframes flipin{from{transform:perspective(600px) rotateY(80deg);opacity:.4}to{transform:none;opacity:1}}
+  .labscope .mcard.kept{animation:kept .55s ease}
+  @keyframes kept{0%{transform:scale(1)}40%{transform:scale(1.06);box-shadow:0 0 0 3px rgba(127,207,152,.25)}100%{transform:scale(1)}}
+  .labscope .bump{animation:bump .35s ease}
+  @keyframes bump{40%{transform:scale(1.35)}}
+  .labscope .scoreline.glow span{animation:glow 1s ease}
+  @keyframes glow{30%{box-shadow:0 0 0 2px var(--accent-dim),0 0 18px rgba(185,163,255,.35)}}
+  .refscope .rdlist .dentry{animation:fadein .3s ease both}
+  .refscope .rdlist .dentry:nth-child(2){animation-delay:.02s}.refscope .rdlist .dentry:nth-child(3){animation-delay:.04s}
+  .refscope .rdlist .dentry:nth-child(4){animation-delay:.06s}.refscope .rdlist .dentry:nth-child(5){animation-delay:.08s}
+  .refscope .rdlist .dentry:nth-child(6){animation-delay:.1s}.refscope .rdlist .dentry:nth-child(n+7){animation-delay:.12s}
+  .modal{animation:fadein2 .2s ease}.modal .box{animation:cardin .3s cubic-bezier(.2,.7,.2,1)}
+  @keyframes fadein2{from{opacity:0}to{opacity:1}}
+}
+/* celebration sparkle + streak toast */
+.burst{position:fixed;width:0;height:0;pointer-events:none;z-index:60}
+.burst i{position:absolute;width:6px;height:6px;margin:-3px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(185,163,255,.8);animation:spark .9s cubic-bezier(.2,.7,.2,1) forwards}
+.burst i:nth-child(3n){background:#e8dcff;width:4px;height:4px}
+.burst i:nth-child(4n){background:var(--good)}
+@keyframes spark{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(1);opacity:0}}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);opacity:0;z-index:70;background:#221d31;color:var(--ink);border:1px solid var(--accent-dim);border-radius:999px;padding:8px 18px;font:600 .9rem var(--f);box-shadow:0 12px 30px -12px rgba(185,163,255,.45);transition:opacity .3s,transform .3s cubic-bezier(.2,.7,.2,1)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media (max-width:640px){.sfx{margin-bottom:4px;width:32px;height:32px}.hright{gap:4px}}
+@media print{.sfx,.toast,.burst{display:none}.refscope .rv{opacity:1;transform:none}}
+
+@media (pointer:coarse){.labscope .kbdhint{display:none}}
 </style>
 </head>
 <body>
 <header class="top"><div class="hwrap">
  <div><div class="eyebrow">Groton · From Alpha to Omega · Lessons 1–23 · 237 words</div><h1>Attic Greek <span>Companion</span></h1></div>
- <nav class="toptabs" role="tablist" aria-label="Sections"><button role="tab" data-top="reference">Reference</button><button role="tab" data-top="dictionary">Dictionary</button></nav>
+ <div class="hright"><nav class="toptabs" role="tablist" aria-label="Sections"><button role="tab" data-top="reference">Reference</button><button role="tab" data-top="dictionary">Dictionary</button></nav>
+ <button class="sfx" id="sfx" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z" fill="currentColor" fill-opacity=".18"/><path class="w" d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11"/><path class="x" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button></div>
 </div></header>
 <div class="view refscope" id="v-reference">
  <div class="rsub" role="group" aria-label="Reference sections"><button class="seg" data-rsub="forms">Forms &amp; paradigms</button><button class="seg" data-rsub="syntax">Syntax &amp; prepositions</button></div>
- <div id="r-forms"><div class="sheet"><main><nav class="fjump" aria-label="Jump to"><a href="#f-article" data-jump="f-article">Article &amp; εἰμί</a><a href="#f-nouns" data-jump="f-nouns">Nouns</a><a href="#f-adj" data-jump="f-adj">Adjectives</a><a href="#f-pron" data-jump="f-pron">Pronouns</a><a href="#f-dem" data-jump="f-dem">Demonstratives &amp; πᾶς</a><a href="#f-verbs" data-jump="f-verbs">Active verbs</a><a href="#f-mp" data-jump="f-mp">Middle &amp; passive</a><a href="#f-perf" data-jump="f-perf">Perfect</a><a href="#f-contract" data-jump="f-contract">Contract &amp; liquid</a></nav>
+ <div id="r-forms"><div class="sheet"><main><nav class="fjump" aria-label="Jump to"><a href="#f-article" data-jump="f-article">Article</a><a href="#f-nouns" data-jump="f-nouns">Nouns</a><a href="#f-adj" data-jump="f-adj">Adjectives</a><a href="#f-pron" data-jump="f-pron">Pronouns</a><a href="#f-dem" data-jump="f-dem">Demonstratives</a><a href="#f-verbs" data-jump="f-verbs">Active verbs</a><a href="#f-mp" data-jump="f-mp">Middle/passive</a><a href="#f-perf" data-jump="f-perf">Perfect</a><a href="#f-contract" data-jump="f-contract">Contract</a></nav>
 <section id="f-article"><h2>Article &amp; <span class="gk">εἰμί</span></h2><div class="cards"><div class="card "><h3>Definite article <span class="gk dim">ὁ, ἡ, τό</span></h3><div class="tw"><table class="mfn"><thead><tr><th rowspan="2"></th><th colspan="3" class="grp">Singular</th><th colspan="3" class="grp">Plural</th></tr><tr><th>M.</th><th>F.</th><th>N.</th><th>M.</th><th>F.</th><th>N.</th></tr></thead><tbody><tr><th scope="row">Nom.</th><td><span class="gk">ὁ</span></td><td><span class="gk">ἡ</span></td><td><span class="gk">τό</span></td><td><span class="gk">οἱ</span></td><td><span class="gk">αἱ</span></td><td><span class="gk">τά</span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">τ<b>οῦ</b></span></td><td><span class="gk">τ<b>ῆς</b></span></td><td><span class="gk">τ<b>οῦ</b></span></td><td><span class="gk">τ<b>ῶν</b></span></td><td><span class="gk">τ<b>ῶν</b></span></td><td><span class="gk">τ<b>ῶν</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">τ<b>ῷ</b></span></td><td><span class="gk">τ<b>ῇ</b></span></td><td><span class="gk">τ<b>ῷ</b></span></td><td><span class="gk">τ<b>οῖς</b></span></td><td><span class="gk">τ<b>αῖς</b></span></td><td><span class="gk">τ<b>οῖς</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">τ<b>όν</b></span></td><td><span class="gk">τ<b>ήν</b></span></td><td><span class="gk">τ<b>ό</b></span></td><td><span class="gk">τ<b>ούς</b></span></td><td><span class="gk">τ<b>άς</b></span></td><td><span class="gk">τ<b>ά</b></span></td></tr></tbody></table></div><p class="note"><span class="gk">ὁ ἡ οἱ αἱ</span> are proclitics (no accent). No vocative; use <span class="gk">ὦ</span>.</p></div><div class="card "><h3><span class="gk">εἰμί</span> · be</h3><div class="tw"><table class=""><thead><tr><th></th><th>Present</th><th>Imperfect</th><th>Future (mid. form)</th></tr></thead><tbody><tr><th scope="row">1 sg.</th><td><span class="gk">εἰμί</span></td><td><span class="gk">ἦ <span class="sl">/</span> ἦν</span></td><td><span class="gk">ἔσ<b>ομαι</b></span></td></tr><tr><th scope="row">2 sg.</th><td><span class="gk">εἶ</span></td><td><span class="gk">ἦσθα</span></td><td><span class="gk">ἔσ<b>ῃ</b> <span class="sl">/</span> ἔσ<b>ει</b></span></td></tr><tr><th scope="row">3 sg.</th><td><span class="gk">ἐστί(ν)</span></td><td><span class="gk">ἦν</span></td><td><span class="gk">ἔσ<b>ται</b></span></td></tr><tr><th scope="row">1 pl.</th><td><span class="gk">ἐσμέν</span></td><td><span class="gk">ἦμεν</span></td><td><span class="gk">ἐσ<b>όμεθα</b></span></td></tr><tr><th scope="row">2 pl.</th><td><span class="gk">ἐστέ</span></td><td><span class="gk">ἦτε</span></td><td><span class="gk">ἔσ<b>εσθε</b></span></td></tr><tr><th scope="row">3 pl.</th><td><span class="gk">εἰσί(ν)</span></td><td><span class="gk">ἦσαν</span></td><td><span class="gk">ἔσ<b>ονται</b></span></td></tr><tr><th scope="row">Infin.</th><td><span class="gk">εἶναι</span></td><td><span class="na">none</span></td><td><span class="gk">ἔσ<b>εσθαι</b></span></td></tr><tr class="div"><td colspan="4">Imperative</td></tr><tr><th scope="row">2 sg.</th><td><span class="gk">ἴσθι</span></td><td></td><td></td></tr><tr><th scope="row">3 sg.</th><td><span class="gk">ἔστω</span></td><td></td><td></td></tr><tr><th scope="row">2 pl.</th><td><span class="gk">ἔστε</span></td><td></td><td></td></tr><tr><th scope="row">3 pl.</th><td><span class="gk">ἔστων <span class="sl">/</span> ὄντων</span></td><td></td><td></td></tr></tbody></table></div><p class="note">Present is enclitic except <span class="gk">εἶ</span>. Takes a predicate <b>nominative</b>. No aorist.</p></div></div></section>
 <section id="f-nouns"><h2>Nouns</h2><div class="cards"><div class="card wide"><h3>First declension · feminine</h3><div class="tw"><table class="nouns"><thead><tr><th></th><th><span class="gk hn">χώρα</span><br>land · long ᾱ</th><th><span class="gk hn">ἐπιστολή</span><br>letter · η</th><th><span class="gk hn">θάλαττα</span><br>sea · short α</th><th><span class="gk hn">μοῖρα</span><br>fate · short α after ρ</th><th><span class="gk hn">γῆ</span><br>earth · contracted </th></tr></thead><tbody><tr class="div"><td colspan="6">Singular</td></tr><tr><th scope="row">Nom.</th><td><span class="gk">χώρ<b>α</b></span></td><td><span class="gk">ἐπιστολ<b>ή</b></span></td><td><span class="gk">θάλαττ<b>α</b></span></td><td><span class="gk">μοῖρ<b>α</b></span></td><td><span class="gk">γῆ</span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">χώρ<b>ας</b></span></td><td><span class="gk">ἐπιστολ<b>ῆς</b></span></td><td><span class="gk">θαλάττ<b>ης</b></span></td><td><span class="gk">μοίρ<b>ας</b></span></td><td><span class="gk">γῆ<b>ς</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">χώρ<b>ᾳ</b></span></td><td><span class="gk">ἐπιστολ<b>ῇ</b></span></td><td><span class="gk">θαλάττ<b>ῃ</b></span></td><td><span class="gk">μοίρ<b>ᾳ</b></span></td><td><span class="gk">γῇ</span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">χώρ<b>αν</b></span></td><td><span class="gk">ἐπιστολ<b>ήν</b></span></td><td><span class="gk">θάλαττ<b>αν</b></span></td><td><span class="gk">μοῖρ<b>αν</b></span></td><td><span class="gk">γῆ<b>ν</b></span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">χώρ<b>α</b></span></td><td><span class="gk">ἐπιστολ<b>ή</b></span></td><td><span class="gk">θάλαττ<b>α</b></span></td><td><span class="gk">μοῖρ<b>α</b></span></td><td><span class="gk">γῆ</span></td></tr><tr class="div"><td colspan="6">Plural</td></tr><tr><th scope="row">Nom.</th><td><span class="gk">χῶρ<b>αι</b></span></td><td><span class="gk">ἐπιστολ<b>αί</b></span></td><td><span class="gk">θάλαττ<b>αι</b></span></td><td><span class="gk">μοῖρ<b>αι</b></span></td><td><span class="na">—</span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">χωρ<b>ῶν</b></span></td><td><span class="gk">ἐπιστολ<b>ῶν</b></span></td><td><span class="gk">θαλαττ<b>ῶν</b></span></td><td><span class="gk">μοιρ<b>ῶν</b></span></td><td><span class="na">—</span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">χώρ<b>αις</b></span></td><td><span class="gk">ἐπιστολ<b>αῖς</b></span></td><td><span class="gk">θαλάττ<b>αις</b></span></td><td><span class="gk">μοίρ<b>αις</b></span></td><td><span class="na">—</span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">χώρ<b>ας</b></span></td><td><span class="gk">ἐπιστολ<b>άς</b></span></td><td><span class="gk">θαλάττ<b>ας</b></span></td><td><span class="gk">μοίρ<b>ας</b></span></td><td><span class="na">—</span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">χῶρ<b>αι</b></span></td><td><span class="gk">ἐπιστολ<b>αί</b></span></td><td><span class="gk">θάλαττ<b>αι</b></span></td><td><span class="gk">μοῖρ<b>αι</b></span></td><td><span class="na">—</span></td></tr></tbody></table></div><p class="note">Long ᾱ after ε, ι, ρ; otherwise η. Short-α nouns keep α only in nom./acc./voc. sg. (θάλαττα, θαλάττης) unless the stem ends in ε, ι, ρ (μοῖρα, μοίρας). Gen. pl. is always <span class="gk">-ῶν</span>. <span class="gk">γῆ</span> is singular only.</p></div><div class="card"><h3>First declension · masculine</h3><div class="tw"><table class="nouns"><thead><tr><th></th><th><span class="gk hn">νεανίας</span><br>young man · -ᾱς</th><th><span class="gk hn">δεσπότης</span><br>master · -ης</th><th><span class="gk hn">μαθητής</span><br>student · -ής</th></tr></thead><tbody><tr class="div"><td colspan="4">Singular</td></tr><tr><th scope="row">Nom.</th><td><span class="gk">νεανί<b>ας</b></span></td><td><span class="gk">δεσπότ<b>ης</b></span></td><td><span class="gk">μαθητ<b>ής</b></span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">νεανί<b>ου</b></span></td><td><span class="gk">δεσπότ<b>ου</b></span></td><td><span class="gk">μαθητ<b>οῦ</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">νεανί<b>ᾳ</b></span></td><td><span class="gk">δεσπότ<b>ῃ</b></span></td><td><span class="gk">μαθητ<b>ῇ</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">νεανί<b>αν</b></span></td><td><span class="gk">δεσπότ<b>ην</b></span></td><td><span class="gk">μαθητ<b>ήν</b></span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">νεανί<b>α</b></span></td><td><span class="gk">δέσποτ<b>α</b></span></td><td><span class="gk">μαθητ<b>ά</b></span></td></tr><tr class="div"><td colspan="4">Plural</td></tr><tr><th scope="row">Nom.</th><td><span class="gk">νεανί<b>αι</b></span></td><td><span class="gk">δεσπότ<b>αι</b></span></td><td><span class="gk">μαθητ<b>αί</b></span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">νεανι<b>ῶν</b></span></td><td><span class="gk">δεσποτ<b>ῶν</b></span></td><td><span class="gk">μαθητ<b>ῶν</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">νεανί<b>αις</b></span></td><td><span class="gk">δεσπότ<b>αις</b></span></td><td><span class="gk">μαθητ<b>αῖς</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">νεανί<b>ας</b></span></td><td><span class="gk">δεσπότ<b>ας</b></span></td><td><span class="gk">μαθητ<b>άς</b></span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">νεανί<b>αι</b></span></td><td><span class="gk">δεσπότ<b>αι</b></span></td><td><span class="gk">μαθητ<b>αί</b></span></td></tr></tbody></table></div><p class="note">Masculine first-declension nouns add -ς in the nom. sg. and take <span class="gk">-ου</span> in the gen. sg. Nouns in -της have a vocative in short -α (<span class="gk">δέσποτα</span>, recessive accent).</p></div><div class="card"><h3>Second declension</h3><div class="tw"><table class="nouns"><thead><tr><th></th><th><span class="gk hn">λόγος</span><br>word · masc.</th><th><span class="gk hn">ὁδός</span><br>road · fem.</th><th><span class="gk hn">δῶρον</span><br>gift · neut.</th></tr></thead><tbody><tr class="div"><td colspan="4">Singular</td></tr><tr><th scope="row">Nom.</th><td><span class="gk">λόγ<b>ος</b></span></td><td><span class="gk">ὁδ<b>ός</b></span></td><td><span class="gk">δῶρ<b>ον</b></span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">λόγ<b>ου</b></span></td><td><span class="gk">ὁδ<b>οῦ</b></span></td><td><span class="gk">δώρ<b>ου</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">λόγ<b>ῳ</b></span></td><td><span class="gk">ὁδ<b>ῷ</b></span></td><td><span class="gk">δώρ<b>ῳ</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">λόγ<b>ον</b></span></td><td><span class="gk">ὁδ<b>όν</b></span></td><td><span class="gk">δῶρ<b>ον</b></span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">λόγ<b>ε</b></span></td><td><span class="gk">ὁδ<b>έ</b></span></td><td><span class="gk">δῶρ<b>ον</b></span></td></tr><tr class="div"><td colspan="4">Plural</td></tr><tr><th scope="row">Nom.</th><td><span class="gk">λόγ<b>οι</b></span></td><td><span class="gk">ὁδ<b>οί</b></span></td><td><span class="gk">δῶρ<b>α</b></span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">λόγ<b>ων</b></span></td><td><span class="gk">ὁδ<b>ῶν</b></span></td><td><span class="gk">δώρ<b>ων</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">λόγ<b>οις</b></span></td><td><span class="gk">ὁδ<b>οῖς</b></span></td><td><span class="gk">δώρ<b>οις</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">λόγ<b>ους</b></span></td><td><span class="gk">ὁδ<b>ούς</b></span></td><td><span class="gk">δῶρ<b>α</b></span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">λόγ<b>οι</b></span></td><td><span class="gk">ὁδ<b>οί</b></span></td><td><span class="gk">δῶρ<b>α</b></span></td></tr></tbody></table></div><p class="note">A few -ος nouns are feminine (<span class="gk">ὁδός, νῆσος</span>); the article tells you. Neuter: nom. = acc. = voc.; plural in -α.</p></div><div class="card wide"><h3>Third declension · consonant stems</h3><div class="tw"><table class="nouns"><thead><tr><th></th><th><span class="gk hn">φύλαξ</span><br>guard · κ</th><th><span class="gk hn">ἀσπίς</span><br>shield · δ</th><th><span class="gk hn">νύξ</span><br>night · κτ</th><th><span class="gk hn">ὄνομα</span><br>name · τ, neut.</th><th><span class="gk hn">λέων</span><br>lion · ντ</th><th><span class="gk hn">ῥήτωρ</span><br>orator · ρ</th></tr></thead><tbody><tr class="div"><td colspan="7">Singular</td></tr><tr><th scope="row">Nom.</th><td><span class="gk">φύλα<b>ξ</b></span></td><td><span class="gk">ἀσπί<b>ς</b></span></td><td><span class="gk">νύ<b>ξ</b></span></td><td><span class="gk">ὄνομα</span></td><td><span class="gk">λέ<b>ων</b></span></td><td><span class="gk">ῥήτ<b>ωρ</b></span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">φύλακ<b>ος</b></span></td><td><span class="gk">ἀσπίδ<b>ος</b></span></td><td><span class="gk">νυκτ<b>ός</b></span></td><td><span class="gk">ὀνόματ<b>ος</b></span></td><td><span class="gk">λέοντ<b>ος</b></span></td><td><span class="gk">ῥήτορ<b>ος</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">φύλακ<b>ι</b></span></td><td><span class="gk">ἀσπίδ<b>ι</b></span></td><td><span class="gk">νυκτ<b>ί</b></span></td><td><span class="gk">ὀνόματ<b>ι</b></span></td><td><span class="gk">λέοντ<b>ι</b></span></td><td><span class="gk">ῥήτορ<b>ι</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">φύλακ<b>α</b></span></td><td><span class="gk">ἀσπίδ<b>α</b></span></td><td><span class="gk">νύκτ<b>α</b></span></td><td><span class="gk">ὄνομα</span></td><td><span class="gk">λέοντ<b>α</b></span></td><td><span class="gk">ῥήτορ<b>α</b></span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">φύλα<b>ξ</b></span></td><td><span class="gk">ἀσπί</span></td><td><span class="gk">νύ<b>ξ</b></span></td><td><span class="gk">ὄνομα</span></td><td><span class="gk">λέον</span></td><td><span class="gk">ῥῆτορ</span></td></tr><tr class="div"><td colspan="7">Plural</td></tr><tr><th scope="row">Nom.</th><td><span class="gk">φύλακ<b>ες</b></span></td><td><span class="gk">ἀσπίδ<b>ες</b></span></td><td><span class="gk">νύκτ<b>ες</b></span></td><td><span class="gk">ὀνόματ<b>α</b></span></td><td><span class="gk">λέοντ<b>ες</b></span></td><td><span class="gk">ῥήτορ<b>ες</b></span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">φυλάκ<b>ων</b></span></td><td><span class="gk">ἀσπίδ<b>ων</b></span></td><td><span class="gk">νυκτ<b>ῶν</b></span></td><td><span class="gk">ὀνομάτ<b>ων</b></span></td><td><span class="gk">λεόντ<b>ων</b></span></td><td><span class="gk">ῥητόρ<b>ων</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">φύλα<b>ξι(ν)</b></span></td><td><span class="gk">ἀσπί<b>σι(ν)</b></span></td><td><span class="gk">νυ<b>ξί(ν)</b></span></td><td><span class="gk">ὀνόμα<b>σι(ν)</b></span></td><td><span class="gk">λέο<b>υσι(ν)</b></span></td><td><span class="gk">ῥήτορ<b>σι(ν)</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">φύλακ<b>ας</b></span></td><td><span class="gk">ἀσπίδ<b>ας</b></span></td><td><span class="gk">νύκτ<b>ας</b></span></td><td><span class="gk">ὀνόματ<b>α</b></span></td><td><span class="gk">λέοντ<b>ας</b></span></td><td><span class="gk">ῥήτορ<b>ας</b></span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">φύλακ<b>ες</b></span></td><td><span class="gk">ἀσπίδ<b>ες</b></span></td><td><span class="gk">νύκτ<b>ες</b></span></td><td><span class="gk">ὀνόματ<b>α</b></span></td><td><span class="gk">λέοντ<b>ες</b></span></td><td><span class="gk">ῥήτορ<b>ες</b></span></td></tr></tbody></table></div><p class="note">Stem = genitive singular minus <span class="gk">-ος</span>. Dative plural adds <span class="gk">-σι(ν)</span>: κ/γ/χ + σ → ξ, π/β/φ + σ → ψ, and τ δ θ ντ drop out (<span class="gk">ἀσπίσι, λέουσι</span>). Monosyllables accent the ultima in gen./dat. (<span class="gk">νυκτός, νυκτί</span>).</p></div><div class="card wide"><h3>Third declension · σ-stems & others</h3><div class="tw"><table class="nouns"><thead><tr><th></th><th><span class="gk hn">τεῖχος</span><br>wall · neut. -ος</th><th><span class="gk hn">ἔτος</span><br>year · neut. -ος</th><th><span class="gk hn">γέρας</span><br>prize · neut. -ας</th><th><span class="gk hn">τριήρης</span><br>trireme · -ης</th><th><span class="gk hn">Σωκράτης</span><br>Socrates</th><th><span class="gk hn">Ἕλλην</span><br>Greek · ν</th></tr></thead><tbody><tr class="div"><td colspan="7">Singular</td></tr><tr><th scope="row">Nom.</th><td><span class="gk">τεῖχ<b>ος</b></span></td><td><span class="gk">ἔτ<b>ος</b></span></td><td><span class="gk">γέρ<b>ας</b></span></td><td><span class="gk">τριήρ<b>ης</b></span></td><td><span class="gk">Σωκράτ<b>ης</b></span></td><td><span class="gk">Ἕλλην</span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">τείχ<b>ους</b></span></td><td><span class="gk">ἔτ<b>ους</b></span></td><td><span class="gk">γέρ<b>ως</b></span></td><td><span class="gk">τριήρ<b>ους</b></span></td><td><span class="gk">Σωκράτ<b>ους</b></span></td><td><span class="gk">Ἕλλην<b>ος</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">τείχ<b>ει</b></span></td><td><span class="gk">ἔτ<b>ει</b></span></td><td><span class="gk">γέρ<b>αι</b></span></td><td><span class="gk">τριήρ<b>ει</b></span></td><td><span class="gk">Σωκράτ<b>ει</b></span></td><td><span class="gk">Ἕλλην<b>ι</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">τεῖχ<b>ος</b></span></td><td><span class="gk">ἔτ<b>ος</b></span></td><td><span class="gk">γέρ<b>ας</b></span></td><td><span class="gk">τριήρ<b>η</b></span></td><td><span class="gk">Σωκράτ<b>η</b></span></td><td><span class="gk">Ἕλλην<b>α</b></span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">τεῖχ<b>ος</b></span></td><td><span class="gk">ἔτ<b>ος</b></span></td><td><span class="gk">γέρ<b>ας</b></span></td><td><span class="gk">τριῆρ<b>ες</b></span></td><td><span class="gk">Σώκρατ<b>ες</b></span></td><td><span class="gk">Ἕλλην</span></td></tr><tr class="div"><td colspan="7">Plural</td></tr><tr><th scope="row">Nom.</th><td><span class="gk">τείχ<b>η</b></span></td><td><span class="gk">ἔτ<b>η</b></span></td><td><span class="gk">γέρ<b>α</b></span></td><td><span class="gk">τριήρ<b>εις</b></span></td><td><span class="na">—</span></td><td><span class="gk">Ἕλλην<b>ες</b></span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">τειχ<b>ῶν</b></span></td><td><span class="gk">ἐτ<b>ῶν</b></span></td><td><span class="gk">γερ<b>ῶν</b></span></td><td><span class="gk">τριήρ<b>ων</b></span></td><td><span class="na">—</span></td><td><span class="gk">Ἑλλήν<b>ων</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">τείχ<b>εσι(ν)</b></span></td><td><span class="gk">ἔτ<b>εσι(ν)</b></span></td><td><span class="gk">γέρ<b>ασι(ν)</b></span></td><td><span class="gk">τριήρ<b>εσι(ν)</b></span></td><td><span class="na">—</span></td><td><span class="gk">Ἕλλη<b>σι(ν)</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">τείχ<b>η</b></span></td><td><span class="gk">ἔτ<b>η</b></span></td><td><span class="gk">γέρ<b>α</b></span></td><td><span class="gk">τριήρ<b>εις</b></span></td><td><span class="na">—</span></td><td><span class="gk">Ἕλλην<b>ας</b></span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">τείχ<b>η</b></span></td><td><span class="gk">ἔτ<b>η</b></span></td><td><span class="gk">γέρ<b>α</b></span></td><td><span class="gk">τριήρ<b>εις</b></span></td><td><span class="na">—</span></td><td><span class="gk">Ἕλλην<b>ες</b></span></td></tr></tbody></table></div><p class="note">σ-stems lose the σ between vowels and contract: <span class="gk">τείχε(σ)ος → τείχους</span>, <span class="gk">τριήρε(σ)α → τριήρη</span>. <span class="gk">Ἑλλάς</span> declines like <span class="gk">ἀσπίς</span> (singular only); <span class="gk">Ἕλλην</span> like <span class="gk">ἀγών</span> but with the accent kept on Ἑλ-.</p></div></div></section>
 <section id="f-adj"><h2>Adjectives</h2><div class="cards"><div class="card wide"><h3><span class="gk">ἀγαθός, -ή, -όν</span> <span class="dim">· good · 2-1-2</span></h3><div class="tw"><table class="mfn"><thead><tr><th rowspan="2"></th><th colspan="3" class="grp">Singular</th><th colspan="3" class="grp">Plural</th></tr><tr><th>M.</th><th>F.</th><th>N.</th><th>M.</th><th>F.</th><th>N.</th></tr></thead><tbody><tr><th scope="row">Nom.</th><td><span class="gk">ἀγαθ<b>ός</b></span></td><td><span class="gk">ἀγαθ<b>ή</b></span></td><td><span class="gk">ἀγαθ<b>όν</b></span></td><td><span class="gk">ἀγαθ<b>οί</b></span></td><td><span class="gk">ἀγαθ<b>αί</b></span></td><td><span class="gk">ἀγαθ<b>ά</b></span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">ἀγαθ<b>οῦ</b></span></td><td><span class="gk">ἀγαθ<b>ῆς</b></span></td><td><span class="gk">ἀγαθ<b>οῦ</b></span></td><td><span class="gk">ἀγαθ<b>ῶν</b></span></td><td><span class="gk">ἀγαθ<b>ῶν</b></span></td><td><span class="gk">ἀγαθ<b>ῶν</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">ἀγαθ<b>ῷ</b></span></td><td><span class="gk">ἀγαθ<b>ῇ</b></span></td><td><span class="gk">ἀγαθ<b>ῷ</b></span></td><td><span class="gk">ἀγαθ<b>οῖς</b></span></td><td><span class="gk">ἀγαθ<b>αῖς</b></span></td><td><span class="gk">ἀγαθ<b>οῖς</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">ἀγαθ<b>όν</b></span></td><td><span class="gk">ἀγαθ<b>ήν</b></span></td><td><span class="gk">ἀγαθ<b>όν</b></span></td><td><span class="gk">ἀγαθ<b>ούς</b></span></td><td><span class="gk">ἀγαθ<b>άς</b></span></td><td><span class="gk">ἀγαθ<b>ά</b></span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">ἀγαθ<b>έ</b></span></td><td><span class="gk">ἀγαθ<b>ή</b></span></td><td><span class="gk">ἀγαθ<b>όν</b></span></td><td><span class="gk">ἀγαθ<b>οί</b></span></td><td><span class="gk">ἀγαθ<b>αί</b></span></td><td><span class="gk">ἀγαθ<b>ά</b></span></td></tr></tbody></table></div><p class="note">Masc./neut. like <span class="gk">λόγος, δῶρον</span>; fem. like <span class="gk">ἐπιστολή</span>. So also <span class="gk">καλός, κακός, σοφός, Ἑλληνικός</span>.</p></div><div class="card wide"><h3><span class="gk">ἄξιος, -ᾱ, -ον</span> <span class="dim">· worthy · long ᾱ after ι, ε, ρ</span></h3><div class="tw"><table class="mfn"><thead><tr><th rowspan="2"></th><th colspan="3" class="grp">Singular</th><th colspan="3" class="grp">Plural</th></tr><tr><th>M.</th><th>F.</th><th>N.</th><th>M.</th><th>F.</th><th>N.</th></tr></thead><tbody><tr><th scope="row">Nom.</th><td><span class="gk">ἄξι<b>ος</b></span></td><td><span class="gk">ἀξί<b>α</b></span></td><td><span class="gk">ἄξι<b>ον</b></span></td><td><span class="gk">ἄξι<b>οι</b></span></td><td><span class="gk">ἄξι<b>αι</b></span></td><td><span class="gk">ἄξι<b>α</b></span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">ἀξί<b>ου</b></span></td><td><span class="gk">ἀξί<b>ας</b></span></td><td><span class="gk">ἀξί<b>ου</b></span></td><td><span class="gk">ἀξί<b>ων</b></span></td><td><span class="gk">ἀξί<b>ων</b></span></td><td><span class="gk">ἀξί<b>ων</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">ἀξί<b>ῳ</b></span></td><td><span class="gk">ἀξί<b>ᾳ</b></span></td><td><span class="gk">ἀξί<b>ῳ</b></span></td><td><span class="gk">ἀξί<b>οις</b></span></td><td><span class="gk">ἀξί<b>αις</b></span></td><td><span class="gk">ἀξί<b>οις</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">ἄξι<b>ον</b></span></td><td><span class="gk">ἀξί<b>αν</b></span></td><td><span class="gk">ἄξι<b>ον</b></span></td><td><span class="gk">ἀξί<b>ους</b></span></td><td><span class="gk">ἀξί<b>ας</b></span></td><td><span class="gk">ἄξι<b>α</b></span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">ἄξι<b>ε</b></span></td><td><span class="gk">ἀξί<b>α</b></span></td><td><span class="gk">ἄξι<b>ον</b></span></td><td><span class="gk">ἄξι<b>οι</b></span></td><td><span class="gk">ἄξι<b>αι</b></span></td><td><span class="gk">ἄξι<b>α</b></span></td></tr></tbody></table></div><p class="note">Fem. gen. pl. follows the masculine accent (<span class="gk">ἀξίων</span>), not the noun rule. So also <span class="gk">ἐλεύθερος, πρότερος, πολέμιος, ἡμέτερος</span>.</p></div><div class="card"><h3><span class="gk">ἀθάνατος, -ον</span> <span class="dim">· two-ending</span></h3><div class="tw"><table class="mfn"><thead><tr><th rowspan="2"></th><th colspan="2" class="grp">Singular</th><th colspan="2" class="grp">Plural</th></tr><tr><th>M./F.</th><th>N.</th><th>M./F.</th><th>N.</th></tr></thead><tbody><tr><th scope="row">Nom.</th><td><span class="gk">ἀθάνατ<b>ος</b></span></td><td><span class="gk">ἀθάνατ<b>ον</b></span></td><td><span class="gk">ἀθάνατ<b>οι</b></span></td><td><span class="gk">ἀθάνατ<b>α</b></span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">ἀθανάτ<b>ου</b></span></td><td><span class="gk">ἀθανάτ<b>ου</b></span></td><td><span class="gk">ἀθανάτ<b>ων</b></span></td><td><span class="gk">ἀθανάτ<b>ων</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">ἀθανάτ<b>ῳ</b></span></td><td><span class="gk">ἀθανάτ<b>ῳ</b></span></td><td><span class="gk">ἀθανάτ<b>οις</b></span></td><td><span class="gk">ἀθανάτ<b>οις</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">ἀθάνατ<b>ον</b></span></td><td><span class="gk">ἀθάνατ<b>ον</b></span></td><td><span class="gk">ἀθανάτ<b>ους</b></span></td><td><span class="gk">ἀθάνατ<b>α</b></span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">ἀθάνατ<b>ε</b></span></td><td><span class="gk">ἀθάνατ<b>ον</b></span></td><td><span class="gk">ἀθάνατ<b>οι</b></span></td><td><span class="gk">ἀθάνατ<b>α</b></span></td></tr></tbody></table></div><p class="note">No separate feminine: <span class="gk">ἡ ἀθάνατος θεός</span>. So also <span class="gk">ἀνάξιος, φιλόσοφος</span>.</p></div><div class="card"><h3><span class="gk">ἀληθής, -ές</span> <span class="dim">· true · 3rd decl. σ-stem</span></h3><div class="tw"><table class="mfn"><thead><tr><th rowspan="2"></th><th colspan="2" class="grp">Singular</th><th colspan="2" class="grp">Plural</th></tr><tr><th>M./F.</th><th>N.</th><th>M./F.</th><th>N.</th></tr></thead><tbody><tr><th scope="row">Nom.</th><td><span class="gk">ἀληθ<b>ής</b></span></td><td><span class="gk">ἀληθ<b>ές</b></span></td><td><span class="gk">ἀληθ<b>εῖς</b></span></td><td><span class="gk">ἀληθ<b>ῆ</b></span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">ἀληθ<b>οῦς</b></span></td><td><span class="gk">ἀληθ<b>οῦς</b></span></td><td><span class="gk">ἀληθ<b>ῶν</b></span></td><td><span class="gk">ἀληθ<b>ῶν</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">ἀληθ<b>εῖ</b></span></td><td><span class="gk">ἀληθ<b>εῖ</b></span></td><td><span class="gk">ἀληθ<b>έσι(ν)</b></span></td><td><span class="gk">ἀληθ<b>έσι(ν)</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">ἀληθ<b>ῆ</b></span></td><td><span class="gk">ἀληθ<b>ές</b></span></td><td><span class="gk">ἀληθ<b>εῖς</b></span></td><td><span class="gk">ἀληθ<b>ῆ</b></span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">ἀληθ<b>ές</b></span></td><td><span class="gk">ἀληθ<b>ές</b></span></td><td><span class="gk">ἀληθ<b>εῖς</b></span></td><td><span class="gk">ἀληθ<b>ῆ</b></span></td></tr></tbody></table></div><p class="note">Contracts like <span class="gk">τριήρης</span>; neut. pl. <span class="gk">ἀληθῆ</span>.</p></div><div class="card"><h3><span class="gk">εὐδαίμων, -ον</span> <span class="dim">· happy · 3rd decl. ν-stem</span></h3><div class="tw"><table class="mfn"><thead><tr><th rowspan="2"></th><th colspan="2" class="grp">Singular</th><th colspan="2" class="grp">Plural</th></tr><tr><th>M./F.</th><th>N.</th><th>M./F.</th><th>N.</th></tr></thead><tbody><tr><th scope="row">Nom.</th><td><span class="gk">εὐδαίμ<b>ων</b></span></td><td><span class="gk">εὔδαιμον</span></td><td><span class="gk">εὐδαίμον<b>ες</b></span></td><td><span class="gk">εὐδαίμον<b>α</b></span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">εὐδαίμον<b>ος</b></span></td><td><span class="gk">εὐδαίμον<b>ος</b></span></td><td><span class="gk">εὐδαιμόν<b>ων</b></span></td><td><span class="gk">εὐδαιμόν<b>ων</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">εὐδαίμον<b>ι</b></span></td><td><span class="gk">εὐδαίμον<b>ι</b></span></td><td><span class="gk">εὐδαίμο<b>σι(ν)</b></span></td><td><span class="gk">εὐδαίμο<b>σι(ν)</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">εὐδαίμον<b>α</b></span></td><td><span class="gk">εὔδαιμον</span></td><td><span class="gk">εὐδαίμον<b>ας</b></span></td><td><span class="gk">εὐδαίμον<b>α</b></span></td></tr><tr><th scope="row">Voc.</th><td><span class="gk">εὔδαιμον</span></td><td><span class="gk">εὔδαιμον</span></td><td><span class="gk">εὐδαίμον<b>ες</b></span></td><td><span class="gk">εὐδαίμον<b>α</b></span></td></tr></tbody></table></div><p class="note">Recessive accent in the neuter and vocative (<span class="gk">εὔδαιμον</span>).</p></div><div class="card wide"><h3><span class="gk">πολύς, πολλή, πολύ</span> <span class="dim">· much, many</span></h3><div class="tw"><table class="mfn"><thead><tr><th rowspan="2"></th><th colspan="3" class="grp">Singular</th><th colspan="3" class="grp">Plural</th></tr><tr><th>M.</th><th>F.</th><th>N.</th><th>M.</th><th>F.</th><th>N.</th></tr></thead><tbody><tr><th scope="row">Nom.</th><td><span class="gk">πολ<b>ύς</b></span></td><td><span class="gk">πολλ<b>ή</b></span></td><td><span class="gk">πολ<b>ύ</b></span></td><td><span class="gk">πολ<b>λοί</b></span></td><td><span class="gk">πολλ<b>αί</b></span></td><td><span class="gk">πολ<b>λά</b></span></td></tr><tr><th scope="row">Gen.</th><td><span class="gk">πολ<b>λοῦ</b></span></td><td><span class="gk">πολλ<b>ῆς</b></span></td><td><span class="gk">πολ<b>λοῦ</b></span></td><td><span class="gk">πολ<b>λῶν</b></span></td><td><span class="gk">πολλ<b>ῶν</b></span></td><td><span class="gk">πολ<b>λῶν</b></span></td></tr><tr><th scope="row">Dat.</th><td><span class="gk">πολ<b>λῷ</b></span></td><td><span class="gk">πολλ<b>ῇ</b></span></td><td><span class="gk">πολ<b>λῷ</b></span></td><td><span class="gk">πολ<b>λοῖς</b></span></td><td><span class="gk">πολλ<b>αῖς</b></span></td><td><span class="gk">πολ<b>λοῖς</b></span></td></tr><tr><th scope="row">Acc.</th><td><span class="gk">πολ<b>ύν</b></span></td><td><span class="gk">πολλ<b>ήν</b></span></td><td><span class="gk">πολ<b>ύ</b></span></td><td><span class="gk">πολ<b>λούς</b></span></td><td><span class="gk">πολλ<b>άς</b></span></td><td><span class="gk">πολ<b>λά</b></span></td></tr></tbody></table></div><p class="note">Short forms only in masc./neut. nom. & acc. sg.; everything else is <span class="gk">πολλ-</span> + regular endings. <span class="gk">οἱ πολλοί</span> = the many.</p></div></div></section>
@@ -967,6 +1099,171 @@ window.addEventListener("hashchange",()=>showTop(location.hash.slice(1)));
 document.querySelectorAll("[data-jump]").forEach(a=>a.onclick=e=>{e.preventDefault();const t=document.getElementById(a.dataset.jump);if(t)t.scrollIntoView({behavior:"smooth",block:"start"})});
 refSub(load("rsub","forms"));
 showTop(location.hash.slice(1));
+}
+
+
+/* ================= Polish: sound effects + motion ================= */
+{
+/* ---------- sound (Web Audio, synthesized, no files) ---------- */
+const SFX=(()=>{
+  let ctx=null,master=null,on=load("sfx",true);
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function ac(){
+    if(!on) return null;
+    try{
+      if(!ctx){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;ctx=new C();master=ctx.createGain();master.gain.value=.16;
+        const comp=ctx.createDynamicsCompressor();master.connect(comp);comp.connect(ctx.destination)}
+      if(ctx.state==="suspended") ctx.resume();
+      return ctx;
+    }catch(e){return null}
+  }
+  function tone(f,t0,dur,type="sine",vol=1,glide){
+    const c=ac();if(!c)return;const t=c.currentTime+t0;
+    const o=c.createOscillator(),g=c.createGain();
+    o.type=type;o.frequency.setValueAtTime(f,t);if(glide)o.frequency.exponentialRampToValueAtTime(glide,t+dur);
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.008);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g);g.connect(master);o.start(t);o.stop(t+dur+.02);
+  }
+  function noise(t0,dur,freq,vol){
+    const c=ac();if(!c)return;const t=c.currentTime+t0;
+    const len=Math.floor(c.sampleRate*dur),buf=c.createBuffer(1,len,c.sampleRate),d=buf.getChannelData(0);
+    for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*(1-i/len);
+    const s=c.createBufferSource(),bp=c.createBiquadFilter(),g=c.createGain();
+    s.buffer=buf;bp.type="bandpass";bp.frequency.setValueAtTime(freq,t);bp.frequency.exponentialRampToValueAtTime(freq*2.2,t+dur);bp.Q.value=.9;
+    g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    s.connect(bp);bp.connect(g);g.connect(master);s.start(t);
+  }
+  const bell=(f,t,d,v)=>{tone(f,t,d,"sine",v);tone(f*2.01,t,d*.6,"sine",v*.18)};
+  return {
+    get on(){return on},
+    set(v){on=v;store("sfx",v);if(v)this.tick()},
+    tick(){tone(1250,0,.035,"sine",.12)},
+    tap(){tone(880,0,.03,"triangle",.1)},
+    select(){tone(540,0,.06,"sine",.2);tone(810,.0,.05,"sine",.06)},
+    flip(){noise(0,.11,1400,.32);tone(620,.01,.06,"sine",.05)},
+    good(){bell(880,0,.28,.55);bell(1318.5,.075,.42,.5)},
+    bad(){tone(207.7,0,.2,"triangle",.42,164.8);tone(155.6,.05,.22,"sine",.25)},
+    soft(){tone(330,0,.12,"sine",.16,294)},
+    streak(){[1568,1976,2349,3136].forEach((f,i)=>bell(f,.05+i*.06,.3,.18))},
+    win(){[523.25,659.25,783.99,1046.5].forEach((f,i)=>bell(f,i*.085,i===3?.9:.35,.42));tone(261.6,.0,.9,"sine",.12)},
+    reduce
+  };
+})();
+window.SFX=SFX;
+
+/* ---------- helpers ---------- */
+const anim=(el,cls)=>{if(!el)return;el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls)};
+function burst(el){
+  if(!el||SFX.reduce)return;
+  const r=el.getBoundingClientRect(),host=document.createElement("div");host.className="burst";
+  host.style.left=(r.left+r.width/2)+"px";host.style.top=(r.top+Math.min(r.height/2,160))+"px";
+  for(let i=0;i<18;i++){const s=document.createElement("i");const a=Math.PI*2*i/18+Math.random()*.4,d=60+Math.random()*90;
+    s.style.setProperty("--x",Math.cos(a)*d+"px");s.style.setProperty("--y",Math.sin(a)*d+"px");s.style.animationDelay=(Math.random()*.08)+"s";host.appendChild(s)}
+  document.body.appendChild(host);setTimeout(()=>host.remove(),1100);
+}
+function toast(text){
+  const t=document.createElement("div");t.className="toast";t.textContent=text;document.body.appendChild(t);
+  requestAnimationFrame(()=>t.classList.add("show"));setTimeout(()=>{t.classList.remove("show");setTimeout(()=>t.remove(),400)},1500);
+}
+
+/* ---------- scoring sounds ---------- */
+const _tally=tally;
+tally=function(g){
+  _tally(g);
+  if(g){
+    if(sc.str>0&&sc.str%5===0){SFX.good();setTimeout(()=>SFX.streak(),120);toast(sc.str+" in a row");anim(document.querySelector(".scoreline"),"glow")}
+    else SFX.good();
+  } else SFX.bad();
+  anim(document.getElementById(g?"sc-ok":"sc-all"),"bump");
+};
+
+/* ---------- view transitions ---------- */
+const GAME=new Set(["flash","quiz","type","match","memory","preps","decl"]);
+const _render=render;
+render=function(){
+  _render();
+  const v=$("#view");v.dataset.mode=tab;$("#deck").dataset.mode=tab;
+  document.querySelector(".scoreline").hidden=!GAME.has(tab);
+  anim(tab==="search"?$("#p-search"):tab==="keys"?$("#p-keys"):v,"enter");
+};
+
+/* flashcards: slide in each new card, flip-reveal the answer */
+const _flash=flash;
+flash=function(){
+  const key=fl.i+"|"+fl.round+"|"+fl.deck.length;
+  const flipped=fl.flip&&fl._key===key&&!fl._was;
+  _flash();
+  const c=$("#fc");
+  if(c){ if(fl._key!==key) anim(c,"cardin"); else if(flipped){anim(c,"reveal");SFX.flip()} }
+  fl._key=fl.i+"|"+fl.round+"|"+fl.deck.length;fl._was=fl.flip;
+};
+const _flashDone=flashDone;
+flashDone=function(){_flashDone();SFX.win();burst($("#view .card"))};
+
+/* quiz & type-it: fade each new question */
+const _quiz=quiz;
+quiz=function(){const isNew=qz._v!==qz.cur||!qz.cur;_quiz();if(isNew){anim($("#view .card"),"cardin");qz._v=qz.cur}};
+const _type=typeIt;
+typeIt=function(){const isNew=ty._v!==ty.cur||!ty.cur;_type();if(isNew){anim($("#view .card"),"cardin");ty._v=ty.cur}};
+
+/* match: select sound, dissolve matched pairs, celebrate the finish */
+const _newMatch=newMatch;
+newMatch=function(){_newMatch();mt._seen=new Set();mt._cel=false};
+const _match=match;
+match=function(){
+  const before=new Set(mt._seen||[]);
+  _match();
+  mt._seen=new Set(mt.done);
+  document.querySelectorAll(".tile").forEach(b=>{const t=mt.tiles[+b.dataset.i];if(t&&mt.done.has(t.id)&&!before.has(t.id))b.classList.add("pop")});
+  if(mt.sel!==null&&!mt.finished) SFX.select();
+  if(mt.finished&&!mt._cel){mt._cel=true;setTimeout(()=>{SFX.win();burst($("#view .card"))},120)}
+  if(mt.finished) anim($("#view .card .big"),"cardin");
+};
+
+/* memory: flip new cards, soft "nope" on a miss, pulse kept pairs */
+const _newMemory=newMemory;
+newMemory=function(){_newMemory();mm._up=[];mm._done=new Set();mm._cel=false};
+const _memory=memory;
+memory=function(){
+  const prevUp=mm._up||[],prevDone=mm._done||new Set();
+  _memory();
+  document.querySelectorAll(".mcard").forEach(b=>{const i=+b.dataset.i,c=mm.cards[i];if(!c)return;
+    if(mm.up.includes(i)&&!prevUp.includes(i)) b.classList.add("flipin");
+    if(mm.done.has(c.id)&&!prevDone.has(c.id)) b.classList.add("kept")});
+  if(mm.up.length>prevUp.length) SFX.flip();
+  if(mm.lock&&mm.up.length===2) setTimeout(()=>SFX.soft(),180);
+  const all=mm.cards.length&&mm.done.size*2===mm.cards.length;
+  if(all&&!mm._cel){mm._cel=true;setTimeout(()=>{SFX.win();burst($("#view .card"))},150)}
+  mm._up=mm.up.slice();mm._done=new Set(mm.done);
+};
+
+/* ---------- gentle UI clicks ---------- */
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-top],[data-rsub],#tabs button,.chip,.seg,.fjump a,.cjump a,[data-dir],[data-m],[data-src],[data-les],[data-pos],[data-wp],.star,.ditem,.dentry,.linkbtn");
+  if(t) SFX.tick();
+  if(e.target.closest(".gkey,.kbd button")) SFX.tap();
+},true);
+
+/* ---------- sound toggle ---------- */
+const sb=$("#sfx");
+const paint=()=>{sb.setAttribute("aria-pressed",SFX.on);sb.title=SFX.on?"Sound on":"Sound off";sb.setAttribute("aria-label",SFX.on?"Turn sound effects off":"Turn sound effects on")};
+sb.onclick=()=>{SFX.set(!SFX.on);paint()};paint();
+
+/* ---------- reference: reveal on scroll + section highlighting ---------- */
+if("IntersectionObserver" in window){
+  if(!SFX.reduce){
+    const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target)}}),{rootMargin:"0px 0px -6% 0px",threshold:.04});
+    document.querySelectorAll(".refscope .card, .refscope .citem, .refscope .gram").forEach(el=>{el.classList.add("rv");io.observe(el)});
+  }
+  const links=[...document.querySelectorAll(".fjump a, .cjump a")];
+  const spy=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){const id=en.target.id;links.forEach(a=>a.classList.toggle("on",a.dataset.jump===id))}}),{rootMargin:"-30% 0px -60% 0px"});
+  document.querySelectorAll("#r-forms section[id], #r-syntax .cgroup[id]").forEach(s=>spy.observe(s));
+}
+/* top-level & reference sub-view fade */
+document.querySelectorAll("[data-top]").forEach(b=>b.addEventListener("click",()=>anim(document.getElementById("v-"+b.dataset.top),"enter")));
+document.querySelectorAll("[data-rsub]").forEach(b=>b.addEventListener("click",()=>anim(document.getElementById("r-"+b.dataset.rsub),"enter")));
+
+render();
 }
 
 {const h=document.querySelector("header.top");const set=()=>document.documentElement.style.setProperty("--hh",h.offsetHeight+"px");set();addEventListener("resize",set);}
