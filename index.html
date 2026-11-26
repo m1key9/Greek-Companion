@@ -722,6 +722,129 @@ body.dl-lock{overflow:hidden}
   .quote{animation:quotein .5s cubic-bezier(.3,1.4,.5,1) .5s both}
   @keyframes quotein{from{opacity:0;transform:translateY(-6px) scale(.92)}to{opacity:1;transform:none}}
 }
+/* ================= Campaign scenes ================= */
+.camp{position:fixed;left:0;right:0;bottom:18px;height:156px;z-index:45;pointer-events:none;overflow:hidden;animation:campin .35s ease both}
+.camp.inlesson{position:absolute;top:58px;bottom:auto;height:150px;z-index:5}
+.camp.out{animation:campout .35s ease forwards}
+@keyframes campin{from{opacity:0}to{opacity:1}}@keyframes campout{to{opacity:0;transform:translateY(8px)}}
+.camp::before{content:"";position:absolute;inset:40px 0 0;background:linear-gradient(rgba(17,16,20,0),rgba(17,16,20,.85) 60%);}
+.camp.inlesson::before{inset:0;background:linear-gradient(rgba(17,16,20,.9),rgba(17,16,20,.75))}
+.stage{position:absolute;left:50%;transform:translateX(-50%);bottom:0;top:0;width:min(100%,760px)}
+.ccap{position:absolute;left:50%;top:6px;transform:translateX(-50%);background:#1d1a26;border:1px solid var(--accent-dim);border-radius:999px;padding:4px 14px;display:flex;gap:8px;align-items:baseline;white-space:nowrap;max-width:94vw;overflow:hidden;text-overflow:ellipsis;font-size:.78rem;box-shadow:0 8px 20px -10px #000;animation:campin .4s ease .1s both}
+.ccap b{font-weight:600;color:var(--ink)}.ccap span{color:var(--muted);font-size:.7rem}
+.ccap span.gk{color:var(--accent);font-size:.85rem}
+.act{position:absolute}
+.act svg,.vic svg{width:100%;height:auto;display:block;overflow:visible}
+.act.flip svg{transform:scaleX(-1)}
+.cbub{position:absolute;background:#fbfaff;color:#1b1626;border-radius:12px;padding:5px 10px;font:600 .8rem var(--f);max-width:220px;box-shadow:0 8px 20px -8px #000}
+.cbub .gk{font-size:1rem}
+/* sprite poses */
+.spr .arm{transform-box:view-box;transform-origin:43px 44.5px;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.spr .shout,.spr .frown,.spr .tears{opacity:0}
+.raise .arm{transform:rotate(-148deg)}
+.raise .shout{opacity:1}.raise .mouth{opacity:0}
+.frown .mouth,.cry .mouth{opacity:0}.frown .frown,.cry .frown{opacity:1}
+.cry .tears{opacity:1}
+/* horse gallop */
+.horse .leg{animation:legA .32s ease-in-out infinite alternate}
+.horse .l2,.horse .l3{animation-name:legB}
+@keyframes legA{from{transform:rotate(28deg)}to{transform:rotate(-28deg)}}
+@keyframes legB{from{transform:rotate(-28deg)}to{transform:rotate(28deg)}}
+.gallop svg.horse{animation:bounce .32s ease-in-out infinite alternate}
+@keyframes bounce{to{transform:translateY(-4px)}}
+.run-lr{animation:runlr var(--dur) linear forwards}
+@keyframes runlr{from{transform:translateX(-140px)}to{transform:translateX(calc(min(100vw,760px) + 40px))}}
+.charge{animation:charge 1.3s cubic-bezier(.4,.1,.4,1) forwards}
+@keyframes charge{from{transform:translateX(-140px)}to{transform:translateX(min(36vw,300px))}}
+.topple{transform-origin:50% 92%;animation:topple .5s cubic-bezier(.5,0,.8,.4) var(--d,1s) forwards}
+@keyframes topple{to{transform:rotate(80deg) translateY(10px);opacity:.55}}
+.march{animation:march 1.6s cubic-bezier(.3,.6,.4,1) var(--d,0s) both}
+@keyframes march{from{transform:translateX(-60vw)}to{transform:none}}
+.march svg{animation:step .3s ease-in-out 5 alternate}
+@keyframes step{to{transform:translateY(-3px)}}
+.popin{animation:popin .4s cubic-bezier(.3,1.6,.5,1) 1.5s both}
+@keyframes popin{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+.seq{opacity:0;animation:popin .4s cubic-bezier(.3,1.6,.5,1) var(--d,0s) forwards}
+.walkin{animation:walkin .8s ease-out both}
+@keyframes walkin{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
+.walkin.flip{animation-name:walkinr}
+@keyframes walkinr{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
+.lateIn{opacity:0;animation:walkin .6s ease-out 2.2s forwards}
+.roll{animation:roll 1.4s cubic-bezier(.3,.6,.4,1) forwards}
+@keyframes roll{from{transform:translateX(-80px)}to{transform:translateX(min(52vw,440px))}}
+.wall{width:100px;height:90px;display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+.wall i{background:#b9a27c;border:1px solid #8a7656;border-radius:2px;animation:crumble .8s cubic-bezier(.5,0,.8,.5) var(--d) forwards}
+@keyframes crumble{to{transform:translate(var(--x),70px) rotate(var(--r));opacity:0}}
+.knot{width:46px;height:46px}
+.knot b{position:absolute;inset:0;border:5px solid #c2a36b;border-radius:50%;box-shadow:inset 0 0 0 5px #9c7f4c}
+.knot .kl{clip-path:inset(0 50% 0 0);animation:kl .6s ease-out 1.05s forwards}
+.knot .kr{clip-path:inset(0 0 0 50%);animation:kr .6s ease-out 1.05s forwards}
+@keyframes kl{to{transform:translate(-26px,30px) rotate(-60deg);opacity:0}}
+@keyframes kr{to{transform:translate(26px,30px) rotate(60deg);opacity:0}}
+.knot .cut{position:absolute;left:-14px;right:-14px;top:50%;height:3px;background:#fff;transform:rotate(-30deg) scaleX(0);box-shadow:0 0 8px #fff;animation:cut .25s ease-out .9s forwards}
+@keyframes cut{60%{transform:rotate(-30deg) scaleX(1);opacity:1}to{transform:rotate(-30deg) scaleX(1);opacity:0}}
+.swing .arm{animation:swing 1.2s ease .3s forwards}
+@keyframes swing{0%{transform:none}40%{transform:rotate(-160deg)}70%,100%{transform:rotate(-20deg)}}
+.mound{width:120px;height:40px;background:radial-gradient(60px 40px at 50% 100%,#5b4a36 98%,transparent 100%)}
+.mound span{position:absolute;bottom:26px;width:22px;height:22px;border:4px solid #6fa35a;border-radius:50%;opacity:0;animation:wreath .5s ease forwards}
+.mound span:first-child{left:28px;animation-delay:1.2s}.mound span:last-child{right:28px;animation-delay:1.6s}
+@keyframes wreath{from{opacity:0;transform:translateY(-14px) scale(.6)}to{opacity:1;transform:none}}
+.jar{width:58px;height:60px}
+.jar svg{width:58px;position:absolute;bottom:14px;left:0;clip-path:inset(0 0 46% 0)}
+.jar::after{content:"";position:absolute;left:-2px;right:-2px;bottom:0;height:36px;background:radial-gradient(ellipse at 50% 30%,#b0773f,#7a4e26);border-radius:40% 40% 46% 46%}
+.lieDown{transform-origin:50% 92%;animation:liedown .9s ease .2s forwards}
+@keyframes liedown{to{transform:rotate(-86deg) translate(-8px,6px)}}
+.sob{animation:sob .5s ease-in-out .6s 6 alternate}
+@keyframes sob{to{transform:translateY(2px) scaleY(.97)}}
+.cry .tears{animation:tear .8s linear infinite}
+@keyframes tear{from{transform:translateY(0);opacity:1}to{transform:translateY(8px);opacity:0}}
+.spearfly{width:60px;height:3px;background:#9a8770;border-radius:2px;opacity:0;animation:spear .45s cubic-bezier(.4,0,1,1) .6s forwards}
+.spearfly::after{content:"";position:absolute;right:-8px;top:-3px;border-left:9px solid #cfd3dc;border-top:4.5px solid transparent;border-bottom:4.5px solid transparent}
+@keyframes spear{0%{opacity:1;transform:translateX(0)}100%{opacity:1;transform:translateX(min(26vw,200px))}}
+.throw .arm{animation:throwarm .5s ease .3s forwards}
+@keyframes throwarm{40%{transform:rotate(-170deg)}100%{transform:rotate(-40deg)}}
+.cryLate .spr .tears,.cryLate .spr .frown{animation:showlate .2s ease 2.2s forwards}
+.cryLate .spr .mouth{animation:hidelate .2s ease 2.2s forwards}
+@keyframes showlate{to{opacity:1}}@keyframes hidelate{to{opacity:0}}
+.sit svg{transform:scaleX(-1) scaleY(.82)}
+.stomp{animation:stomp .35s ease-in-out .3s 6 alternate}
+@keyframes stomp{to{transform:translateY(-6px)}}
+.struck{transform-origin:50% 92%;animation:struck .6s ease 1.15s forwards}
+@keyframes struck{30%{transform:rotate(-8deg)}100%{transform:rotate(-70deg) translateY(6px)}}
+.arrowfly{width:44px;height:2px;background:#6b4a2f;opacity:0;animation:arrow .55s linear .6s forwards}
+.arrowfly::before{content:"";position:absolute;left:-7px;top:-3px;border-right:8px solid #cfd3dc;border-top:4px solid transparent;border-bottom:4px solid transparent}
+@keyframes arrow{0%{opacity:1;transform:translateX(0)}100%{opacity:1;transform:translateX(calc(-1 * min(44vw,330px)))}}
+.sun{width:44px;height:44px;border-radius:50%;background:radial-gradient(#ffe8a3,#ffb347);box-shadow:0 0 40px 10px rgba(255,180,70,.35)}
+.dunes{left:0;right:0;bottom:0;height:34px;background:radial-gradient(160px 30px at 20% 100%,#c8a25e 98%,transparent),radial-gradient(200px 34px at 70% 100%,#b8924f 98%,transparent)}
+.trudge{animation:trudge var(--dur) linear forwards}
+.trudge svg{animation:step .5s ease-in-out infinite alternate}
+@keyframes trudge{to{transform:translateX(min(70vw,560px))}}
+/* site-wide Alexander */
+header.top h1{display:flex;align-items:center;gap:10px}
+.logo{width:30px;height:34px;display:inline-block;flex:none;overflow:hidden;border-radius:50%;background:var(--tint);border:1px solid var(--accent-dim)}
+.logo svg{width:52px;height:auto;margin:-8px 0 0 -11px}
+.mini{display:inline-block;width:22px;height:26px;vertical-align:-6px;margin-right:6px;overflow:hidden}
+.mini svg{width:40px;margin:-6px 0 0 -9px}
+.comp{position:absolute;width:42px;top:-6px;pointer-events:none}
+.comp.heph{right:-56px}
+.dl-nodewrap[style*="--x:-"] .comp.heph{right:auto;left:-56px}
+.comp.parm{left:-58px;top:-4px}
+.dl-nodewrap[style*="--x:-"] .comp.parm{left:auto;right:-58px}
+.comp svg{width:100%;height:auto;overflow:visible}
+.comp.heph svg{transform:scaleX(-1)}
+.vic{width:64px;margin:0 auto -4px}
+.vic svg{width:100%;height:auto;overflow:visible}
+.cast{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.cast figure{margin:0;text-align:center;background:#1c1a22;border-radius:12px;padding:10px 6px}
+.cast svg{width:56px;height:auto;margin:0 auto;display:block;overflow:visible}
+.cast figcaption{font-size:.72rem;color:var(--muted);line-height:1.35;margin-top:4px}
+.cast b{display:block;color:var(--ink);font-size:.82rem}
+@media (max-width:700px){
+  .camp{bottom:calc(74px + env(safe-area-inset-bottom));height:150px}
+  .act svg{max-width:100%}
+  .ccap{font-size:.7rem}.ccap span{display:none}
+}
+@media (prefers-reduced-motion: reduce){.camp{display:none}}
 </style>
 </head>
 <body>
@@ -818,6 +941,7 @@ body.dl-lock{overflow:hidden}
 
   <section class="set-group">
    <div class="set-row"><div><b>Sound effects</b><span>Dings, flips and little chimes</span></div><button class="switch" id="sfx" aria-pressed="true"><i></i></button></div>
+   <div class="set-row"><div><b>Campaign scenes</b><span>Little scenes from Alexander’s campaigns when you answer</span></div><button class="switch" id="camp" aria-pressed="true"><i></i></button></div>
    <div class="set-row stack"><div><b>Daily goal</b><span>Levels per day · one keeps your streak</span></div><div class="set-goal" id="set-goal"></div></div>
    <div class="set-row stack"><div><b>Reset progress</b><span>Clears your Daily path, streak and XP on this device</span></div><button class="set-btn danger" id="set-reset">Reset</button></div>
   </section>
@@ -836,6 +960,7 @@ body.dl-lock{overflow:hidden}
   <h2 class="set-h2">Edit history</h2>
   <section class="set-group">
    <ol class="log">
+    <li><time>Nov 26, 2026</time><span>Campaign scenes from Arrian and Plutarch: Bucephalus, Granicus, Issus, Gaugamela, Tyre, the Gordian knot, and the hard days too. Hephaestion and Parmenion join the cast.</span></li>
     <li><time>Nov 26, 2026</time><span>Alexander the Great joins the Daily path, with quotes from Plutarch and Arrian and a war cry. True/false answers now always show the real meaning.</span></li>
     <li><time>Nov 26, 2026</time><span>Daily review path with streaks, levels and speed rounds. Phone app mode, installable from the home screen. Settings and About.</span></li>
     <li><time>Nov 26, 2026</time><span>Sound effects, gentle animations and a calmer, centered layout.</span></li>
@@ -1495,6 +1620,13 @@ const SFX=(()=>{
     bad(){tone(207.7,0,.2,"triangle",.42,164.8);tone(155.6,.05,.22,"sine",.25)},
     soft(){tone(330,0,.12,"sine",.16,294)},
     streak(){[1568,1976,2349,3136].forEach((f,i)=>bell(f,.05+i*.06,.3,.18))},
+    gallop(){for(let i=0;i<12;i++){const t=i*.16+(i%2?.05:0);noise(t,.045,420,.3);tone(110,t,.06,"sine",.18)}},
+    clash(){[0,.5,.95].forEach(t=>{noise(t,.07,3200,.25);tone(1900,t,.22,"triangle",.12);tone(2850,t,.18,"sine",.08)});tone(196,1.25,.5,"triangle",.12,262)},
+    crumble(){noise(1.3,.9,180,.5);noise(1.5,.7,110,.45);tone(70,1.3,.6,"sine",.3,45)},
+    slash(){noise(.55,.18,2600,.35);tone(1400,.6,.18,"triangle",.1,700)},
+    chime(){[784,988,1175].forEach((f,i)=>bell(f,i*.12,.5,.25))},
+    sad(){tone(392,0,.32,"triangle",.22,370);tone(370,.34,.32,"triangle",.22,349);tone(349,.68,.7,"triangle",.22,300)},
+    thud(){noise(.9,.12,600,.3);tone(95,.95,.3,"sine",.4,48);setTimeout(()=>{},0)},
     alala(){const F=[[820,5,1.6],[1300,7,1],[2650,9,.35]];voice(0,1.3,[[0,560],[.16,840],[.95,880],[1.3,620]],F,7.4,.95,1.1);voice(.02,1.28,[[0,560],[.16,840],[.95,880],[1.3,620]],F,7.1,.9,.55,1.012);noise(0,.1,900,.12)},
     hooray(){voice(0,.2,[[0,215],[.2,250]],[[420,5,1.6],[950,6,.8]],0,0,1);voice(.18,.6,[[0,300],[.12,350],[.6,250]],[[760,5,1.6],[1220,7,1],[2500,9,.3]],0,0,1.15);noise(.17,.07,1800,.18)},
     win(){[523.25,659.25,783.99,1046.5].forEach((f,i)=>bell(f,i*.085,i===3?.9:.35,.42));tone(261.6,.0,.9,"sine",.12)},
@@ -1528,6 +1660,7 @@ tally=function(g){
     else SFX.good();
   } else SFX.bad();
   anim(document.getElementById(g?"sc-ok":"sc-all"),"bump");
+  window.Campaign&&Campaign.event(g,{streak:sc.str});
 };
 
 /* ---------- view transitions ---------- */
@@ -1905,7 +2038,7 @@ function start(node,custom){
   open();next();
 }
 function open(){const o=ov();o.hidden=false;document.body.classList.add("dl-lock");FX.anim(o,"enter")}
-function close(){const o=ov();o.hidden=true;o.innerHTML="";document.body.classList.remove("dl-lock");L=null;if(SP){clearInterval(SP.timer);SP=null}drawPath()}
+function close(){window.Campaign&&Campaign.stop();const o=ov();o.hidden=true;o.innerHTML="";document.body.classList.remove("dl-lock");L=null;if(SP){clearInterval(SP.timer);SP=null}drawPath()}
 function frame(body,foot){
   const pct=L?Math.round(L.i/(L.tot)*100):0;
   ov().innerHTML=`<div class="dl-ovin"><div class="dl-bar"><button class="dl-close" aria-label="Quit lesson">✕</button><div class="dl-prog"><i style="width:${pct}%"></i></div>${L&&L.combo>=3?`<div class="dl-combo">${ICON.flame}${L.combo}</div>`:`<div class="dl-combo dim">${L?L.title.replace(/^Unit \d+ · /,""):""}</div>`}</div>
@@ -1917,6 +2050,7 @@ function confirmQuit(){if(Date.now()-quitArmed<2500)return true;quitArmed=Date.n
 function next(){
   if(!L)return;
   if(L.i>=L.qs.length)return finish();
+  window.Campaign&&Campaign.stop();
   const q=L.qs[L.i];q.sel=null;
   if(q.kind==="match")return renderMatch(q);
   let body=`<div class="q-tag">${q.tag}</div><div class="q-prompt">${q.prompt}</div>`;
@@ -1957,6 +2091,7 @@ function grade(q,ok){
   if(ok){S.good();L.combo++;L.best=Math.max(L.best,L.combo);if(firstTry)L.first++;if(L.combo>0&&L.combo%5===0)setTimeout(()=>S.streak(),130)}
   else{S.bad();L.combo=0;if(firstTry){L.retried.add(q);const c=Object.assign({},q);L.retried.add(c);L.qs.push(c);L.tot++}}
   if(q.v){D.str[q.v.id]=ok?Math.min(5,(D.str[q.v.id]||0)+1):0;if(!ok)markMissed(q.v)}
+  window.Campaign&&Campaign.event(ok,{streak:L.combo});
 }
 function renderMatch(q){
   const ws=q.ws,L1=shuffle(ws.map(v=>v.id)),R1=shuffle(ws.map(v=>v.id));let selL=null,selR=null,done=new Set(),miss=0;
@@ -2082,6 +2217,177 @@ $("#set-reset").onclick=e=>{const b=e.currentTarget;
 
 drawPath();
 if(!document.getElementById("v-daily").hidden) window.dailyShow();
+}
+
+
+/* ================= Campaign: Alexander & company ================= */
+{
+const S=window.SFX||{};
+/* ---------- sprite builder (64×80 figure) ---------- */
+const sunRays=(r1,r2,w,rot=0)=>[0,1,2,3,4,5,6,7].map(k=>`<path d="M0 ${-r1}L${w} ${-r2}L${-w} ${-r2}Z" transform="rotate(${k*45+rot})"/>`).join("");
+function P(o,cls=""){
+  const sk=o.skin||"#eccfa9",tr=o.trim||"#d9b25b";
+  const legs=o.noLegs?"":`<path d="M25 60l-2 12h6l1-11zM39 60l2 12h-6l-1-11z" fill="${sk}"/><rect x="22" y="71" width="8.5" height="3.4" rx="1.6" fill="#8a5a33"/><rect x="33.5" y="71" width="8.5" height="3.4" rx="1.6" fill="#8a5a33"/>`;
+  const cloak=o.cloak?`<path d="M19 41q13-5 26 0l4 26q-17 5-34 0z" fill="${o.cloak}"/>`:"";
+  const skirt=`<g fill="${o.skirt||o.tunic}" stroke="${tr}" stroke-width=".6">${[0,1,2,3,4,5].map(i=>`<rect x="${20.6+i*3.85}" y="55.5" width="3.3" height="7.5" rx="1.1"/>`).join("")}</g>`;
+  const body=`<path d="M19.5 42q12.5-5 25 0l-1.6 14q-10.9 3-21.8 0z" fill="${o.tunic}" stroke="rgba(0,0,0,.14)" stroke-width=".7"/><rect x="20.6" y="52.5" width="22.8" height="3" rx="1" fill="${tr}"/>`+
+    (o.sun?`<g transform="translate(32 46.5)" fill="${tr}"><circle r="1.5"/>${sunRays(1.6,3.8,.55)}</g>`:"");
+  let hair="";
+  if(o.style==="alex") hair=`<path d="M20.2 31Q18.6 16.8 29.6 15.2Q32.6 10.8 35.8 15Q46.2 16.6 43.8 31Q42.4 24.6 38.4 23.6Q35.6 18.8 32.2 22.4Q28.6 19 25.4 23.4Q21.8 24.4 20.2 31Z" fill="${o.hair}"/><path d="M30 15.6q2.4-3.8 5.6-.4q-2.6-.8-3.4 3.6q-.8-2.4-2.2-3.2z" fill="rgba(0,0,0,.1)"/><circle cx="20.8" cy="31.6" r="2.9" fill="${o.hair}"/><circle cx="43.2" cy="31.6" r="2.9" fill="${o.hair}"/>`;
+  if(o.style==="curly") hair=`<path d="M20.5 31Q19.5 18 32 17Q44.5 18 43.5 31Q41 22.5 32 22.5Q23 22.5 20.5 31Z" fill="${o.hair}"/>${[[22,22],[26,18.5],[31,17],[36,17.5],[40.5,20],[43,25],[21,27]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3.2" fill="${o.hair}"/>`).join("")}`;
+  if(o.style==="short") hair=`<path d="M21 29Q21 17.5 32 17.5T43 29Q40.5 22.5 32 22.5T21 29Z" fill="${o.hair}"/>`;
+  if(o.style==="bald") hair=`<path d="M21 31Q20 25 22.5 23M43 31Q44 25 41.5 23" stroke="${o.hair}" stroke-width="3" stroke-linecap="round" fill="none"/>`;
+  const beard=o.beard?`<path d="M21.5 31.5q0 12.5 10.5 12.5t10.5-12.5q-2.5 6.5-10.5 6.5t-10.5-6.5z" fill="${o.beard}"/>`:"";
+  let helm="";
+  if(o.helmet&&!o.tiara) helm=`<path d="M19.5 31Q19 15 32 15T44.5 31L41.6 32Q41 21.5 32 21.5T22.4 32Z" fill="${o.helmet}"/><path d="M19.8 30.5l-1.3 6 3.4.6.6-5.6z M44.2 30.5l1.3 6-3.4.6-.6-5.6z" fill="${o.helmet}"/>`+(o.crest?`<path d="M32 7c9.5 0 15.5 4.5 16.5 11.5-5.5-3.2-11-4.2-16.5-3.2-5.5-1-11 0-16.5 3.2C16.5 11.5 22.5 7 32 7z" fill="${o.crest}"/>`:"");
+  if(o.tiara) helm=`<path d="M20.5 28Q21.5 11 32 9.5Q42.5 11 43.5 28Q38 23 32 23T20.5 28Z" fill="${o.helmet}"/><path d="M20.5 28q-1 6 1.5 11M43.5 28q1 6-1.5 11" stroke="${o.helmet}" stroke-width="3.2" fill="none" stroke-linecap="round"/>`;
+  const face=`<circle cx="28" cy="31.8" r="1.6" fill="#2b2233"/><circle cx="36" cy="31.8" r="1.6" fill="#2b2233"/>
+    <path class="mouth" d="M29 36.6q3 2.2 6 0" stroke="#2b2233" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+    <path class="frown" d="M29 38.2q3-2.2 6 0" stroke="#2b2233" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+    <ellipse class="shout" cx="32" cy="37.4" rx="2.3" ry="2.6" fill="#5a2730"/>
+    <g class="tears" fill="#8fd0ff"><path d="M26.6 34q-1.3 2.4 0 3.4 1.3-1 0-3.4z"/><path d="M37.4 34q-1.3 2.4 0 3.4 1.3-1 0-3.4z"/></g>`;
+  let shield="";
+  if(o.shield){const s=o.shield;
+    shield=s.wicker?`<rect x="6" y="40" width="16" height="24" rx="3" fill="${s.fill}" stroke="${s.ring}" stroke-width="1.6"/><path d="M8 46h12M8 52h12M8 58h12" stroke="${s.ring}" stroke-width="1"/>`
+      :`<circle cx="14.5" cy="52" r="9.2" fill="${s.fill}" stroke="${s.ring}" stroke-width="2"/>`+(s.sun?`<g transform="translate(14.5 52)" fill="${s.ring}"><circle r="2"/>${sunRays(2.2,6.4,.8,22.5)}</g>`:`<circle cx="14.5" cy="52" r="3" fill="${s.ring}"/>`)}
+  let weapon="";
+  if(o.weapon==="sword") weapon=`<path d="M47.6 59.8l1.9-.5 5.4 15.2-1.4 1.6-1.3-.4z" fill="#e6e9f1" stroke="#a9b0be" stroke-width=".5"/><rect x="44.4" y="57.2" width="7.6" height="2.2" rx="1" fill="#d9b25b" transform="rotate(-18 48.2 58.3)"/>`;
+  if(o.weapon==="spear") weapon=`<path d="M48 30l-.6 46" stroke="#9a8770" stroke-width="2" stroke-linecap="round"/><path d="M48 21l2.6 9h-5.2z" fill="#cfd3dc"/>`;
+  if(o.weapon==="sarissa") weapon=`<path d="M46 60L118 16" stroke="#9a8770" stroke-width="1.8" stroke-linecap="round"/><path d="M118 16l7-5-2.4 7.6z" fill="#cfd3dc"/>`;
+  const arm=`<g class="arm">${weapon}<path d="M42.6 43.6q5.6 2.6 6.6 11.2l-3.2 1.2q-1.6-6.4-5-9.4z" fill="${sk}"/><path d="M41.8 42.8q3.4.4 5 2.6l-3 2.6q-1.6-1.6-3.2-2z" fill="${o.tunic}" stroke="rgba(0,0,0,.14)" stroke-width=".6"/><circle cx="47.7" cy="56.6" r="2.7" fill="${sk}"/></g>`;
+  return `<svg class="spr ${cls}" viewBox="0 0 64 80" aria-hidden="true">${o.noShadow?"":`<ellipse cx="32" cy="76" rx="15" ry="3.5" fill="#000" opacity=".3"/>`}${cloak}${legs}${skirt}${body}<circle cx="32" cy="29.5" r="11" fill="${sk}"/>${hair}${beard}${helm}${face}${shield}${arm}</svg>`;
+}
+const C={
+ alex:{tunic:"#fbfaff",trim:"#d9b25b",skirt:"#f4efe2",cloak:"#dcd7e4",hair:"#f2cf73",style:"alex",sun:true,shield:{fill:"#fbfaff",ring:"#d9b25b",sun:true},weapon:"sword"},
+ heph:{tunic:"#efe3c8",trim:"#7a5a8e",cloak:"#5b4f80",hair:"#4a3326",style:"curly",weapon:"spear",skin:"#e2bf96"},
+ parm:{tunic:"#cdb88e",trim:"#8a5a33",cloak:"#8e2f2f",hair:"#c9c9c9",style:"short",beard:"#d6d6d6",helmet:"#c99d45",crest:"#8e2f2f",weapon:"spear",shield:{fill:"#c99d45",ring:"#8a6a2c",sun:true}},
+ clei:{tunic:"#3a3540",trim:"#8a6a2c",cloak:"#141218",hair:"#1c1a1f",style:"short",beard:"#1c1a1f"},
+ pers:{tunic:"#d98c3a",trim:"#5a2a6e",skirt:"#c97a2e",hair:"#2a1d16",style:"short",beard:"#2a1d16",helmet:"#7a3b72",tiara:true,weapon:"spear",shield:{fill:"#b98a52",ring:"#6b4a2f",wicker:true},skin:"#d9b48a"},
+ phal:{tunic:"#a33a30",trim:"#d9b25b",hair:"#3a2a20",style:"short",helmet:"#c99d45",weapon:"sarissa",shield:{fill:"#c99d45",ring:"#8a6a2c",sun:true}},
+ diog:{tunic:"#8a7a66",trim:"#6b5d4c",hair:"#9a9a9a",beard:"#bdbdbd",style:"bald"},
+};
+window.Sprite={P,C};
+function HORSE(rider){
+  const leg=(x,c)=>`<g class="leg ${c}" style="transform-origin:${x}px 44px"><path d="M${x-2.4} 42h4.8l-.6 22h-3.6z" fill="#1f1b24"/><rect x="${x-2.6}" y="62" width="5.2" height="3" rx="1" fill="#0e0c10"/></g>`;
+  return `<svg class="horse" viewBox="0 0 110 84" aria-hidden="true"><ellipse cx="54" cy="80" rx="34" ry="4" fill="#000" opacity=".3"/>
+   <g transform="translate(0 12)">${leg(32,"l1")}${leg(40,"l2")}
+   <path d="M18 34q-10 2-14 14 6-4 12-5" fill="#121015"/>
+   <ellipse cx="50" cy="36" rx="30" ry="12" fill="#2a2530"/>
+   <path d="M70 32q8-14 16-20l8 3q-2 10-10 22z" fill="#2a2530"/>
+   <path d="M86 9q8-3 14 2l3 8q-2 3-6 2l-9-4z" fill="#2a2530"/>
+   <path d="M86 10q-6 4-12 16l-3-3q5-9 11-15z" fill="#121015"/>
+   <path d="M93 12l1.6 1 1.6-1-1.6 3z" fill="#fff"/><circle cx="96" cy="12" r="1" fill="#000"/>
+   <path d="M88 7l2-4 2 4z" fill="#2a2530"/>
+   <rect x="38" y="26" width="22" height="7" rx="2" fill="#8e2f2f"/><path d="M38 33h22l-3 5H41z" fill="#d9b25b"/>
+   ${leg(64,"l3")}${leg(72,"l4")}</g>
+   ${rider?`<svg x="22" y="-12" width="52" height="66" viewBox="0 0 64 80" style="overflow:visible"><g class="${(rider.match(/class="spr ([^"]*)"/)||[])[1]||""}">${rider.replace(/^<svg[^>]*>|<\/svg>$/g,"")}</g></svg>`:""}</svg>`;
+}
+
+/* ---------- scenes (ancient sources only) ---------- */
+const A=(cls="")=>P(C.alex,cls), Ar=(cls="")=>P(Object.assign({},C.alex,{noLegs:true,noShadow:true}),cls);
+const actor=(html,style,cls="")=>`<div class="act ${cls}" style="${style}">${html}</div>`;
+const bubble=(t,style,cls="")=>`<div class="cbub ${cls}" style="${style}">${t}</div>`;
+const GOOD={
+ ride:()=>({t:"Alexander rides Bucephalus",src:"Plutarch, Alexander 6",dur:3600,snd:"gallop",
+   html:actor(HORSE(Ar()),"left:0;bottom:6px;width:120px","gallop run-lr")}),
+ battle:()=>{const b=rnd([["Victory at the Granicus, 334 BC","Arrian 1.13–16"],["Victory at Issus, 333 BC","Arrian 2.6–11"],["Victory at Gaugamela, 331 BC","Arrian 3.8–15"]]);
+   return {t:b[0],src:b[1],dur:3800,snd:"clash",
+   html:actor(HORSE(Ar("raise")),"left:0;bottom:6px;width:116px","gallop charge")+[0,1,2].map(i=>actor(P(C.pers),`right:${8+i*9}%;bottom:6px;width:52px;--d:${1.05+i*.22}s`,"flip topple")).join("")}},
+ tyre:()=>({t:"Tyre falls after a seven-month siege, 332 BC",src:"Arrian 2.24",dur:4000,snd:"crumble",
+   html:`<div class="act wall" style="right:10%;bottom:6px">${[...Array(15)].map((_,i)=>`<i style="--d:${1.4+Math.random()*.6}s;--r:${(Math.random()*80-40)|0}deg;--x:${(Math.random()*40-20)|0}px"></i>`).join("")}</div>`+
+     actor(`<svg viewBox="0 0 40 70"><rect x="6" y="6" width="28" height="54" rx="2" fill="#8a6a3c"/><path d="M6 18h28M6 30h28M6 42h28" stroke="#6b4a2f" stroke-width="2"/><rect x="12" y="10" width="8" height="6" fill="#2b2233"/><circle cx="12" cy="64" r="5" fill="#3e2c1c"/><circle cx="28" cy="64" r="5" fill="#3e2c1c"/></svg>`,"left:0;bottom:4px;width:58px","roll")+
+     actor(A("raise"),"left:2%;bottom:6px;width:52px","lateIn")}),
+ phalanx:()=>({t:"The phalanx raises the war cry",src:"ἀλαλαί!",dur:3800,snd:"alala",
+   html:[0,1,2,3,4,5].map(i=>actor(P(C.phal),`left:${-4+i*8}%;bottom:6px;width:50px;--d:${i*.06}s`,"march")).join("")+bubble(`<span class="gk">ἀλαλαί!</span>`,"left:30%;bottom:80px","popin")}),
+ gordian:()=>({t:"Alexander cuts the Gordian knot",src:"Arrian 2.3 · Plutarch 18",dur:3400,snd:"slash",
+   html:actor(A("swing"),"left:38%;bottom:6px;width:56px")+`<div class="act knot" style="left:54%;bottom:40px"><b class="kl"></b><b class="kr"></b><i class="cut"></i></div>`}),
+ troy:()=>({t:"Wreaths for Achilles and Patroclus at Troy",src:"Arrian 1.12",dur:3800,snd:"chime",
+   html:`<div class="act mound" style="left:44%;bottom:6px"><span></span><span></span></div>`+actor(A(),"left:30%;bottom:6px;width:52px","walkin")+actor(P(C.heph),"left:58%;bottom:6px;width:52px","walkin flip")}),
+};
+const RARE={
+ parmenion:()=>({t:"Darius’s offer",src:"Plutarch, Alexander 29",dur:5600,snd:"chime",
+   html:actor(P(C.parm),"left:28%;bottom:6px;width:54px","walkin")+actor(A(),"left:56%;bottom:6px;width:54px","walkin flip")+
+     bubble("“I would accept, if I were Alexander.”","left:14%;bottom:80px;--d:.5s","seq")+bubble("“So would I, if I were Parmenion.”","left:48%;bottom:80px;--d:2.4s","seq")}),
+ diogenes:()=>({t:"Alexander meets Diogenes",src:"Plutarch, Alexander 14",dur:5000,snd:"chime",
+   html:`<div class="act jar" style="left:52%;bottom:6px">${P(Object.assign({},C.diog,{noShadow:true}))}</div>`+actor(A(),"left:34%;bottom:6px;width:54px","walkin")+
+     bubble("“Stand a little out of my sun.”","left:46%;bottom:80px;--d:1s","seq")}),
+};
+const BAD={
+ heph:()=>({t:"Hephaestion dies at Ecbatana; Alexander grieves",src:"Arrian 7.14",dur:4000,snd:"sad",
+   html:actor(P(C.heph),"left:52%;bottom:2px;width:52px","lieDown")+actor(A("cry"),"left:36%;bottom:6px;width:54px","sob")}),
+ cleitus:()=>({t:"Alexander kills Cleitus at Maracanda, then weeps",src:"Arrian 4.8–9",dur:4200,snd:"thud",
+   html:actor(A("throw"),"left:26%;bottom:6px;width:54px","cryLate")+`<i class="act spearfly" style="left:34%;bottom:46px"></i>`+actor(P(C.clei),"left:62%;bottom:6px;width:54px;--d:1.05s","flip topple")}),
+ hyphasis:()=>({t:"At the Hyphasis the army refuses to go on",src:"Arrian 5.25–28",dur:4000,snd:"sad",
+   html:[0,1,2,3].map(i=>actor(P(Object.assign({},C.phal,{weapon:null})),`left:${44+i*9}%;bottom:-8px;width:44px`,"sit flip")).join("")+actor(A("frown"),"left:28%;bottom:6px;width:54px","stomp")+bubble("…","left:31%;bottom:80px","popin")}),
+ mallian:()=>({t:"Struck by an arrow at the Mallian town",src:"Arrian 6.10",dur:3600,snd:"thud",
+   html:actor(A("frown"),"left:40%;bottom:6px;width:54px","struck")+`<i class="act arrowfly" style="right:4%;bottom:52px"></i>`}),
+ desert:()=>({t:"The march through the Gedrosian desert",src:"Arrian 6.22–26",dur:4200,snd:"sad",
+   html:`<div class="act sun" style="right:12%;top:8px"></div><div class="act dunes"></div>`+actor(A("frown"),"left:0;bottom:8px;width:50px","trudge")}),
+};
+
+/* ---------- engine ---------- */
+let busy=false,last="",on=load("camp",true);
+const pickFrom=o=>{const ks=Object.keys(o).filter(k=>k!==last);const k=rnd(ks);last=k;return o[k]()};
+function play(sc){
+  if(busy||!on) return;busy=true;
+  const lesson=!document.getElementById("dl-ov").hidden;
+  const el=document.createElement("div");el.className="camp"+(lesson?" inlesson":"");
+  el.innerHTML=`<div class="stage">${sc.html}</div><div class="ccap"><b>${sc.t}</b><span class="${/[α-ω]/.test(sc.src)?"gk":""}">${sc.src}</span></div>`;
+  el.style.setProperty("--dur",sc.dur+"ms");
+  (lesson?document.getElementById("dl-ov"):document.body).appendChild(el);
+  if(S[sc.snd]) setTimeout(()=>S[sc.snd](),sc.snd==="alala"?500:120);
+  setTimeout(()=>el.classList.add("out"),sc.dur-350);
+  setTimeout(()=>{el.remove();busy=false},sc.dur);
+}
+let sinceGood=0,sinceBad=0;
+window.Campaign={
+  event(ok,{streak=0}={}){
+    if(!on||matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if(ok){sinceGood++;
+      if(streak>0&&streak%10===0) return play(pickFrom(RARE));
+      if(streak>0&&streak%5===0) return play(GOOD.phalanx());
+      if(sinceGood>=3&&Math.random()<.5){sinceGood=0;play(pickFrom(GOOD))}
+    } else {sinceBad++;
+      if(sinceBad>=1&&Math.random()<.45){sinceBad=0;play(pickFrom(BAD))}
+    }
+  },
+  play(name){const all=Object.assign({},GOOD,RARE,BAD);if(all[name]){busy=false;play(all[name]())}},
+  stop(){document.querySelectorAll(".camp").forEach(e=>e.remove());busy=false},
+  get on(){return on},set(v){on=v;store("camp",v)},
+};
+
+/* ---------- Alexander around the site ---------- */
+// header crest
+const h1=document.querySelector("header.top h1");
+if(h1&&!h1.querySelector(".logo")) h1.insertAdjacentHTML("afterbegin",`<span class="logo">${P(Object.assign({},C.alex,{noShadow:true}))}</span>`);
+// notes label in the reference sidebar
+const nl=document.querySelector(".refscope .side .label");
+if(nl) nl.insertAdjacentHTML("afterbegin",`<span class="mini">${P(Object.assign({},C.alex,{noShadow:true,weapon:null}))}</span>`);
+// Daily path companions
+const _show=window.dailyShow;
+function companions(){
+  const cur=document.querySelector("#daily .dl-node.cur");
+  if(cur&&!cur.parentElement.querySelector(".comp")) cur.parentElement.insertAdjacentHTML("beforeend",`<div class="comp heph">${P(C.heph)}</div>`);
+  const boss=[...document.querySelectorAll("#daily .dl-node.k-boss")].find(b=>!b.classList.contains("done"));
+  if(boss&&!boss.parentElement.querySelector(".comp")) boss.parentElement.insertAdjacentHTML("beforeend",`<div class="comp parm">${P(C.parm)}</div>`);
+}
+const daily=document.getElementById("daily");
+if(daily) new MutationObserver(()=>companions()).observe(daily,{childList:true});
+companions();
+// finish screens in the Dictionary games
+const vic=()=>`<div class="vic">${A("raise")}</div>`;
+const addVic=()=>{const c=document.querySelector("#view .card");if(c&&!c.querySelector(".vic")&&/FINISHED|CLEARED|DECK COMPLETE/.test(c.textContent))c.insertAdjacentHTML("afterbegin",vic())};
+new MutationObserver(addVic).observe(document.getElementById("view"),{childList:true,subtree:false});
+// about: the cast
+const ab=document.querySelector(".set .about .ab-grid");
+if(ab&&!document.querySelector(".cast")) ab.insertAdjacentHTML("afterend",`<div class="cast">
+  <figure>${P(C.alex)}<figcaption><b>Alexander</b>Your guide on the Daily path.</figcaption></figure>
+  <figure>${P(C.heph)}<figcaption><b>Hephaestion</b>His closest friend (Arrian 7.14).</figcaption></figure>
+  <figure>${P(C.parm)}<figcaption><b>Parmenion</b>Philip’s veteran general (Plutarch 29).</figcaption></figure></div>
+  <p class="small">Scenes that play during games come from Arrian’s <i>Anabasis</i> and Plutarch’s <i>Life of Alexander</i>.</p>`);
+// settings toggle
+const sw=document.getElementById("camp");
+if(sw){const paint=()=>sw.setAttribute("aria-pressed",on);paint();sw.onclick=()=>{window.Campaign.set(!on);paint();if(on)window.Campaign.play("ride")}}
 }
 
 if('serviceWorker' in navigator&&location.protocol==='https:'&&/github\.io$/.test(location.hostname))navigator.serviceWorker.register('sw.js').catch(()=>{});
