@@ -953,6 +953,17 @@ header.top h1{display:flex;align-items:center;gap:10px}
 @keyframes pinin{from{opacity:0;transform:scale(.88) translateY(6px)}to{opacity:1;transform:none}}
 @keyframes pinout{to{opacity:0;transform:scale(.9)}}
 @keyframes pinnudge{0%,100%{transform:none}25%{transform:rotate(-1.5deg) scale(1.02)}75%{transform:rotate(1.5deg) scale(1.02)}}
+
+/* ---------- Sisyphus on tab change ---------- */
+.sisy{position:fixed;left:50%;bottom:18px;z-index:46;width:250px;margin-left:-125px;pointer-events:none;background:var(--panel);border:1px solid var(--rule);border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.5);padding:6px 6px 4px;animation:sisyin .22s cubic-bezier(.3,1.4,.5,1) both}
+.sisy.out{animation:sisyout .3s ease forwards}
+.sisy svg{display:block;width:100%;height:auto;border-radius:9px}
+.sisy p{margin:2px 4px 2px;font-size:.7rem;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.sisy p b{color:var(--accent);font-weight:600;font-family:var(--gk,inherit)}
+@media (max-width:640px){.sisy{bottom:calc(82px + env(safe-area-inset-bottom))}}
+@media (prefers-reduced-motion: reduce){.sisy{display:none}}
+@keyframes sisyin{from{opacity:0;transform:translateY(10px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes sisyout{to{opacity:0;transform:translateY(8px)}}
 </style>
 </head>
 <body>
@@ -1052,6 +1063,7 @@ header.top h1{display:flex;align-items:center;gap:10px}
   <section class="set-group">
    <div class="set-row"><div><b>Sound effects</b><span>Dings, flips, swooshes and little chimes</span></div><button class="switch" id="sfx" aria-pressed="true"><i></i></button></div>
    <div class="set-row"><div><b>Typing clicks</b><span>A soft click for every key you type</span></div><button class="switch" id="keysfx" aria-pressed="true"><i></i></button></div>
+   <div class="set-row"><div><b>Sisyphus</b><span>A little boulder scene when you switch between Reference, Dictionary and Daily</span></div><button class="switch" id="sisysw" aria-pressed="true"><i></i></button></div>
    <div class="set-row"><div><b>Campaign scenes</b><span>Little scenes from Alexander’s campaigns when you answer</span></div><button class="switch" id="camp" aria-pressed="true"><i></i></button></div>
    <div class="set-row stack"><div><b>Daily goal</b><span>Levels per day · one keeps your streak</span></div><div class="set-goal" id="set-goal"></div></div>
    <div class="set-row stack"><div><b>Reset progress</b><span>Clears your Daily path, streak and XP on this device</span></div><button class="set-btn danger" id="set-reset">Reset</button></div>
@@ -1071,6 +1083,7 @@ header.top h1{display:flex;align-items:center;gap:10px}
   <h2 class="set-h2">Edit history</h2>
   <section class="set-group">
    <ol class="log">
+    <li><time>Nov 27, 2026</time><span>Sisyphus: switching between Reference, Dictionary and Daily now plays a tiny scene. Forward, he pushes the boulder uphill; back, it rolls down and he trudges after it. Switch it off in Settings.</span></li>
     <li><time>Nov 27, 2026</time><span>Pop-out paradigms: float any Reference table on top of the app (⧉ on a table, the ⧉ button up top, or Tables in the Keyboard). Drag it anywhere, resize it, collapse it; it stays put when you switch tabs.</span></li>
     <li><time>Nov 27, 2026</time><span>More sounds: typing clicks (with their own switch in Settings), a swoosh between Reference, Dictionary and Daily, and page turns between sub-tabs.</span></li>
     <li><time>Nov 27, 2026</time><span>Greek keyboard: letter pairs now work as you type: th θ, ph φ, ch χ, ps ψ, ks ξ. h is still η; type thh or phh for τη or πη.</span></li>
@@ -1799,6 +1812,10 @@ const SFX=(()=>{
     grab(){tone(330,0,.04,"triangle",.14,390)},
     drop(){tone(200,0,.08,"sine",.26,130);noise(0,.03,700,.14)},
     fold(){tone(620,0,.07,"sine",.15,420)},
+    heave(){tone(150,0,.22,"triangle",.12,120);noise(.05,.25,300,.12)},
+    rumble(){noise(0,.9,140,.55);noise(.15,.7,90,.45);tone(62,0,.8,"sine",.22,40)},
+    hop(){tone(420,0,.14,"sine",.18,900)},
+    sigh(){tone(330,0,.35,"triangle",.1,220)},
     unfold(){tone(420,0,.07,"sine",.15,620)},
     set(v){on=v;store("sfx",v);if(v)this.tick()},
     tick(){tone(1250,0,.035,"sine",.12)},
@@ -1919,7 +1936,7 @@ document.addEventListener("click",e=>{
     if(t.matches("[data-top]")){
       const ord=["reference","dictionary","daily"],cur=document.querySelector("[data-top][aria-selected=true]");
       const a=cur?ord.indexOf(cur.dataset.top):-1,b=ord.indexOf(t.dataset.top);
-      a===b?SFX.tick():SFX.whoosh(b>a?1:-1);
+      if(a===b)SFX.tick();else{SFX.whoosh(b>a?1:-1);window.SISY&&SISY(b>a?1:-1)}
     } else if(t.matches("[data-rsub],#tabs button")&&t.getAttribute("aria-pressed")!=="true"&&t.getAttribute("aria-selected")!=="true") SFX.page();
     else SFX.tick();
   }
@@ -2840,6 +2857,81 @@ document.addEventListener("pointerdown",e=>{if(pick&&!pick.contains(e.target)&&!
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&pick){e.stopPropagation();closePick();pickFrom&&pickFrom.focus()}},true);
 
 ld("pins",[]).forEach(p=>{if(p&&P[p.k])openPin(p.k,p,true)});
+}
+
+/* ================= Sisyphus: a tiny scene when switching sections ================= */
+{
+const S=window.SFX||{};
+const sfx=(n,d=0)=>setTimeout(()=>{try{S[n]&&S[n]()}catch(e){}},d);
+let on=(()=>{try{const x=localStorage.getItem("vocab-lab-sisy");return x?JSON.parse(x):true}catch(e){return true}})();
+const sw=document.getElementById("sisysw");
+const paint=()=>{sw.setAttribute("aria-pressed",on);sw.setAttribute("aria-label",on?"Turn the Sisyphus scene off":"Turn the Sisyphus scene on")};
+sw.onclick=()=>{on=!on;try{localStorage.setItem("vocab-lab-sisy",JSON.stringify(on))}catch(e){}paint();if(on)SISY(1)};paint();
+
+const SK="#eccfa9",SK2="#c9a982",TUN="#7a68ad",TUN2="#5b4f80",HAIR="#5a4636",ROCK="#8d8896",ROCK2="#5f5a69";
+const ANG=-15,R=15,f=n=>n.toFixed(1);
+/* figure facing right, feet on y=0. ph: walk phase. pose: "push" | "stand" | "slump". lift: jump height */
+function fig(ph,pose,lift,bob){
+  const y=-lift-bob,hip=[0,-20+y];
+  const sh=pose==="push"?[9,-33+y]:pose==="slump"?[4,-34+y]:[2,-36+y];
+  const hd=pose==="push"?[sh[0]+4.5,sh[1]-6]:pose==="slump"?[sh[0]+3,sh[1]-5]:[sh[0]+.5,sh[1]-6.5];
+  const s1=Math.sin(ph),c1=Math.cos(ph);
+  const ft=[[2+8*s1,-Math.max(0,c1)*3-lift],[2-8*s1,-Math.max(0,-c1)*3-lift]];
+  const leg=(ftp,col)=>{const m=[(hip[0]+ftp[0])/2+3.5,(hip[1]+ftp[1])/2-1];return `<path d="M${f(hip[0])} ${f(hip[1])}Q${f(m[0])} ${f(m[1])} ${f(ftp[0])} ${f(ftp[1])}" stroke="${col}" stroke-width="3.6" fill="none" stroke-linecap="round"/><path d="M${f(ftp[0]-1)} ${f(ftp[1])}h4.5" stroke="#8a5a33" stroke-width="2.4" stroke-linecap="round"/>`};
+  const hand=pose==="push"?[17,-23+y*.4]:pose==="slump"?[7,-21+y]:[4,-22+y];
+  const hand2=pose==="push"?[16,-27+y*.4]:pose==="slump"?[1,-21+y]:[-1,-23+y];
+  const arm=(h,col)=>`<path d="M${f(sh[0])} ${f(sh[1]+1)}L${f(h[0])} ${f(h[1])}" stroke="${col}" stroke-width="3.2" stroke-linecap="round"/>`;
+  const tunic=`<path d="M${f(sh[0]-4.5)} ${f(sh[1]-1)}L${f(sh[0]+3.5)} ${f(sh[1]+.5)}L${f(hip[0]+6.5)} ${f(hip[1]+5)}L${f(hip[0]-6)} ${f(hip[1]+5)}Z" fill="${TUN}" stroke="${TUN2}" stroke-width=".8" stroke-linejoin="round"/>`;
+  const head=`<circle cx="${f(hd[0])}" cy="${f(hd[1])}" r="5" fill="${SK}"/><path d="M${f(hd[0]-5)} ${f(hd[1]+.5)}Q${f(hd[0]-5)} ${f(hd[1]-6)} ${f(hd[0]+1)} ${f(hd[1]-5.6)}Q${f(hd[0]+4.5)} ${f(hd[1]-5)} ${f(hd[0]+5)} ${f(hd[1]-2)}Q${f(hd[0])} ${f(hd[1]-3)} ${f(hd[0]-1.5)} ${f(hd[1]+1)}Z" fill="${HAIR}"/><path d="M${f(hd[0]-.5)} ${f(hd[1]+2)}Q${f(hd[0]+1)} ${f(hd[1]+8.5)} ${f(hd[0]+5)} ${f(hd[1]+2.5)}Q${f(hd[0]+2.5)} ${f(hd[1]+4)} ${f(hd[0]-.5)} ${f(hd[1]+2)}Z" fill="${HAIR}"/><circle cx="${f(hd[0]+2.6)}" cy="${f(hd[1]-.6)}" r=".8" fill="#2b2233"/>`;
+  const sweat=pose==="push"&&Math.sin(ph*.7)>.55?`<path d="M${f(hd[0]-6)} ${f(hd[1]-4)}q-1.2 2 0 2.6q1.2-.6 0-2.6z" fill="#9fc3ff" opacity=".85"/>`:"";
+  return leg(ft[1],SK2)+arm(hand2,SK2)+tunic+leg(ft[0],SK)+head+sweat+arm(hand,SK);
+}
+function rock(rot){return `<g transform="rotate(${f(rot)})"><path d="M-15 -1Q-14 -12 -3 -15Q10 -15 14.5 -4Q16 8 6 13.5Q-7 16 -13 8Z" fill="${ROCK}" stroke="${ROCK2}" stroke-width="1.2"/><path d="M-6 -8l4 3 -1 5M5 2l4 5M-9 4l3-1" stroke="${ROCK2}" stroke-width="1" fill="none" stroke-linecap="round"/><circle cx="-4" cy="-9" r="2.4" fill="#a7a2b0" opacity=".5"/></g>`}
+
+let cur=null;
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2,easeIn=t=>t*t,cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+window.SISY=function(dir){
+  if(!on||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  if(cur){cancelAnimationFrame(cur.raf);clearTimeout(cur.to);cur.el.remove();cur=null}
+  const slip=dir<0||Math.random()<.2;
+  const el=document.createElement("div");el.className="sisy";el.setAttribute("aria-hidden","true");
+  const lines=dir>0?(slip?["almost…","so close","ἀεὶ πάλιν"]:["up we go","onward","one more step","ἄνω"]):["…and down it goes","again","πάλιν","κάτω"];
+  el.innerHTML=`<svg viewBox="0 0 240 92"><defs><linearGradient id="sisysky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#231d33"/><stop offset="1" stop-color="#16141b"/></linearGradient></defs><rect width="240" height="92" fill="url(#sisysky)"/><circle cx="205" cy="18" r="7" fill="#d9b25b" opacity=".55"/><g transform="translate(0 86) rotate(${ANG})"><path d="M-30 0H300V90H-30Z" fill="#2c2636"/><path d="M-30 0H300" stroke="#4a4058" stroke-width="1.5"/><g id="sisy-dust"></g><g id="sisy-man"></g><g id="sisy-rock"></g></g></svg><p><span>${lines[Math.floor(Math.random()*lines.length)]}</span><b>Σίσυφος</b></p>`;
+  document.body.appendChild(el);
+  const man=el.querySelector("#sisy-man"),rk=el.querySelector("#sisy-rock");
+  const DUR=dir>0&&!slip?1500:2300,t0=performance.now();
+  let rumbled=false,hopped=false;
+  if(dir>0)sfx("heave",60);
+  const frame=now=>{
+    const t=cl((now-t0)/DUR);
+    let sx,bx,pose="push",face=1,ph,lift=0,bob=0,brot;
+    if(dir>0&&!slip){ // push up the hill
+      const e=ease(t);sx=40+95*e;bx=sx+31;ph=sx*.33;bob=Math.abs(Math.sin(ph))*1.1;
+    } else {
+      const top=dir>0?.45:.18; // time spent pushing before it slips
+      const sx0=dir>0?40:120;
+      if(t<top){const e=ease(t/top);sx=sx0+(dir>0?100:12)*e;bx=sx+31;ph=sx*.33;bob=Math.abs(Math.sin(ph))*1.1;cur.topX=sx}
+      else {
+        const k=(t-top)/(1-top),sTop=cur.topX;
+        if(!rumbled){rumbled=true;sfx("rumble")}
+        bx=sTop+31-easeIn(cl(k/.6))*(sTop+31+60); // rock rolls all the way down and off
+        const d=bx-(sTop+4);
+        lift=d<30&&d>-30?Math.cos(d/30*Math.PI/2)*26:0;
+        if(lift>2&&!hopped){hopped=true;sfx("hop")}
+        if(k<.62){sx=sTop;pose=lift>0?"stand":"push";ph=0}
+        else {const w=(k-.62)/.38;sx=sTop-46*w;face=-1;pose="slump";ph=w*9;bob=Math.abs(Math.sin(ph))*1.1;if(w>.05&&!cur.sighed){cur.sighed=true;sfx("sigh")}}
+      }
+    }
+    brot=(bx/R)*180/Math.PI;
+    man.setAttribute("transform",`translate(${f(sx)} 0)${face<0?" scale(-1 1)":""}`);
+    man.innerHTML=fig(ph,pose,lift,bob);
+    rk.setAttribute("transform",`translate(${f(bx)} ${-R})`);rk.innerHTML=rock(brot);
+    if(t<1)cur.raf=requestAnimationFrame(frame);
+    else cur.to=setTimeout(()=>{el.classList.add("out");setTimeout(()=>{el.remove();if(cur&&cur.el===el)cur=null},300)},dir>0&&!slip?350:150);
+  };
+  cur={el,raf:0,to:0,topX:40};
+  cur.raf=requestAnimationFrame(frame);
+};
 }
 </script>
 </body>
