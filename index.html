@@ -982,7 +982,7 @@ header.top h1{display:flex;align-items:center;gap:10px}
   <div class="kact"><button class="btn" id="kcopy">Copy</button><button class="btn" id="kclear">Clear</button></div>
  </div>
  <div class="gkbd" id="kbd"></div>
- <p class="khelp">Physical keyboard: Latin letters turn into Greek (<code>q</code> θ · <code>h</code> η · <code>w</code> ω · <code>c</code> ξ · <code>y</code> ψ · <code>x</code> χ · <code>f</code> φ). Marks go after the letter: <code>)</code> smooth · <code>(</code> rough · <code>/</code> acute · <code>\</code> grave · <code>=</code> circumflex · <code>|</code> iota subscript. Final sigma is automatic. Lookup ignores accents and recognizes many inflected forms.</p>
+ <p class="khelp">Physical keyboard: Latin letters turn into Greek. <code>h</code> is η, and pairs work too: <code>th</code> θ · <code>ph</code> φ · <code>ch</code> χ · <code>ps</code> ψ · <code>ks</code> ξ. For τη or πη (τήν, τῆς), add a second h: <code>thh</code>, <code>phh</code>. Single keys still work: <code>q</code> θ · <code>f</code> φ · <code>x</code> χ · <code>y</code> ψ · <code>c</code> ξ · <code>w</code> ω. Marks go after the letter: <code>)</code> smooth · <code>(</code> rough · <code>/</code> acute · <code>\</code> grave · <code>=</code> circumflex · <code>|</code> iota subscript. Final sigma is automatic. Lookup ignores accents and recognizes many inflected forms.</p>
  <h2 class="ktitle">Lookup</h2>
  <div id="klist" class="rdlist"></div>
 </div>
@@ -1020,6 +1020,7 @@ header.top h1{display:flex;align-items:center;gap:10px}
   <h2 class="set-h2">Edit history</h2>
   <section class="set-group">
    <ol class="log">
+    <li><time>Nov 27, 2026</time><span>Greek keyboard: letter pairs now work as you type: th θ, ph φ, ch χ, ps ψ, ks ξ. h is still η; type thh or phh for τη or πη.</span></li>
     <li><time>Nov 26, 2026</time><span>Fixed: verb tenses now follow Groton’s order. Unit 2 tests only the present and future; the imperfect and middle/passive start in Unit 3, the aorist in Unit 6 (Lessons 18–20).</span></li>
     <li><time>Nov 26, 2026</time><span>Fixed: early units could show later-lesson words as wrong answer choices, later prepositions, and verb tenses not yet learned. Each unit now stays within the lessons you have reached.</span></li>
     <li><time>Nov 26, 2026</time><span>Study mode: after every answer you see the full entry: dictionary form, full meaning, declension table for nouns, adjectives and pronouns, principal parts and the present tense for verbs. Answer choices open up to the full definition, and wrong choices show what they actually mean. Dictionary Quiz and Type It show the full entry too.</span></li>
@@ -1271,10 +1272,13 @@ function quiz(){
 
 /* ---------- Type It ---------- */
 const BETA={a:"α",b:"β",g:"γ",d:"δ",e:"ε",z:"ζ",h:"η",q:"θ",i:"ι",k:"κ",l:"λ",m:"μ",n:"ν",c:"ξ",o:"ο",p:"π",r:"ρ",s:"σ",t:"τ",u:"υ",f:"φ",x:"χ",y:"ψ",w:"ω",v:"υ"};
-function toGreek(s){s=s.toLowerCase().replace(/th/g,"θ").replace(/ph/g,"φ").replace(/ch/g,"χ").replace(/ps/g,"ψ").replace(/ks/g,"ξ");return [...s].map(c=>BETA[c]||c).join("")}
+/* Latin letter pairs: th θ · ph φ · ch χ · ps ψ · ks ξ. A doubled h keeps the eta: thh τη · phh πη · chh ξη. */
+const DIG={th:"θ",ph:"φ",ch:"χ",ps:"ψ",ks:"ξ"};
+function digraphs(s){return s.replace(/([tpc])(h)h/gi,(m,a,h)=>a+(h==="h"?"η":"Η")).replace(/th|ph|ch|ps|ks/gi,m=>{const g=DIG[m.toLowerCase()];return m[0]!==m[0].toLowerCase()?g.toUpperCase():g})}
+function toGreek(s){s=digraphs(s.toLowerCase());return [...s].map(c=>BETA[c]||c).join("")}
 function finalSigma(s){return s.replace(/σ(?=$|[\s.,;·!?…])/g,"ς")}
 function kbdHTML(){return `<div class="kbd">${"α β γ δ ε ζ η θ ι κ λ μ ν ξ ο π ρ σ τ υ φ χ ψ ω".split(" ").map(k=>`<button data-k="${k}">${k}</button>`).join("")}<button class="wide" data-k=" ">space</button><button class="wide" data-k="del">⌫</button></div>
-  <div class="legend">Latin keys: <code>q</code>=θ <code>h</code>=η <code>w</code>=ω <code>x</code>=χ <code>c</code>=ξ <code>y</code>=ψ, or <code>th ph ch ps</code>. Accents and breathings are ignored.</div>`}
+  <div class="legend">Latin keys: <code>h</code>=η <code>th</code>=θ <code>ph</code>=φ <code>ch</code>=χ <code>ps</code>=ψ <code>ks</code>=ξ <code>w</code>=ω (also <code>q</code>=θ <code>f</code>=φ <code>x</code>=χ <code>y</code>=ψ <code>c</code>=ξ). For τη, πη type <code>thh</code>, <code>phh</code>. Accents and breathings are ignored.</div>`}
 function wireKbd(ti,pv){const upd=()=>{pv.textContent=finalSigma(toGreek(ti.value))||" "};ti.oninput=upd;upd();if(!matchMedia("(pointer:coarse)").matches)ti.focus({preventScroll:true});
   document.querySelectorAll(".kbd button").forEach(b=>b.onclick=()=>{if(b.dataset.k==="del")ti.value=ti.value.slice(0,-1);else ti.value+=b.dataset.k;upd();ti.focus({preventScroll:true})})}
 let ty={cur:null};
@@ -1591,7 +1595,7 @@ function applyMark(ch,m){
 }
 function sigma(s){return s.replace(/[σς](?=$|[^\p{L}\p{M}])/gu,"ς").replace(/ς(?=\p{L})/gu,"σ")}
 function convert(s){
-  s=s.replace(/th/gi,"θ").replace(/ph/gi,"φ").replace(/ch/gi,"χ").replace(/ps/gi,"ψ");
+  s=digraphs(s);
   const out=[];
   for(const ch of s){
     const lo=ch.toLowerCase();
@@ -1603,7 +1607,24 @@ function convert(s){
 }
 const kq=$("#kq");
 function setK(val){kq.value=val;kq.setSelectionRange(val.length,val.length);drawK()}
-kq.addEventListener("input",()=>{const c=convert(kq.value);if(c!==kq.value)setK(c);else drawK()});
+/* Letters turn Greek as you type, so pairs are joined here: τ+h → θ, π+h → φ, ξ+h → χ, π+s → ψ, κ+s → ξ.
+   One more h right after a joined pair splits it back with an eta: t h h → τη. */
+let kst=null;
+const kcase=(g,up)=>up?g.toUpperCase():g;
+kq.addEventListener("input",e=>{
+  let v=kq.value;
+  const one=e.inputType==="insertText"&&e.data&&[...e.data].length===1&&kq.selectionStart===v.length;
+  const lo=one?e.data.toLowerCase():"";
+  let next=null;
+  if(one&&kst){
+    const arr=[...v],prev=arr[arr.length-2]||"",up=prev!==prev.toLowerCase();
+    if(lo==="h"&&kst.merged&&prev.toLowerCase()===kst.merged){arr.splice(-2,2,kcase(LAT[kst.lat],up),e.data==="h"?"η":"Η");v=arr.join("")}
+    else if(!kst.merged&&DIG[kst.lat+lo]&&prev.toLowerCase()===LAT[kst.lat]){const g=DIG[kst.lat+lo];arr.splice(-2,2,kcase(g,up));v=arr.join("");if(lo==="h")next={lat:kst.lat,merged:g}}
+    else if("tpck".includes(lo))next={lat:lo};
+  } else if(one&&"tpck".includes(lo))next={lat:lo};
+  kst=next;
+  const c=convert(v);if(c!==kq.value)setK(c);else drawK();
+});
 const ROWS=[["α","β","γ","δ","ε","ζ","η","θ"],["ι","κ","λ","μ","ν","ξ","ο","π"],["ρ","σ","ς","τ","υ","φ","χ","ψ","ω"]];
 const MARKS=[["\u0313","᾿","smooth breathing"],["\u0314","῾","rough breathing"],["\u0301","´","acute"],["\u0300","`","grave"],["\u0342","῀","circumflex"],["\u0345","ͺ","iota subscript"],["\u0308","¨","diaeresis"]];
 $("#kbd").innerHTML=ROWS.map(r=>`<div class="gkrow">${r.map(k=>`<button class="gkey" data-k="${k}">${k}</button>`).join("")}</div>`).join("")+
@@ -1614,10 +1635,11 @@ document.querySelectorAll("#kbd .gkey").forEach(b=>b.onclick=()=>{
   if(b.dataset.del){v=[...v].slice(0,-1).join("")}
   else if(b.dataset.m){const arr=[...v];if(arr.length){arr[arr.length-1]=applyMark(arr[arr.length-1],b.dataset.m)}v=arr.join("")}
   else v+=b.dataset.k;
+  kst=null;
   setK(sigma(v.normalize("NFC")));
   if(!matchMedia("(pointer:coarse)").matches) kq.focus();
 });
-$("#kclear").onclick=()=>{setK("");kq.focus()};
+$("#kclear").onclick=()=>{kst=null;setK("");kq.focus()};
 $("#kcopy").onclick=async()=>{const b=$("#kcopy");try{await navigator.clipboard.writeText(kq.value);b.textContent="Copied"}catch(e){kq.select();b.textContent="Press Ctrl/⌘+C"}setTimeout(()=>b.textContent="Copy",1500)};
 function drawK(){
   const words=kq.value.trim().split(/\s+/);const last=words[words.length-1]||"";
