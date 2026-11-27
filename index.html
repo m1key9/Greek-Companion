@@ -905,12 +905,61 @@ header.top h1{display:flex;align-items:center;gap:10px}
 .updbar button{border:0;border-radius:999px;background:var(--accent);color:#17122a;font:700 .8rem var(--f);padding:7px 14px;cursor:pointer}
 
 .seqout{opacity:0;animation:popin .4s cubic-bezier(.3,1.6,.5,1) var(--d,0s) forwards,hidelate .3s ease var(--e,2s) forwards}
+
+/* ---------- pop-out paradigms ---------- */
+.refscope .card h3 .popbtn{float:right;margin:-4px -4px 0 8px;width:26px;height:26px;border:0;border-radius:7px;background:none;color:var(--muted);display:grid;place-items:center;cursor:pointer;opacity:.6;transition:opacity .15s,color .15s,background .15s}
+.refscope .card h3 .popbtn svg{width:15px;height:15px}
+.refscope .card:hover h3 .popbtn,.refscope .card h3 .popbtn:focus-visible{opacity:1}
+.refscope .card h3 .popbtn:hover{color:var(--accent);background:var(--tint)}
+#pins{position:fixed;inset:0;pointer-events:none;z-index:52}
+.pin{position:absolute;pointer-events:auto;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--accent-dim);border-radius:12px;box-shadow:0 18px 50px rgba(0,0,0,.55),0 2px 8px rgba(0,0,0,.4);max-height:calc(100vh - 16px);overflow:hidden}
+.pin.drag{box-shadow:0 28px 70px rgba(0,0,0,.65),0 0 0 1px var(--accent);opacity:.96}
+.pin-h{display:flex;align-items:center;gap:2px;padding:6px 6px 6px 8px;background:var(--panel2);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;border-bottom:1px solid var(--rule)}
+.pin.drag .pin-h{cursor:grabbing}
+.pin-grip{flex:none;width:14px;height:18px;margin-right:4px;background:radial-gradient(circle,var(--muted) 1.2px,transparent 1.6px) 0 0/7px 6px;opacity:.7}
+.pin-t{flex:1;min-width:0;font-weight:600;font-size:.86rem;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pin-t small{display:block;font-size:.68rem;letter-spacing:.02em;color:var(--muted);font-weight:500}
+.pin-t .dim{font-size:.78rem;color:var(--muted)}
+.pin-b{flex:none;width:28px;height:28px;border:0;border-radius:8px;background:none;color:var(--muted);cursor:pointer;font:600 .95rem var(--f);display:grid;place-items:center}
+.pin-b:hover{background:var(--tint);color:var(--ink)}
+.pin-body{overflow:auto;padding:10px 12px 12px;flex:1;min-height:0}
+.pin-body .note{font-size:.76rem;color:var(--muted);margin:8px 0 0}
+.pin.min{height:auto!important}
+.pin.min .pin-body,.pin.min .pin-rs{display:none}
+.pin.min .pin-h{border-bottom:0}
+.pin-rs{position:absolute;right:0;bottom:0;width:20px;height:20px;cursor:nwse-resize;touch-action:none;background:linear-gradient(135deg,transparent 0 52%,var(--muted) 52% 58%,transparent 58% 68%,var(--muted) 68% 74%,transparent 74%);opacity:.7}
+.pinpick{position:fixed;z-index:53;width:min(340px,calc(100vw - 24px));max-height:min(70vh,560px);display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--rule);border-radius:12px;box-shadow:0 18px 50px rgba(0,0,0,.6);overflow:hidden}
+.pinpick .pp-head{padding:12px 12px 8px}
+.pinpick .pp-head b{display:block;font-size:.9rem;margin-bottom:2px}
+.pinpick .pp-head span{display:block;font-size:.74rem;color:var(--muted);margin-bottom:8px}
+.pinpick input{width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--rule);border-radius:8px;color:var(--ink);font:500 .9rem var(--f);padding:8px 10px}
+.pinpick input:focus{outline:none;border-color:var(--accent-dim)}
+.pinpick .pp-list{overflow:auto;padding:0 6px 8px}
+.pinpick .pp-sec{font-size:.72rem;letter-spacing:.03em;color:var(--accent);opacity:.85;padding:10px 8px 4px}
+.pinpick .pp-it{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:0;border-radius:8px;color:var(--ink);font:500 .86rem var(--f);padding:7px 8px;cursor:pointer}
+.pinpick .pp-it:hover,.pinpick .pp-it:focus-visible{background:var(--tint);outline:none}
+.pinpick .pp-it .dim{color:var(--muted);font-size:.8rem}
+.pinpick .pp-it.on::after{content:"open";margin-left:auto;font-size:.66rem;color:var(--accent);letter-spacing:.06em;text-transform:uppercase}
+.pinpick .pp-foot{border-top:1px solid var(--rule);padding:8px 12px;display:flex;justify-content:flex-end}
+.pinpick .pp-foot button{background:none;border:0;color:var(--muted);font:500 .8rem var(--f);cursor:pointer;padding:4px 6px}
+.pinpick .pp-foot button:hover{color:var(--ink)}
+.pp-empty{color:var(--muted);font-size:.82rem;padding:10px 8px}
+@media (prefers-reduced-motion: no-preference){
+  .pin.pop{animation:pinin .24s cubic-bezier(.3,1.5,.5,1)}
+  .pin.out{animation:pinout .16s ease forwards}
+  .pin.nudge{animation:pinnudge .35s ease}
+  .pinpick{animation:pinin .18s cubic-bezier(.3,1.4,.5,1)}
+}
+@keyframes pinin{from{opacity:0;transform:scale(.88) translateY(6px)}to{opacity:1;transform:none}}
+@keyframes pinout{to{opacity:0;transform:scale(.9)}}
+@keyframes pinnudge{0%,100%{transform:none}25%{transform:rotate(-1.5deg) scale(1.02)}75%{transform:rotate(1.5deg) scale(1.02)}}
 </style>
 </head>
 <body>
 <header class="top"><div class="hwrap">
  <div><h1>Attic Greek <span>Companion</span></h1></div>
  <div class="hright"><nav class="toptabs" role="tablist" aria-label="Sections"><button role="tab" data-top="reference">Reference</button><button role="tab" data-top="dictionary">Dictionary</button><button role="tab" data-top="daily">Daily</button></nav>
+ <button class="sfx" id="pin-open" aria-label="Pop out a paradigm" title="Pop out a paradigm" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="13" height="13" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v11"/></svg></button>
  <button class="sfx" id="set-open" aria-label="Settings and about" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
 </div></header>
 <div class="view refscope" id="v-reference">
@@ -979,9 +1028,10 @@ header.top h1{display:flex;align-items:center;gap:10px}
  <div class="refscope pad kpad" id="p-keys" hidden>
  <div class="kout">
   <input id="kq" class="field big" placeholder="Type Greek…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Greek text">
-  <div class="kact"><button class="btn" id="kcopy">Copy</button><button class="btn" id="kclear">Clear</button></div>
+  <div class="kact"><button class="btn" id="kpins" title="Float a paradigm over the keyboard">Tables</button><button class="btn" id="kcopy">Copy</button><button class="btn" id="kclear">Clear</button></div>
  </div>
  <div class="gkbd" id="kbd"></div>
+ <p class="khelp">Need a paradigm while you type? Press <b>Tables</b> (or the <span aria-hidden="true">⧉</span> button on any Reference table) to float it here. Drag it by its top bar, resize it from the corner.</p>
  <p class="khelp">Physical keyboard: Latin letters turn into Greek. <code>h</code> is η, and pairs work too: <code>th</code> θ · <code>ph</code> φ · <code>ch</code> χ · <code>ps</code> ψ · <code>ks</code> ξ. For τη or πη (τήν, τῆς), add a second h: <code>thh</code>, <code>phh</code>. Single keys still work: <code>q</code> θ · <code>f</code> φ · <code>x</code> χ · <code>y</code> ψ · <code>c</code> ξ · <code>w</code> ω. Marks go after the letter: <code>)</code> smooth · <code>(</code> rough · <code>/</code> acute · <code>\</code> grave · <code>=</code> circumflex · <code>|</code> iota subscript. Final sigma is automatic. Lookup ignores accents and recognizes many inflected forms.</p>
  <h2 class="ktitle">Lookup</h2>
  <div id="klist" class="rdlist"></div>
@@ -1000,7 +1050,8 @@ header.top h1{display:flex;align-items:center;gap:10px}
   <div class="set-head"><h2 id="set-title">Settings</h2><button class="set-x" id="set-close" aria-label="Close settings">✕</button></div>
 
   <section class="set-group">
-   <div class="set-row"><div><b>Sound effects</b><span>Dings, flips and little chimes</span></div><button class="switch" id="sfx" aria-pressed="true"><i></i></button></div>
+   <div class="set-row"><div><b>Sound effects</b><span>Dings, flips, swooshes and little chimes</span></div><button class="switch" id="sfx" aria-pressed="true"><i></i></button></div>
+   <div class="set-row"><div><b>Typing clicks</b><span>A soft click for every key you type</span></div><button class="switch" id="keysfx" aria-pressed="true"><i></i></button></div>
    <div class="set-row"><div><b>Campaign scenes</b><span>Little scenes from Alexander’s campaigns when you answer</span></div><button class="switch" id="camp" aria-pressed="true"><i></i></button></div>
    <div class="set-row stack"><div><b>Daily goal</b><span>Levels per day · one keeps your streak</span></div><div class="set-goal" id="set-goal"></div></div>
    <div class="set-row stack"><div><b>Reset progress</b><span>Clears your Daily path, streak and XP on this device</span></div><button class="set-btn danger" id="set-reset">Reset</button></div>
@@ -1020,6 +1071,8 @@ header.top h1{display:flex;align-items:center;gap:10px}
   <h2 class="set-h2">Edit history</h2>
   <section class="set-group">
    <ol class="log">
+    <li><time>Nov 27, 2026</time><span>Pop-out paradigms: float any Reference table on top of the app (⧉ on a table, the ⧉ button up top, or Tables in the Keyboard). Drag it anywhere, resize it, collapse it; it stays put when you switch tabs.</span></li>
+    <li><time>Nov 27, 2026</time><span>More sounds: typing clicks (with their own switch in Settings), a swoosh between Reference, Dictionary and Daily, and page turns between sub-tabs.</span></li>
     <li><time>Nov 27, 2026</time><span>Greek keyboard: letter pairs now work as you type: th θ, ph φ, ch χ, ps ψ, ks ξ. h is still η; type thh or phh for τη or πη.</span></li>
     <li><time>Nov 26, 2026</time><span>Fixed: verb tenses now follow Groton’s order. Unit 2 tests only the present and future; the imperfect and middle/passive start in Unit 3, the aorist in Unit 6 (Lessons 18–20).</span></li>
     <li><time>Nov 26, 2026</time><span>Fixed: early units could show later-lesson words as wrong answer choices, later prepositions, and verb tenses not yet learned. Each unit now stays within the lessons you have reached.</span></li>
@@ -1722,8 +1775,31 @@ const SFX=(()=>{
     const env=c.createGain();env.gain.setValueAtTime(0.0001,t);env.gain.exponentialRampToValueAtTime(vol,t+.05);env.gain.setValueAtTime(vol,t+Math.max(.06,dur-.14));env.gain.exponentialRampToValueAtTime(0.0001,t+dur);
     sum.connect(env);env.connect(master);o.start(t);vib.start(t);o.stop(t+dur+.05);vib.stop(t+dur+.05);
   }
+  function swoosh(t0,dur,f1,f2,vol){
+    const c=ac();if(!c)return;const t=c.currentTime+t0;
+    const len=Math.floor(c.sampleRate*dur),buf=c.createBuffer(1,len,c.sampleRate),d=buf.getChannelData(0);
+    for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.sin(Math.PI*i/len)**2;
+    const s=c.createBufferSource(),bp=c.createBiquadFilter(),g=c.createGain();
+    s.buffer=buf;bp.type="bandpass";bp.Q.value=1.4;bp.frequency.setValueAtTime(f1,t);bp.frequency.exponentialRampToValueAtTime(f2,t+dur);
+    g.gain.value=vol;s.connect(bp);bp.connect(g);g.connect(master);s.start(t);
+  }
+  let keysOn=load("keysfx",true);
+  const jit=()=>.92+Math.random()*.16;
   return {
     get on(){return on},
+    get keysOn(){return keysOn},
+    setKeys(v){keysOn=v;store("keysfx",v);if(v)this.key()},
+    key(){if(!keysOn)return;const j=jit();tone(190*j,0,.035,"triangle",.22,120*j);noise(0,.022,2600*j,.2)},
+    space(){if(!keysOn)return;tone(120*jit(),0,.05,"triangle",.24,80);noise(0,.03,1100,.2)},
+    back(){if(!keysOn)return;tone(520,0,.045,"sine",.12,360);noise(0,.018,1800,.12)},
+    whoosh(dir=1){swoosh(0,.26,dir>0?500:1800,dir>0?1800:500,.5);tone(dir>0?392:523,.04,.18,"sine",.06,dir>0?523:392)},
+    page(){swoosh(0,.14,900,2200,.32)},
+    pop(){tone(480,0,.1,"sine",.32,960);tone(1440,.06,.09,"sine",.08)},
+    close(){tone(760,0,.11,"sine",.2,380);swoosh(0,.1,2000,700,.18)},
+    grab(){tone(330,0,.04,"triangle",.14,390)},
+    drop(){tone(200,0,.08,"sine",.26,130);noise(0,.03,700,.14)},
+    fold(){tone(620,0,.07,"sine",.15,420)},
+    unfold(){tone(420,0,.07,"sine",.15,620)},
     set(v){on=v;store("sfx",v);if(v)this.tick()},
     tick(){tone(1250,0,.035,"sine",.12)},
     tap(){tone(880,0,.03,"triangle",.1)},
@@ -1839,14 +1915,32 @@ memory=function(){
 /* ---------- gentle UI clicks ---------- */
 document.addEventListener("click",e=>{
   const t=e.target.closest("[data-top],[data-rsub],#tabs button,.chip,.seg,.fjump a,.cjump a,[data-dir],[data-m],[data-src],[data-les],[data-pos],[data-wp],.star,.ditem,.dentry,.linkbtn");
-  if(t) SFX.tick();
-  if(e.target.closest(".gkey,.kbd button")) SFX.tap();
+  if(t){
+    if(t.matches("[data-top]")){
+      const ord=["reference","dictionary","daily"],cur=document.querySelector("[data-top][aria-selected=true]");
+      const a=cur?ord.indexOf(cur.dataset.top):-1,b=ord.indexOf(t.dataset.top);
+      a===b?SFX.tick():SFX.whoosh(b>a?1:-1);
+    } else if(t.matches("[data-rsub],#tabs button")&&t.getAttribute("aria-pressed")!=="true"&&t.getAttribute("aria-selected")!=="true") SFX.page();
+    else SFX.tick();
+  }
+  const k=e.target.closest(".gkey,.kbd button,.q-kbd button");
+  if(k){const v=k.dataset.k;v===" "?SFX.space():(k.dataset.del||v==="del")?SFX.back():SFX.key()}
+},true);
+/* typing clicks for real keyboards (desktop and phone) */
+document.addEventListener("beforeinput",e=>{
+  const el=e.target;if(!el||!el.matches||!el.matches("input:not([type=checkbox]):not([type=range]),textarea"))return;
+  const it=e.inputType||"";
+  if(it.startsWith("delete"))SFX.back();
+  else if(it==="insertText")(e.data===" "?SFX.space():SFX.key());
 },true);
 
 /* ---------- sound toggle ---------- */
 const sb=$("#sfx");
 const paint=()=>{sb.setAttribute("aria-pressed",SFX.on);sb.title=SFX.on?"Sound on":"Sound off";sb.setAttribute("aria-label",SFX.on?"Turn sound effects off":"Turn sound effects on")};
 sb.onclick=()=>{SFX.set(!SFX.on);paint()};paint();
+const kb=$("#keysfx");
+const paintK=()=>{kb.setAttribute("aria-pressed",SFX.keysOn);kb.setAttribute("aria-label",SFX.keysOn?"Turn typing clicks off":"Turn typing clicks on")};
+kb.onclick=()=>{SFX.setKeys(!SFX.keysOn);paintK()};paintK();
 
 /* ---------- reference: reveal on scroll + section highlighting ---------- */
 if("IntersectionObserver" in window){
@@ -2634,6 +2728,119 @@ if(location.protocol==="https:"){
 if('serviceWorker' in navigator&&location.protocol==='https:'&&/github\.io$/.test(location.hostname))navigator.serviceWorker.register('sw.js').catch(()=>{});
 
 {const h=document.querySelector("header.top");const set=()=>document.documentElement.style.setProperty("--hh",h.offsetHeight+"px");set();addEventListener("resize",set);}
+
+/* ================= Pop-out paradigms: floating, draggable tables ================= */
+{
+const S=window.SFX||{};
+const sfx=n=>{try{S[n]&&S[n]()}catch(e){}};
+const ICON_POP=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="13" height="13" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v11"/></svg>`;
+const st=(k,v)=>{try{localStorage.setItem("vocab-lab-"+k,JSON.stringify(v))}catch(e){}};
+const ld=(k,d)=>{try{const x=localStorage.getItem("vocab-lab-"+k);return x?JSON.parse(x):d}catch(e){return d}};
+const P={},ORDER=[];
+document.querySelectorAll("#r-forms section").forEach(sec=>{
+  const h2=sec.querySelector("h2");
+  [...sec.querySelectorAll(".card")].forEach((c,i)=>{
+    const h=c.querySelector("h3");if(!h||!c.querySelector("table"))return;
+    const k=sec.id+":"+i;
+    P[k]={k,title:h.innerHTML,text:h.textContent.replace(/\s+/g," ").trim(),sec:h2?h2.textContent.trim():"",card:c};ORDER.push(k);
+    const b=document.createElement("button");b.type="button";b.className="popbtn";b.title="Pop out";b.setAttribute("aria-label","Pop out: "+P[k].text);b.innerHTML=ICON_POP;
+    b.onclick=e=>{e.stopPropagation();openPin(k)};h.prepend(b);
+  });
+});
+const host=document.createElement("div");host.id="pins";document.body.appendChild(host);
+const live={};let zTop=1;
+const save=()=>st("pins",Object.values(live).sort((a,b)=>(+a.style.zIndex)-(+b.style.zIndex)).map(el=>el._p));
+function clamp(el){
+  const p=el._p,W=innerWidth,H=innerHeight;
+  p.w=Math.max(220,Math.min(p.w,W-12));
+  if(p.h)p.h=Math.max(120,Math.min(p.h,H-16));
+  p.x=Math.max(-p.w+90,Math.min(p.x,W-90));
+  const nav=document.querySelector(".botnav"),lim=nav&&getComputedStyle(nav).display!=="none"?nav.getBoundingClientRect().top-6:H-8;
+  p.y=Math.max(4,Math.min(p.y,lim-44));
+  if(p.h&&p.y+p.h>lim)p.h=Math.max(120,lim-p.y);
+  if(p.h&&p.y+p.h>lim)p.y=Math.max(4,lim-p.h);
+  el.style.left=p.x+"px";el.style.top=p.y+"px";el.style.width=p.w+"px";el.style.height=p.h?p.h+"px":"";el.style.maxHeight=(lim-p.y)+"px";
+}
+const front=el=>{el.style.zIndex=++zTop};
+function setMin(el,m){el._p.min=m;el.classList.toggle("min",m);const b=el.querySelector('[data-a="min"]');b.textContent=m?"▢":"–";b.title=m?"Expand":"Collapse";b.setAttribute("aria-label",b.title);b.setAttribute("aria-expanded",!m)}
+function closePin(el){delete live[el._p.k];save();sfx("close");el.classList.add("out");setTimeout(()=>el.remove(),170);drawPick()}
+function openPin(k,p,quiet){
+  const d=P[k];if(!d)return;
+  if(live[k]){const el=live[k];front(el);if(el._p.min)setMin(el,false);el.classList.remove("nudge");void el.offsetWidth;el.classList.add("nudge");sfx("pop");save();return}
+  const n=Object.keys(live).length,w=Math.min(380,innerWidth-24);
+  const el=document.createElement("div");el.className="pin refscope";el.setAttribute("role","dialog");el.setAttribute("aria-label",d.text);
+  const narrow=innerWidth<700,ph=Math.round(Math.min(300,innerHeight*.4));
+  el._p=p?{...p,k}:narrow?{k,w:innerWidth-16,h:ph,min:false,x:8,y:Math.max(60,innerHeight-ph-(innerWidth<641?92:16)-(n%4)*34)}
+    :{k,w,h:0,min:false,x:Math.max(8,innerWidth-w-16-(n%5)*26),y:86+(n%5)*30};
+  el.innerHTML=`<div class="pin-h"><span class="pin-grip" aria-hidden="true"></span><div class="pin-t"><small>${d.sec.replace(/</g,"&lt;")}</small>${d.title}</div><button class="pin-b" data-a="go" title="Show in Reference" aria-label="Show in Reference">↗</button><button class="pin-b" data-a="min"></button><button class="pin-b" data-a="x" title="Close" aria-label="Close">✕</button></div><div class="pin-body"></div><div class="pin-rs" title="Resize" aria-hidden="true"></div>`;
+  const body=el.querySelector(".pin-body");
+  [...d.card.children].forEach(ch=>{if(ch.tagName!=="H3")body.appendChild(ch.cloneNode(true))});
+  body.querySelectorAll("[id]").forEach(x=>x.removeAttribute("id"));
+  host.appendChild(el);live[k]=el;front(el);setMin(el,!!el._p.min);clamp(el);
+  if(!quiet){el.classList.add("pop");sfx("pop");save()}
+  el.addEventListener("pointerdown",()=>{if(+el.style.zIndex!==zTop){front(el);save()}});
+  el.querySelector('[data-a="x"]').onclick=()=>closePin(el);
+  el.querySelector('[data-a="min"]').onclick=()=>{setMin(el,!el._p.min);sfx(el._p.min?"fold":"unfold");save()};
+  el.querySelector('[data-a="go"]').onclick=()=>{sfx("tick");location.hash="reference";const sub=document.querySelector('[data-rsub="forms"]');if(sub&&sub.getAttribute("aria-pressed")!=="true")sub.click();setTimeout(()=>{d.card.scrollIntoView({behavior:"smooth",block:"center"});window.UIFX&&UIFX.anim(d.card,"glow")},80)};
+  // drag by the top bar
+  const head=el.querySelector(".pin-h");
+  head.addEventListener("dblclick",e=>{if(e.target.closest("button"))return;setMin(el,!el._p.min);sfx(el._p.min?"fold":"unfold");save()});
+  drag(head,e=>!e.target.closest("button"),(dx,dy,o)=>{el._p.x=o.x+dx;el._p.y=o.y+dy;clamp(el)},()=>({x:el._p.x,y:el._p.y}),el);
+  // resize from the corner
+  drag(el.querySelector(".pin-rs"),()=>true,(dx,dy,o)=>{el._p.w=o.w+dx;el._p.h=o.h+dy;clamp(el)},()=>({w:el._p.w,h:el._p.h||el.getBoundingClientRect().height}),el);
+  drawPick();
+}
+function drag(handle,ok,move,origin,el){
+  handle.addEventListener("pointerdown",e=>{
+    if(e.button>0||!ok(e))return;
+    e.preventDefault();handle.setPointerCapture(e.pointerId);
+    const sx=e.clientX,sy=e.clientY,o=origin();let moved=false;
+    el.classList.add("drag");sfx("grab");
+    const mv=ev=>{const dx=ev.clientX-sx,dy=ev.clientY-sy;if(!moved&&Math.abs(dx)+Math.abs(dy)<3)return;moved=true;move(dx,dy,o)};
+    const up=()=>{handle.removeEventListener("pointermove",mv);handle.removeEventListener("pointerup",up);handle.removeEventListener("pointercancel",up);el.classList.remove("drag");if(moved){sfx("drop");save()}};
+    handle.addEventListener("pointermove",mv);handle.addEventListener("pointerup",up);handle.addEventListener("pointercancel",up);
+  });
+}
+addEventListener("resize",()=>Object.values(live).forEach(clamp));
+
+/* picker: choose a paradigm to float, from anywhere */
+let pick=null,pickFrom=null;
+function drawPick(){
+  if(!pick)return;
+  const q=pick.querySelector("input").value.trim().toLowerCase();
+  const norm=x=>x.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+  const nq=norm(q);
+  let html="",last="",any=false;
+  ORDER.forEach(k=>{const d=P[k];if(nq&&!norm(d.text+" "+d.sec).includes(nq))return;any=true;
+    if(d.sec!==last){html+=`<div class="pp-sec">${d.sec.replace(/</g,"&lt;")}</div>`;last=d.sec}
+    html+=`<button class="pp-it${live[k]?" on":""}" data-pk="${k}">${d.title}</button>`});
+  pick.querySelector(".pp-list").innerHTML=any?html:`<p class="pp-empty">No table matches “${q.replace(/</g,"&lt;")}”.</p>`;
+  pick.querySelectorAll("[data-pk]").forEach(b=>b.onclick=()=>{openPin(b.dataset.pk);if(innerWidth<700)closePick()});
+  const n=Object.keys(live).length,f=pick.querySelector(".pp-foot");f.hidden=!n;f.querySelector("button").textContent=n>1?`Close all ${n}`:"Close it";
+}
+function closePick(){if(!pick)return;pick.remove();pick=null;if(pickFrom)pickFrom.setAttribute("aria-expanded","false")}
+function openPick(btn){
+  if(pick){const same=pickFrom===btn;closePick();if(same)return}
+  sfx("tick");pickFrom=btn;btn.setAttribute("aria-expanded","true");
+  pick=document.createElement("div");pick.className="pinpick";pick.setAttribute("role","dialog");pick.setAttribute("aria-label","Pop out a paradigm");
+  pick.innerHTML=`<div class="pp-head"><b>Pop out a paradigm</b><span>It floats on top while you use any tab. Drag it anywhere.</span><input type="search" placeholder="Filter: article, οὗτος, perfect…" aria-label="Filter paradigms" autocomplete="off"></div><div class="pp-list"></div><div class="pp-foot" hidden><button type="button"></button></div>`;
+  document.body.appendChild(pick);
+  pick.querySelector("input").oninput=drawPick;
+  pick.querySelector(".pp-foot button").onclick=()=>{Object.values(live).forEach(closePin)};
+  drawPick();
+  const r=btn.getBoundingClientRect(),w=pick.offsetWidth;
+  pick.style.left=Math.max(12,Math.min(r.right-w,innerWidth-w-12))+"px";
+  const below=r.bottom+8;
+  if(below+260<innerHeight)pick.style.top=below+"px";else pick.style.bottom=(innerHeight-r.top+8)+"px";
+  if(!matchMedia("(pointer:coarse)").matches)pick.querySelector("input").focus();
+}
+document.getElementById("pin-open").onclick=e=>openPick(e.currentTarget);
+const kp=document.getElementById("kpins");if(kp)kp.onclick=e=>openPick(e.currentTarget);
+document.addEventListener("pointerdown",e=>{if(pick&&!pick.contains(e.target)&&!e.target.closest("#pin-open,#kpins"))closePick()},true);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&pick){e.stopPropagation();closePick();pickFrom&&pickFrom.focus()}},true);
+
+ld("pins",[]).forEach(p=>{if(p&&P[p.k])openPin(p.k,p,true)});
+}
 </script>
 </body>
 </html>
