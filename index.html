@@ -954,16 +954,50 @@ header.top h1{display:flex;align-items:center;gap:10px}
 @keyframes pinout{to{opacity:0;transform:scale(.9)}}
 @keyframes pinnudge{0%,100%{transform:none}25%{transform:rotate(-1.5deg) scale(1.02)}75%{transform:rotate(1.5deg) scale(1.02)}}
 
-/* ---------- Sisyphus on tab change ---------- */
-.sisy{position:fixed;left:50%;bottom:18px;z-index:46;width:250px;margin-left:-125px;pointer-events:none;background:var(--panel);border:1px solid var(--rule);border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.5);padding:6px 6px 4px;animation:sisyin .22s cubic-bezier(.3,1.4,.5,1) both}
-.sisy.out{animation:sisyout .3s ease forwards}
-.sisy svg{display:block;width:100%;height:auto;border-radius:9px}
-.sisy p{margin:2px 4px 2px;font-size:.7rem;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
-.sisy p b{color:var(--accent);font-weight:600;font-family:var(--gk,inherit)}
-@media (max-width:640px){.sisy{bottom:calc(82px + env(safe-area-inset-bottom))}}
-@media (prefers-reduced-motion: reduce){.sisy{display:none}}
-@keyframes sisyin{from{opacity:0;transform:translateY(10px) scale(.95)}to{opacity:1;transform:none}}
-@keyframes sisyout{to{opacity:0;transform:translateY(8px)}}
+/* ---------- Sisyphus in the tab bar ---------- */
+.sisy-row{position:fixed;pointer-events:none;transition:opacity .3s ease}
+.sisy-row.out{opacity:0}
+.sisy-row svg{position:absolute;inset:0;overflow:visible}
+@media (prefers-reduced-motion: reduce){.sisy-row{display:none}}
+.toptabs button.sbump,.botnav button.sbump{animation:sbump .5s cubic-bezier(.3,1.6,.5,1)}
+.toptabs button.sshove-r,.botnav button.sshove-r{animation:sshover .55s cubic-bezier(.3,1.6,.5,1)}
+.toptabs button.sshove-l,.botnav button.sshove-l{animation:sshovel .55s cubic-bezier(.3,1.6,.5,1)}
+@keyframes sbump{0%,100%{transform:none}35%{transform:translateY(-6px) rotate(-5deg)}65%{transform:translateY(1px) rotate(2deg)}}
+@keyframes sshover{0%,100%{transform:none}30%{transform:translateX(7px) skewX(-8deg)}60%{transform:translateX(-2px)}}
+@keyframes sshovel{0%,100%{transform:none}30%{transform:translateX(-7px) skewX(8deg)}60%{transform:translateX(2px)}}
+
+/* ---------- Review (adaptive) ---------- */
+.labscope .rv-head{background:var(--panel);border-radius:12px;padding:14px 16px 12px;margin-bottom:12px}
+.labscope .rv-big{display:flex;align-items:flex-end;justify-content:space-between;gap:14px}
+.labscope .rv-big b{display:block;font-size:2.1rem;line-height:1;font-variant-numeric:tabular-nums;color:var(--ink)}
+.labscope .rv-big span{display:block;font-size:.8rem;color:var(--muted);margin-top:4px}
+.labscope .rv-spark{width:min(260px,45%);height:44px;flex:none}
+.labscope .rv-bar{display:flex;height:9px;border-radius:5px;overflow:hidden;margin:12px 0 8px;background:var(--panel2);gap:2px}
+.labscope .rv-bar i{display:block;min-width:3px;transition:flex .5s ease}
+.labscope .rv-bar .m,.labscope .rv-key .m{background:var(--good)}
+.labscope .rv-bar .l2,.labscope .rv-key .l2{background:var(--accent)}
+.labscope .rv-bar .l1,.labscope .rv-key .l1{background:var(--accent-dim)}
+.labscope .rv-bar .l0,.labscope .rv-key .l0{background:var(--bad)}
+.labscope .rv-bar .un,.labscope .rv-key .un{background:#3a3742}
+.labscope .rv-bar .due,.labscope .rv-key .due{background:#d9b25b}
+.labscope .rv-key{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.74rem;color:var(--muted)}
+.labscope .rv-key i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;vertical-align:0}
+.labscope .rv-tough{margin-top:10px;font-size:.82rem}
+.labscope .rv-tough summary{cursor:pointer;color:var(--muted)}
+.labscope .rv-tough div{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.labscope .rv-tough small{color:var(--bad);margin-left:2px}
+.labscope .rv-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.labscope .rv-pips{display:flex;gap:4px}
+.labscope .rv-pips i{width:18px;height:5px;border-radius:3px;background:var(--panel2)}
+.labscope .rv-pips i.on{background:var(--accent)}
+.labscope .rv-msg{font-size:.82rem;font-weight:600;margin-bottom:4px}
+.labscope .rv-back{border-top:1px dashed var(--rule);margin-top:12px;padding-top:10px;text-align:center}
+.labscope .rv-back .meaning{font-size:1.25rem}
+.labscope .rv-sumgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;text-align:center}
+.labscope .rv-sumgrid b{display:block;font-size:1.6rem;font-variant-numeric:tabular-nums}
+.labscope .rv-sumgrid span{font-size:.76rem;color:var(--muted)}
+.labscope .rv-sum .tag{text-align:center}
+@media (max-width:640px){.labscope .rv-big b{font-size:1.7rem}.labscope .rv-spark{width:42%}}
 </style>
 </head>
 <body>
@@ -1063,7 +1097,7 @@ header.top h1{display:flex;align-items:center;gap:10px}
   <section class="set-group">
    <div class="set-row"><div><b>Sound effects</b><span>Dings, flips, swooshes and little chimes</span></div><button class="switch" id="sfx" aria-pressed="true"><i></i></button></div>
    <div class="set-row"><div><b>Typing clicks</b><span>A soft click for every key you type</span></div><button class="switch" id="keysfx" aria-pressed="true"><i></i></button></div>
-   <div class="set-row"><div><b>Sisyphus</b><span>A little boulder scene when you switch between Reference, Dictionary and Daily</span></div><button class="switch" id="sisysw" aria-pressed="true"><i></i></button></div>
+   <div class="set-row"><div><b>Sisyphus</b><span>He shoves a boulder along the tab bar when you switch between Reference, Dictionary and Daily</span></div><button class="switch" id="sisysw" aria-pressed="true"><i></i></button></div>
    <div class="set-row"><div><b>Campaign scenes</b><span>Little scenes from Alexander’s campaigns when you answer</span></div><button class="switch" id="camp" aria-pressed="true"><i></i></button></div>
    <div class="set-row stack"><div><b>Daily goal</b><span>Levels per day · one keeps your streak</span></div><div class="set-goal" id="set-goal"></div></div>
    <div class="set-row stack"><div><b>Reset progress</b><span>Clears your Daily path, streak and XP on this device</span></div><button class="set-btn danger" id="set-reset">Reset</button></div>
@@ -1074,7 +1108,7 @@ header.top h1{display:flex;align-items:center;gap:10px}
    <p class="lead"><b>Attic Greek Companion</b> is a study app for first-year Attic Greek, built around Anne H. Groton’s textbook <i>From Alpha to Omega: A Beginning Course in Classical Greek</i>. It covers <b>Lessons 1–23</b> and 237 vocabulary words (Lessons 3–23).</p>
    <div class="ab-grid">
     <div><b>Reference</b><span>Every paradigm and construction so far: the article, nouns, adjectives, pronouns, verbs through the perfect, syntax and prepositions.</span></div>
-    <div><b>Dictionary</b><span>Search any word or inflected form, then drill with flashcards, quizzes, typing, match, memory and declension games. Build your own set from any words.</span></div>
+    <div><b>Dictionary</b><span>Search any word or inflected form, run the adaptive Review, or drill with flashcards, quizzes, typing, match, memory and declension games. Build your own set from any words.</span></div>
     <div><b>Daily</b><span>A path of short levels for 10–15 minutes of review a day. One level keeps your streak alive; words you miss come back more often.</span></div>
    </div>
    <p class="small">Vocabulary, definitions and principal parts follow Groton’s lesson lists. Progress is saved in this browser on this device, so your phone and computer keep separate streaks.</p>
@@ -1083,7 +1117,8 @@ header.top h1{display:flex;align-items:center;gap:10px}
   <h2 class="set-h2">Edit history</h2>
   <section class="set-group">
    <ol class="log">
-    <li><time>Nov 27, 2026</time><span>Sisyphus: switching between Reference, Dictionary and Daily now plays a tiny scene. Forward, he pushes the boulder uphill; back, it rolls down and he trudges after it. Switch it off in Settings.</span></li>
+    <li><time>Nov 27, 2026</time><span>New Dictionary tab: Review. One long, adaptive run through every word. Words you know graduate out of your drill set; the ones you miss come back sooner and more often, until the set is only what you really need. It remembers everything, has no reset, and mastered words return for check-ins after a few days.</span></li>
+    <li><time>Nov 27, 2026</time><span>Sisyphus lives in the tab bar: switch sections and he shoves a boulder over to your new tab, knocking the tab names as he goes. Go back a tab and it gets away from him. Switch him off in Settings.</span></li>
     <li><time>Nov 27, 2026</time><span>Pop-out paradigms: float any Reference table on top of the app (⧉ on a table, the ⧉ button up top, or Tables in the Keyboard). Drag it anywhere, resize it, collapse it; it stays put when you switch tabs.</span></li>
     <li><time>Nov 27, 2026</time><span>More sounds: typing clicks (with their own switch in Settings), a swoosh between Reference, Dictionary and Daily, and page turns between sub-tabs.</span></li>
     <li><time>Nov 27, 2026</time><span>Greek keyboard: letter pairs now work as you type: th θ, ph φ, ch χ, ps ψ, ks ξ. h is still η; type thh or phh for τη or πη.</span></li>
@@ -1179,7 +1214,7 @@ let sc={ok:0,all:0,str:0};
 function tally(g){sc.all++;if(g){sc.ok++;sc.str++}else sc.str=0;$("#sc-ok").textContent=sc.ok;$("#sc-all").textContent=sc.all;$("#sc-str").textContent=sc.str}
 
 /* ---------- tabs ---------- */
-const TABS=[["search","Search"],["flash","Flashcards"],["quiz","Quiz"],["type","Type It"],["match","Match"],["memory","Memory"],["preps","Prepositions"],["decl","Declensions"],["list","Build a Set"],["missed","Missed"],["keys","Keyboard"]];
+const TABS=[["search","Search"],["review","Review"],["flash","Flashcards"],["quiz","Quiz"],["type","Type It"],["match","Match"],["memory","Memory"],["preps","Prepositions"],["decl","Declensions"],["list","Build a Set"],["missed","Missed"],["keys","Keyboard"]];
 const DECK_TABS=new Set(["flash","quiz","type","match","memory"]);
 let tab=load("tab","search");if(!TABS.some(t=>t[0]===tab))tab="search";
 function drawTabs(badgeOnly){
@@ -1188,7 +1223,7 @@ function drawTabs(badgeOnly){
   if(!badgeOnly) drawDeck();
 }
 let timers=[];function stopTimers(){timers.forEach(clearInterval);timers=[]}
-function render(){stopTimers();document.onkeydown=null;$("#deck").style.display=DECK_TABS.has(tab)?"":"none";const pn=tab==="search"||tab==="keys";$("#view").hidden=pn;$("#p-search").hidden=tab!=="search";$("#p-keys").hidden=tab!=="keys";drawDeck();if(pn){if(tab==="keys"&&window.focusKeys)focusKeys();return}({flash,quiz,type:typeIt,match,memory,preps,decl,list,missed:missedTab})[tab]()}
+function render(){stopTimers();document.onkeydown=null;$("#deck").style.display=DECK_TABS.has(tab)?"":"none";const pn=tab==="search"||tab==="keys";$("#view").hidden=pn;$("#p-search").hidden=tab!=="search";$("#p-keys").hidden=tab!=="keys";drawDeck();if(pn){if(tab==="keys"&&window.focusKeys)focusKeys();return}({review:reviewTab,flash,quiz,type:typeIt,match,memory,preps,decl,list,missed:missedTab})[tab]()}
 function resetModes(){fl.deck=[];qz.cur=null;ty.cur=null;mt.pairs=[];mm.cards=[]}
 
 /* ---------- detail modal ---------- */
@@ -1364,6 +1399,164 @@ function typeIt(){
     $("#fb").className="fb "+(good?"ok":"no");$("#fb").innerHTML=`${good?"Yes":"It’s"}: <span class="gk" style="font-size:1.2rem">${gHTML(v.g)}</span>${good?"":` · you wrote <span class="gk">${finalSigma(toGreek(ti.value))}</span>`}<div style="margin-top:4px">${esc(splitCf(v.m).main)}</div>`+(studyExtra(v)?`<div class="tablewrap study-in">${studyExtra(v)}</div>`:"");
     $("#chk").textContent="Next";$("#chk").onclick=next;ti.onkeydown=e=>{if(e.key==="Enter")next()}};
   $("#chk").onclick=check;ti.onkeydown=e=>{if(e.key==="Enter")check()};
+}
+
+
+/* ---------- Review: one adaptive, never-reset vocabulary run ----------
+   Every word starts in the drill set. Each word climbs levels:
+     new → (multiple choice, Greek → English) → level 1 (English → Greek) → level 2 (type it) → mastered.
+   A new word you already know jumps straight to level 2. A miss drops it to the start and brings it back in a few questions.
+   Mastered words leave the drill set, then come back for a quick flashcard check after 2 days, then 5, 12, 30, 60…
+   Progress is kept separately from everything else and has no reset button. */
+const RV_KEY=v=>v.les+":"+v.h;
+let RV=load("review",null);
+if(!RV||!RV.w)RV={w:{},q:0,hist:[],rounds:0,ok:0,all:0,best:0};
+const rvSave=()=>store("review",RV);
+const DAY=864e5,MASTER=3;
+const rvRec=v=>RV.w[RV_KEY(v)];
+const rvMastered=(r,now=Date.now())=>r&&r.s>=MASTER&&now<r.due;
+const rvDue=(r,now=Date.now())=>r&&r.s>=MASTER&&now>=r.due;
+function rvCounts(){const now=Date.now();let un=0,m=0,l0=0,l1=0,l2=0,due=0;
+  V.forEach(v=>{const r=rvRec(v);if(!r)un++;else if(rvMastered(r,now))m++;else if(rvDue(r,now))due++;else if(r.s>=2)l2++;else if(r.s===1)l1++;else l0++});
+  return {un,m,l0,l1,l2,due,drill:un+l0+l1+l2}}
+let rv={cur:null,kind:null,opts:null,done:false,recent:[],sess:{n:0,ok:0,start:null,grad:0,fell:0},summary:false,flip:false};
+function rvPick(){
+  const now=Date.now(),recent=new Set(rv.recent);
+  const live=V.filter(v=>!rvMastered(rvRec(v),now));
+  if(!live.length)return null;
+  let pool=live.filter(v=>!recent.has(v.id));if(!pool.length)pool=live;
+  const seen=pool.filter(v=>rvRec(v)),unseen=pool.filter(v=>!rvRec(v));
+  // due check-ins first, then words whose turn has come (misses come back fast), then fresh words
+  const dueC=seen.filter(v=>rvDue(rvRec(v),now)).sort((a,b)=>rvRec(a).due-rvRec(b).due);
+  const ready=seen.filter(v=>!rvDue(rvRec(v),now)&&rvRec(v).nq<=RV.q).sort((a,b)=>rvRec(a).nq-rvRec(b).nq);
+  const fresh=unseen.length+seen.length-dueC.length;
+  // check-ins are mixed in (about one question in three) unless nothing else is waiting
+  if(dueC.length&&(RV.q%3===0||!fresh))return dueC[0];
+  if(ready.length)return ready[Math.random()<.7?0:Math.floor(Math.random()*Math.min(3,ready.length))];
+  if(unseen.length)return rnd(unseen);
+  const rest=seen.filter(v=>!rvDue(rvRec(v),now));
+  return rest.length?rest.sort((a,b)=>rvRec(a).nq-rvRec(b).nq)[0]:dueC[0];
+}
+function rvOpts(v,dir){
+  let pool=V.filter(x=>x.id!==v.id&&x.pos===v.pos);if(pool.length<3)pool=V.filter(x=>x.id!==v.id);
+  const seen=new Set([short(v.m),v.h]),ds=[];
+  for(const x of shuffle(pool)){const key=dir==="g2e"?short(x.m):x.h;if(seen.has(key))continue;seen.add(key);ds.push(x);if(ds.length===3)break}
+  return shuffle([v,...ds]);
+}
+function rvNext(){
+  const v=rvPick();rv.cur=v;rv.done=false;rv.flip=false;if(!v)return;
+  const r=rvRec(v);
+  rv.kind=!r?"new":rvDue(r)?"check":r.s>=2?"type":r.s===1?"e2g":"g2e";
+  if(rv.kind==="new"||rv.kind==="g2e")rv.opts=rvOpts(v,"g2e");else if(rv.kind==="e2g")rv.opts=rvOpts(v,"e2g");else rv.opts=null;
+  rv.recent.push(v.id);if(rv.recent.length>6)rv.recent.shift();
+}
+function rvGrade(v,good){
+  const now=Date.now(),k=RV_KEY(v),r=RV.w[k]||{s:0,n:0,c:0,m:0,iv:0,due:0,nq:0},was=r.s,first=!RV.w[k],kind=rv.kind;
+  RV.q++;r.n++;RV.all++;
+  if(good){
+    r.c++;RV.ok++;
+    if(kind==="check"){r.iv=Math.min(Math.round((r.iv||2)*2.5),120);r.due=now+r.iv*DAY*(.85+Math.random()*.3);r.s=MASTER}
+    else{
+      r.s=first?2:r.s+1;
+      if(r.s>=MASTER){r.s=MASTER;r.iv=r.iv?r.iv:2;r.due=now+r.iv*DAY*(.75+Math.random()*.5);rv.sess.grad++}
+      else r.nq=RV.q+(r.s===1?4:7)+Math.floor(Math.random()*3);
+    }
+  } else {
+    r.m++;if(was>=MASTER||kind==="check")rv.sess.fell++;
+    r.s=0;r.iv=0;r.due=0;r.nq=RV.q+3+Math.floor(Math.random()*2);
+  }
+  r.t=now;RV.w[k]=r;
+  if(RV.q%5===0){RV.hist.push([RV.q,rvCounts().drill]);if(RV.hist.length>240)RV.hist=RV.hist.filter((_,i)=>i%2===0)}
+  rv.sess.n++;if(good)rv.sess.ok++;
+  rvSave();tally(good);good?markRight(v):markMissed(v);
+}
+function rvSpark(){
+  const H=[[0,V.length],...RV.hist,[RV.q,rvCounts().drill]];if(H.length<3)return "";
+  const W=260,Hh=44,maxQ=Math.max(1,H[H.length-1][0]);
+  const pts=H.map(([q,d])=>[q/maxQ*W,4+(d/V.length)*(Hh-8)]);
+  // higher on the chart = more words left to drill
+  const path=pts.map(([x,y],i)=>(i?"L":"M")+x.toFixed(1)+" "+(Hh-y).toFixed(1)).join("");
+  return `<svg class="rv-spark" viewBox="0 0 ${W} ${Hh}" preserveAspectRatio="none" aria-label="Drill set size over time"><path d="${path}L${W} ${Hh}L0 ${Hh}Z" fill="rgba(185,163,255,.14)"/><path d="${path}" fill="none" stroke="var(--accent)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`;
+}
+function rvHead(){
+  const c=rvCounts(),T=V.length,seg=(n,cls,lab)=>n?`<i class="${cls}" style="flex:${n}" title="${lab}: ${n}"></i>`:"";
+  const tough=V.map(v=>[v,rvRec(v)]).filter(([v,r])=>r&&r.m>0&&!rvMastered(r)).sort((a,b)=>b[1].m-a[1].m||a[1].s-b[1].s).slice(0,10);
+  return `<div class="rv-head">
+    <div class="rv-big"><div><b id="rv-drill">${c.drill}</b><span>of ${T} words still in your drill set${c.due?` · ${c.due} check-in${c.due===1?"":"s"} waiting`:""}</span></div>${rvSpark()}</div>
+    <div class="rv-bar">${seg(c.m,"m","Mastered")}${seg(c.l2,"l2","Level 2")}${seg(c.l1,"l1","Level 1")}${seg(c.due,"due","Check-in waiting")}${seg(c.l0,"l0","Shaky")}${seg(c.un,"un","Not seen yet")}</div>
+    <div class="rv-key"><span><i class="m"></i>Mastered ${c.m}</span><span><i class="l2"></i>Almost ${c.l2}</span><span><i class="l1"></i>Learning ${c.l1}</span><span><i class="l0"></i>Shaky ${c.l0}</span>${c.due?`<span><i class="due"></i>Check-ins ${c.due}</span>`:""}<span><i class="un"></i>Unseen ${c.un}</span></div>
+    ${tough.length?`<details class="rv-tough"><summary>Toughest right now</summary><div>${tough.map(([v,r])=>`<button class="chip" data-rvd="${v.id}"><span class="gk">${esc(v.h)}</span> <small>×${r.m}</small></button>`).join("")}</div></details>`:""}
+  </div>`;
+}
+const RV_LABEL={new:"New word",g2e:"Level 1 · Greek → English",e2g:"Level 2 · English → Greek",type:"Level 3 · Write it",check:"Check-in · Do you still know it?"};
+function rvPips(v){const r=rvRec(v),s=!r?0:rv.kind==="check"?MASTER:r.s;return `<span class="rv-pips">${[0,1,2].map(i=>`<i class="${i<s?"on":""}"></i>`).join("")}</span>`}
+function reviewTab(){
+  if(rv.summary){rvSummary();return}
+  if(!rv.cur||rv.done||!V.includes(rv.cur))rvNext();
+  if(rv.sess.start===null)rv.sess.start=rvCounts().drill;
+  const v=rv.cur;
+  if(!v){$("#view").innerHTML=rvHead()+`<div class="card" style="text-align:center"><p class="tag">ALL MASTERED</p><div class="big eng">Every word is mastered for now.</div><p class="note" style="margin:8px auto">Words come back for quick check-ins as their time comes up. ${(()=>{const n=Math.min(...V.map(v=>rvRec(v).due));const d=Math.max(0,Math.ceil((n-Date.now())/DAY));return d?`Next one in ${d} day${d===1?"":"s"}.`:"Next one soon."})()}</p></div>`;rvWire();return}
+  const k=rv.kind,{main}=splitCf(v.m);
+  let body="";
+  if(k==="new"||k==="g2e"||k==="e2g"){
+    const g2e=k!=="e2g";
+    body=`${g2e?`<div class="big">${gHTML(v.g)}</div>`:`<div class="big eng">${esc(main)}</div>`}
+      <div class="opts">${rv.opts.map((o,i)=>`<button class="opt ${g2e?"":"gk"}" data-i="${i}"><span style="color:var(--muted);font-size:.8rem">${i+1}</span> ${g2e?esc(short(o.m)):esc(o.h)}</button>`).join("")}</div>
+      <div class="fb" id="fb"></div><div class="center"><button class="btn" id="rv-nx">I don’t know</button></div>`;
+  } else if(k==="type"){
+    const hintFor=v.pos==="verb"?"the 1st principal part":v.pos==="noun"?"the nominative singular":v.pos==="adj"?"the masculine nominative singular":"the dictionary form";
+    body=`<div class="big eng">${esc(main)}</div><p class="note" style="text-align:center;margin:4px auto 0">Write ${hintFor}. Accents don’t count.</p>
+      <div class="typein"><input id="ti" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Your answer"><div class="preview" id="pv"></div></div>${kbdHTML()}
+      <div class="center"><button class="btn primary" id="rv-chk">Check</button><button class="btn" id="rv-idk">I don’t know</button></div><div class="fb" id="fb"></div>`;
+  } else {
+    body=`<div class="big">${gHTML(v.g)}</div>${rv.flip?`<div class="rv-back"><div class="meaning">${esc(main)}</div></div><div class="center"><button class="btn" id="rv-miss">✗ Forgot it</button><button class="btn primary" id="rv-got">✓ Knew it</button></div>`:`<p class="note" style="text-align:center;margin:6px auto">Say the meaning to yourself, then flip.</p><div class="center"><button class="btn primary" id="rv-flip">Flip</button></div>`}<div class="fb" id="fb"></div>`;
+  }
+  const left=Math.max(1,20-rv.sess.n);
+  $("#view").innerHTML=rvHead()+`<div class="card rv-card"><div class="rv-top"><span class="tag">${RV_LABEL[k]}</span>${rvPips(v)}</div><div class="lemma">Lesson ${v.les} · ${POS[v.pos].replace(/s$/,"").toLowerCase()}</div>${body}</div>
+    <div class="kbdhint">${k==="type"?"Enter to check · Enter again for next":k==="check"?"Space to flip · J knew it · F forgot it":"Keys: 1–4 to answer · Enter for next"} · ${left} to the end of this round</div>`;
+  rvWire();
+  const reveal=(good)=>{rv.done=true;rvGrade(v,good);
+    $("#fb").className="fb "+(good?"ok":"no");
+    const r=rvRec(v),msg=good?(r.s>=MASTER?(k==="check"?`Still got it. Next check in ${r.iv} days.`:"Mastered. It leaves your drill set."):k==="new"?"Already know this one. Skipping ahead.":"Up a level."):"Back to the start. It’ll come round again soon.";
+    $("#fb").innerHTML=`<div class="rv-msg">${msg}</div><span class="gk" style="font-size:1.15rem">${gHTML(v.g)}</span>: ${esc(main)}`+(studyExtra(v)?`<div class="tablewrap study-in">${studyExtra(v)}</div>`:"");
+    const d=$("#rv-drill");if(d){d.textContent=rvCounts().drill;window.UIFX&&UIFX.anim(d,"bump")}
+  };
+  const next=()=>{if(rv.sess.n>=20){rv.summary=true;RV.rounds++;rvSave()}rvNext();reviewTab()};
+  if(rv.opts){
+    const answer=i=>{if(rv.done)return;const o=rv.opts[i],good=o===v;
+      document.querySelectorAll(".rv-card .opt").forEach(b=>{const x=rv.opts[+b.dataset.i];if(x===v)b.classList.add("ok");else if(x===o)b.classList.add("no");if(k!=="e2g")b.lastChild.textContent=" "+splitCf(x.m).main;b.style.whiteSpace="normal";b.disabled=true});
+      reveal(good);$("#rv-nx").textContent="Next";$("#rv-nx").className="btn primary"};
+    document.querySelectorAll(".rv-card .opt").forEach(b=>b.onclick=()=>answer(+b.dataset.i));
+    $("#rv-nx").onclick=()=>{if(!rv.done){document.querySelectorAll(".rv-card .opt").forEach(b=>{if(rv.opts[+b.dataset.i]===v)b.classList.add("ok");b.disabled=true});reveal(false);$("#rv-nx").textContent="Next";$("#rv-nx").className="btn primary"}else next()};
+    document.onkeydown=e=>{if($("#modal").innerHTML)return;if(/^[1-4]$/.test(e.key)&&!rv.done)answer(+e.key-1);else if(e.key==="Enter"&&rv.done)next()};
+  } else if(k==="type"){
+    const ti=$("#ti");wireKbd(ti,$("#pv"));
+    const check=()=>{if(rv.done){next();return}const a=bare(toGreek(ti.value));if(!a)return;
+      const good=v.lem.some(l=>bare(l)===a)||bare(v.h)===a;reveal(good);
+      if(!good)$("#fb").insertAdjacentHTML("beforeend",`<div style="margin-top:4px;color:var(--muted)">you wrote <span class="gk">${esc(finalSigma(toGreek(ti.value)))}</span></div>`);
+      ti.disabled=true;$("#rv-chk").textContent="Next";$("#rv-idk").hidden=true;$("#rv-chk").focus({preventScroll:true})};
+    $("#rv-chk").onclick=check;ti.onkeydown=e=>{if(e.key==="Enter")check()};
+    $("#rv-idk").onclick=()=>{if(rv.done)return;reveal(false);ti.disabled=true;$("#rv-chk").textContent="Next";$("#rv-idk").hidden=true};
+    document.onkeydown=e=>{if(rv.done&&e.key==="Enter"&&e.target!==ti){e.preventDefault();next()}};
+  } else {
+    const flip=()=>{if(!rv.flip){rv.flip=true;window.SFX&&SFX.flip&&SFX.flip();reviewTab()}};
+    if(!rv.flip)$("#rv-flip").onclick=flip;
+    else{const fin=g=>{if(rv.done){next();return}reveal(g);$("#rv-got").textContent="Next";$("#rv-got").onclick=next;$("#rv-miss").remove()};$("#rv-got").onclick=()=>fin(true);$("#rv-miss").onclick=()=>fin(false)}
+    document.onkeydown=e=>{if($("#modal").innerHTML)return;if(e.key===" "&&!rv.flip){e.preventDefault();flip()}else if(rv.flip&&!rv.done&&(e.key==="j"||e.key==="ArrowRight"))$("#rv-got").click();else if(rv.flip&&!rv.done&&(e.key==="f"||e.key==="ArrowLeft"))$("#rv-miss").click();else if(rv.done&&e.key==="Enter")next()};
+  }
+}
+function rvWire(){document.querySelectorAll("[data-rvd]").forEach(b=>b.onclick=()=>openDetail(V[+b.dataset.rvd]))}
+function rvSummary(){
+  const c=rvCounts(),s=rv.sess,diff=s.start-c.drill;
+  $("#view").innerHTML=rvHead()+`<div class="card rv-sum"><p class="tag">ROUND ${RV.rounds} DONE</p>
+    <div class="rv-sumgrid"><div><b>${s.ok}/${s.n}</b><span>right</span></div><div><b>${diff>0?"−"+diff:diff<0?"+"+(-diff):"±0"}</b><span>drill set ${diff>0?"tightened":"change"}</span></div><div><b>${s.grad}</b><span>mastered</span></div></div>
+    <p class="note" style="margin:10px auto 0;text-align:center">${diff>0?`Down to ${c.drill} words. Keep squeezing.`:diff<0?`${-diff} word${diff===-1?"":"s"} slipped back in. They’ll get extra turns.`:"Holding steady. The tough ones are getting more turns."}</p>
+    <div class="center"><button class="btn primary" id="rv-go">Next round</button></div></div>`;
+  rvWire();
+  if(diff>0&&window.SFX)SFX.win&&SFX.win();
+  const go=()=>{rv.summary=false;rv.sess={n:0,ok:0,start:rvCounts().drill,grad:0,fell:0};reviewTab()};
+  $("#rv-go").onclick=go;document.onkeydown=e=>{if(e.key==="Enter")go()};
+  $("#rv-go").focus({preventScroll:true});
 }
 
 /* ---------- Match (Quizlet-style) ---------- */
@@ -1816,6 +2009,7 @@ const SFX=(()=>{
     rumble(){noise(0,.9,140,.55);noise(.15,.7,90,.45);tone(62,0,.8,"sine",.22,40)},
     hop(){tone(420,0,.14,"sine",.18,900)},
     sigh(){tone(330,0,.35,"triangle",.1,220)},
+    bonk(){tone(260,0,.07,"triangle",.2,190);noise(0,.03,900,.12)},
     unfold(){tone(420,0,.07,"sine",.15,620)},
     set(v){on=v;store("sfx",v);if(v)this.tick()},
     tick(){tone(1250,0,.035,"sine",.12)},
@@ -1870,7 +2064,7 @@ tally=function(g){
 };
 
 /* ---------- view transitions ---------- */
-const GAME=new Set(["flash","quiz","type","match","memory","preps","decl"]);
+const GAME=new Set(["review","flash","quiz","type","match","memory","preps","decl"]);
 const _render=render;
 render=function(){
   _render();
@@ -1936,7 +2130,7 @@ document.addEventListener("click",e=>{
     if(t.matches("[data-top]")){
       const ord=["reference","dictionary","daily"],cur=document.querySelector("[data-top][aria-selected=true]");
       const a=cur?ord.indexOf(cur.dataset.top):-1,b=ord.indexOf(t.dataset.top);
-      if(a===b)SFX.tick();else{SFX.whoosh(b>a?1:-1);window.SISY&&SISY(b>a?1:-1)}
+      if(a===b)SFX.tick();else{SFX.whoosh(b>a?1:-1);window.SISY&&SISY(a,b)}
     } else if(t.matches("[data-rsub],#tabs button")&&t.getAttribute("aria-pressed")!=="true"&&t.getAttribute("aria-selected")!=="true") SFX.page();
     else SFX.tick();
   }
@@ -2866,7 +3060,7 @@ const sfx=(n,d=0)=>setTimeout(()=>{try{S[n]&&S[n]()}catch(e){}},d);
 let on=(()=>{try{const x=localStorage.getItem("vocab-lab-sisy");return x?JSON.parse(x):true}catch(e){return true}})();
 const sw=document.getElementById("sisysw");
 const paint=()=>{sw.setAttribute("aria-pressed",on);sw.setAttribute("aria-label",on?"Turn the Sisyphus scene off":"Turn the Sisyphus scene on")};
-sw.onclick=()=>{on=!on;try{localStorage.setItem("vocab-lab-sisy",JSON.stringify(on))}catch(e){}paint();if(on)SISY(1)};paint();
+sw.onclick=()=>{on=!on;try{localStorage.setItem("vocab-lab-sisy",JSON.stringify(on))}catch(e){}paint()};paint();
 
 const SK="#eccfa9",SK2="#c9a982",TUN="#7a68ad",TUN2="#5b4f80",HAIR="#5a4636",ROCK="#8d8896",ROCK2="#5f5a69";
 const ANG=-15,R=15,f=n=>n.toFixed(1);
@@ -2889,48 +3083,69 @@ function fig(ph,pose,lift,bob){
 function rock(rot){return `<g transform="rotate(${f(rot)})"><path d="M-15 -1Q-14 -12 -3 -15Q10 -15 14.5 -4Q16 8 6 13.5Q-7 16 -13 8Z" fill="${ROCK}" stroke="${ROCK2}" stroke-width="1.2"/><path d="M-6 -8l4 3 -1 5M5 2l4 5M-9 4l3-1" stroke="${ROCK2}" stroke-width="1" fill="none" stroke-linecap="round"/><circle cx="-4" cy="-9" r="2.4" fill="#a7a2b0" opacity=".5"/></g>`}
 
 let cur=null;
-const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2,easeIn=t=>t*t,cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
-window.SISY=function(dir){
-  if(!on||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2,easeIn=t=>t*t,cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),lerp=(a,b,t)=>a+(b-a)*t;
+const KEYS=["reference","dictionary","daily"];
+function bump(el,cls){if(!el)return;el.classList.remove("sbump","sshove-r","sshove-l");void el.offsetWidth;el.classList.add(cls);setTimeout(()=>el.classList.remove(cls),650)}
+/* Sisyphus lives in the tab bar: he shoves a boulder from the tab you left to the tab you picked,
+   bumping the words on the way. Going back a tab, the boulder gets away from him and he trudges after it. */
+window.SISY=function(a,b){
+  if(!on||a<0||b<0||a===b||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const nav=[...document.querySelectorAll(".toptabs,.botnav")].find(n=>getComputedStyle(n).display!=="none"&&n.getClientRects().length);
+  if(!nav)return;
   if(cur){cancelAnimationFrame(cur.raf);clearTimeout(cur.to);cur.el.remove();cur=null}
-  const slip=dir<0||Math.random()<.2;
-  const el=document.createElement("div");el.className="sisy";el.setAttribute("aria-hidden","true");
-  const lines=dir>0?(slip?["almost…","so close","ἀεὶ πάλιν"]:["up we go","onward","one more step","ἄνω"]):["…and down it goes","again","πάλιν","κάτω"];
-  el.innerHTML=`<svg viewBox="0 0 240 92"><defs><linearGradient id="sisysky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#231d33"/><stop offset="1" stop-color="#16141b"/></linearGradient></defs><rect width="240" height="92" fill="url(#sisysky)"/><circle cx="205" cy="18" r="7" fill="#d9b25b" opacity=".55"/><g transform="translate(0 86) rotate(${ANG})"><path d="M-30 0H300V90H-30Z" fill="#2c2636"/><path d="M-30 0H300" stroke="#4a4058" stroke-width="1.5"/><g id="sisy-dust"></g><g id="sisy-man"></g><g id="sisy-rock"></g></g></svg><p><span>${lines[Math.floor(Math.random()*lines.length)]}</span><b>Σίσυφος</b></p>`;
+  const btns=KEYS.map(k=>nav.querySelector(`[data-top="${k}"]`));if(btns.some(x=>!x))return;
+  const isBot=nav.classList.contains("botnav"),nr=nav.getBoundingClientRect(),PAD=20;
+  const L=nr.left-24,T=nr.top-PAD,W=nr.width+48,H=nr.height+PAD;
+  const k=isBot?.48:.56,R=15*k,OFF=31*k;
+  const cx=btns.map(x=>{const r=x.getBoundingClientRect();return r.left+r.width/2-L});
+  const ground=isBot?btns[0].getBoundingClientRect().bottom-T-2:H-1;
+  const el=document.createElement("div");el.className="sisy-row";el.setAttribute("aria-hidden","true");
+  Object.assign(el.style,{left:L+"px",top:T+"px",width:W+"px",height:H+"px",zIndex:isBot?41:16});
+  el.innerHTML=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><g transform="translate(0 ${f(ground)})"><g class="m"></g><g class="r"></g></g></svg>`;
   document.body.appendChild(el);
-  const man=el.querySelector("#sisy-man"),rk=el.querySelector("#sisy-rock");
-  const DUR=dir>0&&!slip?1500:2300,t0=performance.now();
-  let rumbled=false,hopped=false;
-  if(dir>0)sfx("heave",60);
-  const frame=now=>{
-    const t=cl((now-t0)/DUR);
-    let sx,bx,pose="push",face=1,ph,lift=0,bob=0,brot;
-    if(dir>0&&!slip){ // push up the hill
-      const e=ease(t);sx=40+95*e;bx=sx+31;ph=sx*.33;bob=Math.abs(Math.sin(ph))*1.1;
-    } else {
-      const top=dir>0?.45:.18; // time spent pushing before it slips
-      const sx0=dir>0?40:120;
-      if(t<top){const e=ease(t/top);sx=sx0+(dir>0?100:12)*e;bx=sx+31;ph=sx*.33;bob=Math.abs(Math.sin(ph))*1.1;cur.topX=sx}
-      else {
-        const k=(t-top)/(1-top),sTop=cur.topX;
-        if(!rumbled){rumbled=true;sfx("rumble")}
-        bx=sTop+31-easeIn(cl(k/.6))*(sTop+31+60); // rock rolls all the way down and off
-        const d=bx-(sTop+4);
-        lift=d<30&&d>-30?Math.cos(d/30*Math.PI/2)*26:0;
-        if(lift>2&&!hopped){hopped=true;sfx("hop")}
-        if(k<.62){sx=sTop;pose=lift>0?"stand":"push";ph=0}
-        else {const w=(k-.62)/.38;sx=sTop-46*w;face=-1;pose="slump";ph=w*9;bob=Math.abs(Math.sin(ph))*1.1;if(w>.05&&!cur.sighed){cur.sighed=true;sfx("sigh")}}
-      }
-    }
-    brot=(bx/R)*180/Math.PI;
-    man.setAttribute("transform",`translate(${f(sx)} 0)${face<0?" scale(-1 1)":""}`);
-    man.innerHTML=fig(ph,pose,lift,bob);
-    rk.setAttribute("transform",`translate(${f(bx)} ${-R})`);rk.innerHTML=rock(brot);
-    if(t<1)cur.raf=requestAnimationFrame(frame);
-    else cur.to=setTimeout(()=>{el.classList.add("out");setTimeout(()=>{el.remove();if(cur&&cur.el===el)cur=null},300)},dir>0&&!slip?350:150);
+  const man=el.querySelector(".m"),rk=el.querySelector(".r");
+  const fwd=b>a,slip=fwd&&Math.random()<.2,span=Math.abs(b-a);
+  // state
+  const st={bx:cx[a]-(fwd?18:0),sx:0,face:1,pose:"push",lift:0,ph:0,bob:0};
+  st.sx=st.bx-OFF;
+  const passed=new Set();
+  let hopped=false,rumbled=false;
+  const roll=(from,to,t)=>{st.bx=lerp(from,to,t);const dir=Math.sign(to-from);
+    KEYS.forEach((_,i)=>{if(passed.has(i))return;const c=cx[i];if(c<=Math.min(from,to)||c>=Math.max(from,to))return;if(i!==b&&i!==a&&((dir>0&&st.bx>=c)||(dir<0&&st.bx<=c))){passed.add(i);bump(btns[i],"sbump");sfx("bonk")}})};
+  const hop=()=>{const dU=(st.bx-st.sx)/k-4;st.lift=Math.abs(dU)<30?Math.cos(dU/30*Math.PI/2)*26:0;if(st.lift>3&&!hopped){hopped=true;sfx("hop")}};
+  const walk=()=>{st.ph=st.sx/k*.33;st.bob=Math.abs(Math.sin(st.ph))*1.1};
+  const phases=[];
+  if(fwd){
+    const end=cx[b]-OFF*.2;
+    phases.push({d:420+380*span,go:t=>{roll(cx[a]-18,end,ease(t));st.sx=st.bx-OFF;walk()},done:()=>{bump(btns[b],"sshove-r");sfx("bonk")}});
+    if(slip){
+      phases.push({d:180,go:()=>{st.pose="push";st.bob=0}});
+      phases.push({d:420+300*span,go:t=>{if(!rumbled){rumbled=true;passed.clear();sfx("rumble")}roll(end,cx[a],easeIn(t));st.pose=st.lift>0?"stand":"push";hop()},done:()=>{bump(btns[a],"sshove-l");st.lift=0;st.pose="slump";sfx("sigh")}});
+      phases.push({d:500,go:()=>{st.pose="slump"}});
+    } else phases.push({d:380,go:()=>{st.pose="stand";st.bob=0}});
+  } else {
+    const start=cx[a];
+    phases.push({d:320,go:t=>{st.bx=start+Math.sin(t*28)*1.2;st.sx=start-OFF;st.ph=t*3;st.bob=.5}});
+    phases.push({d:380+260*span,go:t=>{if(!rumbled){rumbled=true;sfx("rumble")}roll(start,cx[b]+OFF*.2,easeIn(t));st.pose=st.lift>0?"stand":"push";hop()},done:()=>{bump(btns[b],"sshove-l");sfx("bonk");st.lift=0}});
+    const from=start-OFF,to=cx[b]+OFF*1.2;
+    phases.push({d:340+300*span,go:t=>{st.face=-1;st.pose="slump";st.sx=lerp(from,to,t);walk();if(!cur.sighed){cur.sighed=true;sfx("sigh")}}});
+    phases.push({d:300,go:()=>{st.face=-1;st.pose="stand";st.bob=0}});
+  }
+  if(fwd)sfx("heave",40);
+  let pi=0,pt0=performance.now();
+  const draw=()=>{
+    man.setAttribute("transform",`translate(${f(st.sx)} 0) scale(${f(k*st.face)} ${f(k)})`);
+    man.innerHTML=fig(st.ph,st.pose,st.lift,st.bob);
+    rk.setAttribute("transform",`translate(${f(st.bx)} ${f(-R)}) scale(${k})`);rk.innerHTML=rock((st.bx/R)*180/Math.PI);
   };
-  cur={el,raf:0,to:0,topX:40};
-  cur.raf=requestAnimationFrame(frame);
+  const frame=now=>{
+    let ph=phases[pi];let t=cl((now-pt0)/ph.d);
+    ph.go(t);
+    if(t>=1){ph.done&&ph.done();pi++;pt0=now;if(pi>=phases.length){draw();cur.to=setTimeout(()=>{el.classList.add("out");setTimeout(()=>{el.remove();if(cur&&cur.el===el)cur=null},320)},120);return}}
+    draw();cur.raf=requestAnimationFrame(frame);
+  };
+  cur={el,raf:0,to:0};
+  draw();cur.raf=requestAnimationFrame(frame);
 };
 }
 </script>
